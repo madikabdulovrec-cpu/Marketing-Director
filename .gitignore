@@ -1,0 +1,15 @@
+# Чувствительная информация — не публикуем
+PROJECT_STATE.md
+dishandi_brief.md
+Бухгалтерия/
+.claude/
+*.xlsx
+*.pdf
+
+# Скрипты сборки — не нужны на гите
+build_xlsx.py
+render_*.py
+
+# Старые версии и ревью — оставляем только финальную v1.3
+strategy_dishandi_v1.html
+strategy_review_v1.2.html

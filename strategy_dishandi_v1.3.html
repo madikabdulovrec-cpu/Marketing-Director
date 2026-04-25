@@ -1,0 +1,1290 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Dishandi SPA — маркетинговая стратегия v1.3</title>
+<style>
+  :root {
+    --bg: #0f1411;
+    --bg-2: #161c18;
+    --bg-3: #1f2722;
+    --ink: #e8e2d4;
+    --ink-dim: #a9a293;
+    --ink-mute: #766f60;
+    --gold: #c9a876;
+    --gold-hi: #e5c58c;
+    --sage: #7ea284;
+    --danger: #d07b6b;
+    --warn: #d4b46a;
+    --ok: #7ea284;
+    --line: #2a322c;
+    --card: #1a211d;
+    --radius: 14px;
+    --serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 16px; line-height: 1.65; }
+  .page { max-width: 1040px; margin: 0 auto; padding: 56px 48px 96px; }
+  h1, h2, h3, h4 { font-family: var(--serif); font-weight: 500; letter-spacing: -0.01em; color: var(--ink); }
+  h1 { font-size: 48px; line-height: 1.15; margin: 0 0 8px; }
+  h2 { font-size: 30px; margin: 48px 0 16px; border-top: 1px solid var(--line); padding-top: 32px; }
+  h2.no-line { border: none; padding-top: 0; }
+  h3 { font-size: 22px; margin: 28px 0 12px; color: var(--gold-hi); }
+  h4 { font-size: 17px; margin: 16px 0 8px; color: var(--ink); font-family: var(--sans); font-weight: 600; letter-spacing: 0; text-transform: uppercase; font-size: 12px; color: var(--gold); }
+  p { margin: 0 0 14px; }
+  em { color: var(--gold-hi); font-style: italic; }
+  strong { color: var(--ink); font-weight: 600; }
+  small { color: var(--ink-mute); font-size: 12px; }
+  a { color: var(--gold); }
+  .cover { border-bottom: 1px solid var(--line); padding-bottom: 28px; margin-bottom: 8px; }
+  .cover .eyebrow { color: var(--gold); font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 8px; }
+  .cover .meta { display: flex; gap: 32px; flex-wrap: wrap; margin-top: 24px; font-size: 13px; color: var(--ink-dim); }
+  .cover .meta b { color: var(--ink); font-weight: 600; }
+  .toc { background: var(--bg-2); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px 28px; margin: 40px 0; }
+  .toc h4 { margin-top: 0; }
+  .toc ol { margin: 0; padding-left: 20px; columns: 2; column-gap: 32px; }
+  .toc li { padding: 3px 0; font-size: 14px; break-inside: avoid; }
+  .toc a { color: var(--ink); text-decoration: none; }
+  .toc a:hover { color: var(--gold-hi); }
+  .callout { border-radius: var(--radius); padding: 18px 22px; margin: 20px 0; border-left: 3px solid var(--gold); background: var(--bg-2); }
+  .callout.warn  { border-left-color: var(--warn); }
+  .callout.danger { border-left-color: var(--danger); background: #271914; }
+  .callout.ok { border-left-color: var(--ok); }
+  .callout .kicker { display: inline-block; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-mute); margin-bottom: 4px; }
+  .callout.danger .kicker { color: var(--danger); }
+  .callout.warn .kicker { color: var(--warn); }
+  .callout.ok .kicker { color: var(--ok); }
+  .grid { display: grid; gap: 16px; margin: 20px 0; }
+  .grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+  .grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+  .grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px 22px; }
+  .card .num { font-family: var(--serif); font-size: 32px; color: var(--gold-hi); line-height: 1; margin-bottom: 6px; }
+  .card .lbl { font-size: 12px; color: var(--ink-mute); letter-spacing: 0.05em; text-transform: uppercase; }
+  .card .sub { font-size: 13px; color: var(--ink-dim); margin-top: 8px; }
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { color: var(--gold); font-weight: 500; font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  tbody tr:hover { background: var(--bg-2); }
+  tfoot td { font-weight: 600; border-top: 2px solid var(--gold); border-bottom: none; }
+  .pill { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 11px; letter-spacing: 0.04em; background: var(--bg-3); color: var(--ink-dim); margin-right: 4px; }
+  .pill.gold { background: #3a2f1e; color: var(--gold-hi); }
+  .pill.sage { background: #1f2e25; color: var(--sage); }
+  .pill.danger { background: #2f1b17; color: var(--danger); }
+  .pill.warn { background: #2d2a1c; color: var(--warn); }
+  .priority { display: grid; grid-template-columns: 48px 1fr; gap: 20px; align-items: start; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px 24px; margin: 14px 0; }
+  .priority .p-num { font-family: var(--serif); font-size: 40px; color: var(--gold); line-height: 1; }
+  .priority h3 { margin: 0 0 6px; color: var(--ink); }
+  .priority .tags { margin-top: 6px; }
+  blockquote { border-left: 3px solid var(--gold); margin: 20px 0; padding: 6px 0 6px 20px; font-family: var(--serif); font-size: 20px; color: var(--ink); font-style: italic; line-height: 1.4; }
+  blockquote small { display: block; margin-top: 8px; font-style: normal; font-family: var(--sans); color: var(--ink-mute); font-size: 13px; }
+  .roadmap { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 20px 0; }
+  .roadmap .phase { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px 22px; }
+  .roadmap .phase h4 { color: var(--gold); font-size: 13px; }
+  .roadmap ul { margin: 10px 0 0; padding-left: 18px; font-size: 14px; }
+  .roadmap li { padding: 3px 0; }
+  .kpi-row { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; margin: 16px 0; }
+  .kpi { background: var(--bg-2); border-radius: var(--radius); padding: 16px; text-align: center; }
+  .kpi .v { font-family: var(--serif); font-size: 26px; color: var(--gold-hi); }
+  .kpi .k { font-size: 11px; color: var(--ink-mute); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 4px; }
+  .persona { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; }
+  .persona .p-name { font-family: var(--serif); font-size: 24px; color: var(--gold-hi); margin-bottom: 2px; }
+  .persona .p-sub { font-size: 12px; color: var(--ink-mute); letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 10px; }
+  .persona .quote { font-family: var(--serif); font-style: italic; color: var(--ink); font-size: 15px; margin: 12px 0; padding: 8px 12px; border-left: 2px solid var(--gold); }
+  .persona dl { margin: 10px 0 0; }
+  .persona dt { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--gold); margin-top: 10px; font-weight: 600; }
+  .persona dd { margin: 2px 0 0; font-size: 13px; color: var(--ink-dim); }
+  .vpc { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 22px; margin: 14px 0; }
+  .vpc h4 { color: var(--gold-hi); font-family: var(--serif); font-size: 18px; text-transform: none; letter-spacing: normal; margin: 0 0 10px; font-weight: 500; }
+  .vpc .vpc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .vpc .vpc-col { background: var(--bg-2); border-radius: 8px; padding: 12px 14px; font-size: 13px; }
+  .vpc .vpc-col h5 { margin: 0 0 6px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--gold); font-family: var(--sans); }
+  .vpc .vpc-col ul { margin: 0; padding-left: 16px; }
+  .vpc .vpc-col li { padding: 2px 0; color: var(--ink-dim); }
+  .ladder-step { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 20px; margin: 8px 0; display: grid; grid-template-columns: 40px 1.2fr 1fr 1fr; gap: 16px; align-items: start; font-size: 13px; }
+  .ladder-step .step-num { font-family: var(--serif); font-size: 28px; color: var(--gold); line-height: 1.1; }
+  .ladder-step h4 { margin: 0 0 4px; font-size: 14px; color: var(--gold-hi); font-family: var(--serif); font-weight: 500; text-transform: none; letter-spacing: normal; }
+  .ladder-step p { margin: 0; color: var(--ink-dim); font-size: 12px; }
+  .ladder-step .step-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--gold); margin-bottom: 3px; }
+  .journey { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 20px; margin: 10px 0; }
+  .journey h4 { color: var(--gold); font-size: 11px; margin-top: 0; }
+  .journey .j-grid { display: grid; grid-template-columns: 80px 1fr; gap: 8px 14px; font-size: 13px; }
+  .journey .j-grid .j-label { color: var(--ink-mute); font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .journey .j-grid .j-value { color: var(--ink-dim); }
+  @media print {
+    body { background: #fff; color: #1a1a1a; }
+    .page { padding: 20mm; max-width: 100%; }
+    h2, h3, h4 { color: #111; }
+    h3 { color: #7a5b1f; }
+    .toc, .card, .callout, .priority, .kpi, .roadmap .phase, .persona, .vpc, .ladder-step, .journey { background: #faf7f1; border-color: #d9cfb8; }
+    .vpc .vpc-col { background: #ece5d3; }
+    .cover, h2 { border-color: #d9cfb8; }
+    a { color: #7a5b1f; }
+    table th { color: #7a5b1f; }
+  }
+  @media (max-width: 800px) {
+    .page { padding: 28px 20px; }
+    h1 { font-size: 34px; }
+    h2 { font-size: 24px; }
+    .grid.cols-3, .grid.cols-4, .roadmap, .kpi-row { grid-template-columns: 1fr 1fr; }
+    .grid.cols-2 { grid-template-columns: 1fr; }
+    .toc ol { columns: 1; }
+    .ladder-step { grid-template-columns: 40px 1fr; }
+    .vpc .vpc-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ───── COVER ───── -->
+  <div class="cover">
+    <div class="eyebrow">маркетинговая стратегия · v1.3 (пост-ревью)</div>
+    <h1>Dishandi SPA</h1>
+    <p style="color: var(--ink-dim); font-size: 18px; margin-top: 8px; max-width: 720px;">
+      Баня как ритуал перехода. Как превратить 28% загрузки в 65% за 90 дней,
+      не изменив сути продукта.
+    </p>
+    <div class="meta">
+      <span><b>Автор:</b> Абдулов Мадияр</span>
+      <span><b>Для:</b> Дмитрий Дишинди, владелец</span>
+      <span><b>Горизонт:</b> 90 дней / 12 месяцев</span>
+      <span><b>Дата:</b> апрель 2026</span>
+    </div>
+    <div style="margin-top: 18px; padding: 12px 16px; background: var(--bg-2); border-radius: 10px; font-size: 12px; color: var(--ink-dim);">
+      <b style="color: var(--gold);">Изменения v1.3 (по ревью v1.2):</b>
+      добавлены <em>JTBD, Customer Journey Map, Value Proposition Canvas, Retention Ladder</em>.
+      Переработаны <em>сегментация (поведенческие оси), позиционирование (true differentiation), таблица рисков</em>.
+    </div>
+  </div>
+
+  <!-- ───── TOC ───── -->
+  <div class="toc">
+    <h4>Содержание</h4>
+    <ol>
+      <li><a href="#summary">Краткое резюме</a></li>
+      <li><a href="#situation">Ситуационный анализ <small>(фин. модель)</small></a></li>
+      <li><a href="#swot">SWOT</a></li>
+      <li><a href="#stp">STP — Сегменты · JTBD · CJM · VPC</a></li>
+      <li><a href="#mix">Маркетинг-микс 7P</a></li>
+      <li><a href="#goals">Цели (SMART)</a></li>
+      <li><a href="#priorities">Стратегические приоритеты</a></li>
+      <li><a href="#tactics">Тактические инициативы</a></li>
+      <li><a href="#roadmap">Roadmap 30 / 60 / 90</a></li>
+      <li><a href="#kpi">KPI + Retention Ladder</a></li>
+      <li><a href="#risks">Риски</a></li>
+    </ol>
+  </div>
+
+  <!-- ───── 1. SUMMARY ───── -->
+  <h2 id="summary" class="no-line">1. Краткое резюме</h2>
+
+  <div class="callout warn">
+    <span class="kicker">⚠ главное</span>
+    <p style="margin: 0;"><strong>Бизнес прибыльный, но маржа быстро сжимается.</strong>
+    2025 год закрыли с 17,1 млн ₸ чистой прибыли (52% маржи) при 157 сеансах и ~12% загрузки.
+    2026 год — выручка выросла вдвое, но <strong>маржа упала с 52% → 34% (янв) → 25% (фев) → 18% (март)</strong>.
+    Причина — в сезонности бизнеса. Задача маркетинга — <strong>стабилизировать маржу и вернуть объём сеансов к январскому уровню (30/мес)</strong>.</p>
+  </div>
+
+  <div class="grid cols-3">
+    <div class="card">
+      <div class="num">52% → 18%</div>
+      <div class="lbl">Сжатие маржи YoY</div>
+      <div class="sub">Средняя 2025 → март 2026. Минус 34 п.п. за 12 месяцев.</div>
+    </div>
+    <div class="card">
+      <div class="num">6%</div>
+      <div class="lbl">Конверсия WhatsApp</div>
+      <div class="sub">45 заявок → 2-3 бани. Главная дыра в воронке. Фикс даёт +10-15 сеансов/мес.</div>
+    </div>
+    <div class="card">
+      <div class="num">0</div>
+      <div class="lbl">Партнёрская сеть</div>
+      <div class="sub">Ни одного партнёра при ЦА «ЗОЖ / бизнес 35+ / духовники». Золотая дыра.</div>
+    </div>
+  </div>
+
+  <h3>Три ставки на 90 дней</h3>
+  <ol>
+    <li><strong>Остановить падение маржи</strong> через сертификаты с множителем и оптимизацию фикс-затрат. Цель: вернуть маржу к 30-35%.</li>
+    <li><strong>Восстановить объём до январских 30 сеансов</strong> через фикс воронки на существующем трафике (2GIS + WhatsApp + Instagram) — без роста бюджета на рекламу.</li>
+    <li><strong>Диверсифицировать каналы</strong>: партнёрская сеть, B2B-сегмент, Bardo-клуб, сертификаты Trio. Снизить зависимость от сарафана (сейчас ~50% клиентов). Эффект: +15-25 сеансов/мес к концу квартала.</li>
+  </ol>
+
+  <!-- ───── 2. SITUATION ───── -->
+  <h2 id="situation">2. Ситуационный анализ</h2>
+
+  <h3>2.1. Продукт (тарифная сетка)</h3>
+  <div class="grid cols-2">
+    <div class="card">
+      <h4>Bardo Light</h4>
+      <p style="margin:0;">4 часа · 1 баня · без персональных пар и еды<br>
+      <strong>50 000 ₸ / человек</strong> (мин. 3 человека)</p>
+    </div>
+  </div>
+
+  <h3>2.2. Фактический P&amp;L (реальные цифры от владельца)</h3>
+
+  <h4>2025 финансовый год (Ноя 2024 — Окт 2025)</h4>
+  <div class="grid cols-4">
+    <div class="card">
+      <div class="num">33,0 млн ₸</div>
+      <div class="lbl">Выручка</div>
+      <div class="sub">157 сеансов / ~13/мес</div>
+    </div>
+    <div class="card">
+      <div class="num">15,9 млн ₸</div>
+      <div class="lbl">Расходы</div>
+      <div class="sub">Средний за месяц ~1,3 млн</div>
+    </div>
+    <div class="card">
+      <div class="num" style="color: var(--ok);">17,1 млн ₸</div>
+      <div class="lbl">Чистая прибыль</div>
+      <div class="sub">~1,43 млн ₸ / мес</div>
+    </div>
+    <div class="card">
+      <div class="num" style="color: var(--ok);">52%</div>
+      <div class="lbl">Маржа чистой прибыли</div>
+      <div class="sub">Эталонная база</div>
+    </div>
+  </div>
+
+  <h4>2026 финансовый год (Ноя 2025 — Март 2026, 5 месяцев)</h4>
+  <div class="grid cols-4">
+    <div class="card">
+      <div class="num">31,4 млн ₸</div>
+      <div class="lbl">Выручка за 5 мес</div>
+      <div class="sub">6,29 млн / мес — <strong>×2,3</strong> к 2025</div>
+    </div>
+    <div class="card">
+      <div class="num">22,7 млн ₸</div>
+      <div class="lbl">Расходы за 5 мес</div>
+      <div class="sub">4,54 млн / мес — <strong>×3,4</strong> к 2025</div>
+    </div>
+    <div class="card">
+      <div class="num">8,8 млн ₸</div>
+      <div class="lbl">Прибыль за 5 мес</div>
+      <div class="sub">1,75 млн / мес — <strong>+22%</strong> к 2025</div>
+    </div>
+    <div class="card">
+      <div class="num" style="color: var(--warn);">28%</div>
+      <div class="lbl">Маржа (среднее)</div>
+      <div class="sub">Минус 24 п.п. к 2025</div>
+    </div>
+  </div>
+
+  <h4>Помесячная динамика (17 месяцев)</h4>
+  <table>
+    <thead><tr>
+      <th>Месяц</th>
+      <th class="num">Выручка</th>
+      <th class="num">Расход</th>
+      <th class="num">Прибыль</th>
+      <th class="num">Маржа</th>
+      <th class="num">Сеансов</th>
+    </tr></thead>
+    <tbody>
+      <tr style="color: var(--ink-mute); font-size: 13px;"><td colspan="6" style="padding: 4px 12px; text-transform: uppercase; letter-spacing: 0.05em; font-size: 10px; color: var(--gold);">ФОДа 2025 (легкий режим, низкие фикс-расходы)</td></tr>
+      <tr><td>Ноя 2024</td><td class="num">810</td><td class="num">460</td><td class="num">350</td><td class="num">43%</td><td class="num">5</td></tr>
+      <tr><td>Дек 2024</td><td class="num">3 351</td><td class="num">1 173</td><td class="num">2 178</td><td class="num">65%</td><td class="num">17</td></tr>
+      <tr><td>Янв 2025</td><td class="num">2 295</td><td class="num">650</td><td class="num">1 646</td><td class="num">72%</td><td class="num">10</td></tr>
+      <tr><td>Фев 2025</td><td class="num">2 625</td><td class="num">1 105</td><td class="num">1 520</td><td class="num">58%</td><td class="num">12</td></tr>
+      <tr><td>Мар 2025</td><td class="num">1 783</td><td class="num">725</td><td class="num">1 058</td><td class="num">59%</td><td class="num">11</td></tr>
+      <tr><td>Апр 2025</td><td class="num">4 495</td><td class="num">2 230</td><td class="num">2 266</td><td class="num">50%</td><td class="num">15</td></tr>
+      <tr><td>Май 2025</td><td class="num">3 700</td><td class="num">2 047</td><td class="num">1 653</td><td class="num">45%</td><td class="num">14</td></tr>
+      <tr><td>Июн 2025</td><td class="num">2 877</td><td class="num">1 326</td><td class="num">1 550</td><td class="num">54%</td><td class="num">11</td></tr>
+      <tr><td>Июл 2025</td><td class="num">1 572</td><td class="num">1 280</td><td class="num">292</td><td class="num" style="color: var(--danger);">19%</td><td class="num">9</td></tr>
+      <tr><td>Авг 2025</td><td class="num">2 590</td><td class="num">1 335</td><td class="num">1 254</td><td class="num">48%</td><td class="num">17</td></tr>
+      <tr><td>Сен 2025</td><td class="num">2 335</td><td class="num">1 271</td><td class="num">1 063</td><td class="num">46%</td><td class="num">15</td></tr>
+      <tr><td>Окт 2025</td><td class="num">4 615</td><td class="num">2 302</td><td class="num">2 315</td><td class="num">50%</td><td class="num">21</td></tr>
+      <tr style="color: var(--gold);"><td><strong>Итого 2025</strong></td><td class="num"><strong>33 048</strong></td><td class="num"><strong>15 904</strong></td><td class="num"><strong>17 147</strong></td><td class="num"><strong>52%</strong></td><td class="num"><strong>157</strong></td></tr>
+      <tr style="color: var(--ink-mute); font-size: 13px;"><td colspan="6" style="padding: 4px 12px; text-transform: uppercase; letter-spacing: 0.05em; font-size: 10px; color: var(--gold);">ФОДа 2026 (масштаб: новое помещение, команда, фикс-расходы ×4-5)</td></tr>
+      <tr><td>Ноя 2025</td><td class="num">5 587</td><td class="num">3 931</td><td class="num">1 656</td><td class="num">30%</td><td class="num">22</td></tr>
+      <tr><td>Дек 2025</td><td class="num">5 431</td><td class="num">3 925</td><td class="num">1 505</td><td class="num">28%</td><td class="num">19</td></tr>
+      <tr><td>Янв 2026</td><td class="num">9 298</td><td class="num">6 105</td><td class="num">3 193</td><td class="num" style="color: var(--ok);">34%</td><td class="num">30</td></tr>
+      <tr><td>Фев 2026</td><td class="num">5 889</td><td class="num">4 427</td><td class="num">1 462</td><td class="num">25%</td><td class="num">22</td></tr>
+      <tr><td>Мар 2026</td><td class="num">5 231</td><td class="num">4 290</td><td class="num">942</td><td class="num" style="color: var(--danger);"><strong>18%</strong></td><td class="num">17</td></tr>
+      <tr style="color: var(--gold);"><td><strong>Итого 2026 (5 мес)</strong></td><td class="num"><strong>31 436</strong></td><td class="num"><strong>22 678</strong></td><td class="num"><strong>8 758</strong></td><td class="num"><strong>28%</strong></td><td class="num"><strong>110</strong></td></tr>
+    </tbody>
+  </table>
+  <p><small>Все цифры — в тысячах тенге. Маржа = прибыль ÷ выручка.</small></p>
+
+  <h3>2.3. Ключевая тенденция</h3>
+  <div class="callout danger">
+    <span class="kicker">🔴 Маржа сжимается</span>
+    <p style="margin: 0;">
+      <strong>52%</strong> (2025 avg) → <strong>34%</strong> (янв) → <strong>25%</strong> (фев) → <strong>18%</strong> (март).<br><br>
+      Минус <strong>16 п.п. за 3 месяца</strong>. Если ничего не делать, к июню маржа может уйти в 0 или минус.
+    </p>
+  </div>
+
+  <h4>Главный разбор: почему маржа упала</h4>
+  <table>
+    <thead><tr><th>Статья</th><th class="num">Окт 2025 (52% маржа)</th><th class="num">Мар 2026 (18% маржа)</th><th>Что изменилось</th></tr></thead>
+    <tbody>
+      <tr><td>Выручка</td><td class="num">4 615</td><td class="num">5 231</td><td>+13% — рост объёма</td></tr>
+      <tr><td>Расходы</td><td class="num">2 302</td><td class="num">4 290</td><td><strong style="color: var(--danger);">+86% — скачок фикс-затрат</strong></td></tr>
+      <tr><td>Прибыль</td><td class="num">2 315</td><td class="num">942</td><td>−59% — результат сжатия</td></tr>
+      <tr><td>Сеансов</td><td class="num">21</td><td class="num">17</td><td>−19% — провал марта</td></tr>
+    </tbody>
+  </table>
+
+  <h3>2.4. Маркетинговая воронка — где утекает</h3>
+  <div class="grid cols-2">
+    <div class="callout warn">
+      <span class="kicker">🟡 2GIS — серая зона</span>
+      <p style="margin:0;">«Много звонят, не понятна конверсия» (со слов владельца). 4,7/5 по 74 оценкам.
+      <strong>Трекинг звонков отсутствует.</strong> Вероятно, здесь скрыт <em>основной поток</em>, который мы не видим.</p>
+    </div>
+    <div class="callout danger">
+      <span class="kicker">🔴 WhatsApp — провал конверсии</span>
+      <p style="margin:0;">60 000 ₸/нед на таргет → 45 заявок/нед → <strong>2-3 бани</strong>.
+      Конверсия заявка → запись <strong>~6%</strong> (норма 15-25%). CAC ≈ 24 000 ₸.</p>
+    </div>
+    <div class="callout ok">
+      <span class="kicker">🟢 Сарафан</span>
+      <p style="margin:0;">Основная масса — повторные и рекомендации. Но без CRM каждый клиент уходит «в темноту» после сеанса.</p>
+    </div>
+    <div class="callout">
+      <span class="kicker">⚪ Instagram (органика)</span>
+      <p style="margin:0;">Охват 6 500 / 4 125 / 97 новых подписчиков. Путь до брони не оптимизирован.</p>
+    </div>
+  </div>
+
+  <h3>2.5. Финансовая модель (откалиброванная по реальным данным)</h3>
+  <p>Модель собрана по фактическим цифрам 2025-2026. Служит для прогнозов «что если» и контроля ежемесячно.</p>
+
+  <h4>Допущения (откалиброванные)</h4>
+  <table>
+    <thead><tr><th>Параметр</th><th class="num">Значение</th><th>Источник</th></tr></thead>
+    <tbody>
+      <tr><td>Цена / человек</td><td class="num">50 000 ₸</td><td>минимум 3 чел</td></tr>
+      <tr><td>Средний размер компании N (2026)</td><td class="num">~5,7 чел</td><td>выведено из факта</td></tr>
+      <tr><td>Оплата администратора</td><td class="num">2 500 × N (cap 15 000)</td><td>от владельца</td></tr>
+      <tr><td>Оплата пар-мастера</td><td class="num">12 000 × N</td><td>от владельца</td></tr>
+      <tr><td>Налог</td><td class="num">4% от выручки (УСН)</td><td>⚠ см. F4 ниже</td></tr>
+      <tr><td>Переменные (% от выручки)</td><td class="num">~33%</td><td>при N=5,7</td></tr>
+      <tr><td>Contribution margin</td><td class="num">~67%</td><td>⚠ см. F2 ниже</td></tr>
+      <tr><td>Фиксированные расходы/мес (факт ~2026)</td><td class="num">~2,6 млн ₸</td><td>⚠ см. F1 ниже</td></tr>
+      <tr><td>&nbsp;&nbsp;из них аренда</td><td class="num">2 000 000</td><td>2025 ≈ 0 (легкий формат)</td></tr>
+      <tr><td>&nbsp;&nbsp;ФОТ постоянный (SMM + горничная)</td><td class="num">250 000</td><td>Маша + горничная</td></tr>
+      <tr><td>&nbsp;&nbsp;Расходники (частично фикс)</td><td class="num">~350 000</td><td>30% переменная / 70% фикс</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout danger">
+    <span class="kicker">⚠ F1 · ДЕЙСТВИЕ: детализация фикс-расходов</span>
+    <p style="margin: 0;"><strong>Обнаружен пробел ~170к ₸/мес.</strong> Аренда 2,0 + SMM 0,15 + горничная 0,10 + 30% расходников 0,18 = <strong>2,43 млн</strong>. До заявленных 2,6 млн остаётся <strong>~170к «невидимых»</strong>.<br><br>
+    <strong>Вероятные скрытые статьи:</strong> интернет, бухгалтерия, ремонт/амортизация оборудования, ОПВ/ОСМС со штатных ЗП, страховка помещения, IT (Altegio, домен, хостинг), аудит.<br><br>
+    <strong>Fix:</strong> запросить у Дмитрия/бухгалтера полную расшивку расходов марта. 30 минут работы — убирает главный источник ошибки в модели.</p>
+  </div>
+
+  <div class="callout warn">
+    <span class="kicker">⚠ F2 · ПРОВЕРИТЬ: contribution margin 67%</span>
+    <p style="margin: 0;">67% справедлива, если расходники (600к) на 70% фикс и 30% переменные. Но на сеанс с 6 гостями: снэки, чай, масла, одноразовые тапочки, полотенца = <em>5–10к/гостя</em>. Значит var-доля выше, а contribution — ниже.<br><br>
+    <strong>Fix:</strong> попросить владельца оценить <em>«себестоимость обслуживания одного гостя»</em> отдельной цифрой. Если реальная contribution = 60% — при 22 сеансах это −310к ₸/мес прибыли (существенно).</p>
+  </div>
+
+  <div class="callout warn">
+    <span class="kicker">⚠ F4 · НАЛОГОВАЯ РЕАЛЬНОСТЬ</span>
+    <p style="margin: 0;">Модель использует 4% УСН. По факту:
+      <ul style="margin: 6px 0;">
+        <li><strong>Один сотрудник официально трудоустроен на МЗП</strong> — с него идут официальные ОПВ/ОСМС/ИПН в минимальном размере</li>
+        <li><strong>Остальные расчёты ЗП (пар-мастер, парильщики, админ, горничная) — в чёрную</strong> → налоговая нагрузка по факту = только 4% УСН + минимум по МЗП</li>
+        <li><strong>Порог УСН ~75 млн ₸:</strong> при росте оборота риск превышения и перехода на общий режим (НДС 12%) — единственный реальный налоговый сюрприз, который надо отслеживать</li>
+      </ul>
+    <strong>Fix:</strong> следить за оборотом квартально, при приближении к 70 млн ₸/год — заранее планировать сценарий ОСНО или дробление юрлиц.</p>
+  </div>
+
+  <h4>Юнит-экономика одного сеанса (зависит от размера компании)</h4>
+  <table>
+    <thead><tr>
+      <th>N гостей</th><th class="num">Выручка</th><th class="num">Администр.</th>
+      <th class="num">Пар-мастер</th><th class="num">Налог 4%</th>
+      <th class="num">Перем. итого</th><th class="num">Contribution</th><th class="num">Marg.</th>
+    </tr></thead>
+    <tbody>
+      <tr><td>3 (минимум)</td><td class="num">150 000</td><td class="num">7 500</td><td class="num">36 000</td><td class="num">6 000</td><td class="num">49 500</td><td class="num"><strong>100 500</strong></td><td class="num">67%</td></tr>
+      <tr><td>4</td><td class="num">200 000</td><td class="num">10 000</td><td class="num">48 000</td><td class="num">8 000</td><td class="num">66 000</td><td class="num"><strong>134 000</strong></td><td class="num">67%</td></tr>
+      <tr><td>5</td><td class="num">250 000</td><td class="num">12 500</td><td class="num">60 000</td><td class="num">10 000</td><td class="num">82 500</td><td class="num"><strong>167 500</strong></td><td class="num">67%</td></tr>
+      <tr><td>6 (макс)</td><td class="num">300 000</td><td class="num">15 000</td><td class="num">72 000</td><td class="num">12 000</td><td class="num">99 000</td><td class="num"><strong>201 000</strong></td><td class="num">67%</td></tr>
+    </tbody>
+  </table>
+
+  <h4>Точка безубыточности (break-even, при фикс ~2,6 млн ₸)</h4>
+  <table>
+    <thead><tr>
+      <th>Средний N</th>
+      <th class="num">Contribution / сеанс</th>
+      <th class="num">BE сеансов</th>
+      <th class="num">BE выручка</th>
+    </tr></thead>
+    <tbody>
+      <tr><td>3 чел</td><td class="num">100 500</td><td class="num">26</td><td class="num">3,88 млн ₸</td></tr>
+      <tr><td>4 чел</td><td class="num">134 000</td><td class="num">19</td><td class="num">3,88 млн ₸</td></tr>
+      <tr><td>5 чел</td><td class="num">167 500</td><td class="num">16</td><td class="num">3,88 млн ₸</td></tr>
+      <tr><td>5,7 (факт)</td><td class="num">191 000</td><td class="num"><strong>14</strong></td><td class="num"><strong>3,88 млн ₸</strong></td></tr>
+      <tr><td>6 чел</td><td class="num">201 000</td><td class="num">13</td><td class="num">3,88 млн ₸</td></tr>
+    </tbody>
+  </table>
+
+  <h4>Чувствительность: что двигает прибыль сильнее всего</h4>
+  <table>
+    <thead><tr><th>Рычаг</th><th>Изменение</th><th class="num">Эффект / мес</th></tr></thead>
+    <tbody>
+      <tr><td>+1 сеанс в месяц</td><td>при N=5,7</td><td class="num">+191 000 ₸</td></tr>
+      <tr><td>Вернуть загрузку марта к февралю</td><td>17 → 22 сеансов</td><td class="num">+957 000 ₸</td></tr>
+      <tr><td>Вернуть загрузку к январю</td><td>17 → 30 сеансов</td><td class="num">+2 485 000 ₸</td></tr>
+      <tr><td>Переговоры по аренде −10%</td><td>2,00 → 1,80 млн</td><td class="num">+200 000 ₸</td></tr>
+      <tr><td>Повышение цены +10% <em>без учёта эластичности</em></td><td>50к → 55к/чел</td><td class="num">+520 000 ₸</td></tr>
+      <tr style="color: var(--warn);"><td>Повышение +10% при эластичности −0,5 <small>(F6)</small></td><td>−5% объёма</td><td class="num">+260 000 ₸</td></tr>
+      <tr style="color: var(--warn);"><td>Повышение +10% при эластичности −1,0 <small>(F6)</small></td><td>−10% объёма</td><td class="num">≈ 0 ₸ (нейтрально)</td></tr>
+      <tr><td>Рост конверсии WhatsApp 6%→15%</td><td>+15 сеансов/мес</td><td class="num">+2 865 000 ₸</td></tr>
+    </tbody>
+  </table>
+  <p><small><strong>Вывод (v1.3):</strong> самый сильный и безопасный рычаг — <strong>конверсия воронки</strong>. Повышение цены — только после усиления позиционирования и измерения эластичности (F6). Второй — возврат объёма сеансов.</small></p>
+
+  <h4>12-месячный контур (при достижении целей стратегии)</h4>
+  <table>
+    <thead><tr>
+      <th>Период</th><th class="num">Сеансов/мес</th>
+      <th class="num">Выручка/мес</th><th class="num">Прибыль/мес</th>
+      <th class="num">Маржа</th>
+      <th class="num">Накопл. прибыль</th>
+    </tr></thead>
+    <tbody>
+      <tr><td>Q2 2026 (мес 1-3, стабилизация)</td><td class="num">22 → 28</td><td class="num">7,0 млн</td><td class="num">+1,9 млн</td><td class="num">27%</td><td class="num">+5,7 млн</td></tr>
+      <tr><td>Q3 2026 (мес 4-6, низкий сезон)</td><td class="num">24 → 30</td><td class="num">7,7 млн</td><td class="num">+2,3 млн</td><td class="num">30%</td><td class="num">+12,6 млн</td></tr>
+      <tr><td>Q4 2026 (мес 7-9, высокий сезон)</td><td class="num">38 → 45</td><td class="num">11,9 млн</td><td class="num">+5,0 млн</td><td class="num">42%</td><td class="num">+27,6 млн</td></tr>
+      <tr><td>Q1 2027 (мес 10-12, плато)</td><td class="num">42 → 48</td><td class="num">12,9 млн</td><td class="num">+5,7 млн</td><td class="num">44%</td><td class="num">+44,7 млн</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout ok">
+    <span class="kicker">✓ выводы фин-модели</span>
+    <p style="margin: 0;">
+      1. Бизнес <strong>прибыльный с запасом</strong> (BE 14 сеансов, факт 17-22).<br>
+      2. <strong>N уже почти на максимуме</strong> (5,7 из 6).<br>
+      3. Главный рычаг — <strong>конверсия воронки</strong> (+15 сеансов = +2,9 млн).<br>
+      4. При выходе на 30 сеансов прибыль возвращается к <strong>37% маржи</strong>.
+    </p>
+  </div>
+
+  <!-- ───── 3. SWOT ───── -->
+  <h2 id="swot">3. SWOT</h2>
+  <div class="grid cols-2">
+    <div class="card">
+      <h4 style="color: var(--ok)">S — Сильные стороны</h4>
+      <ul>
+        <li><strong>Уникальный продукт:</strong> методика Bardo — защищённая авторством</li>
+        <li><strong>Личный бренд Дмитрия</strong> — клиенты «идут на имя»</li>
+        <li><strong>Физический актив:</strong> вид на город, приватность, 6 парных зон</li>
+        <li><strong>Contribution margin ~67%</strong> — при объёме прибыль быстро растёт</li>
+        <li><strong>Чёткое позиционирование:</strong> «без алкоголя, про энергию»</li>
+        <li><strong>4,7/5 в 2GIS</strong> — социальное доказательство</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4 style="color: var(--danger)">W — Слабые стороны</h4>
+      <ul>
+        <li><strong>Нет CRM</strong> и базы клиентов — сарафан не управляемый</li>
+        <li><strong>Воронка WhatsApp разваливается</strong> на 6%</li>
+        <li><strong>2GIS без трекинга</strong> — слепая зона</li>
+        <li><strong>0 партнёров</strong> при богатой ЦА</li>
+        <li><strong>Нет явных фин-продуктов</strong> (только сертификаты)</li>
+        <li><strong>Аренда 2 млн</strong> фиксирует высокий break-even</li>
+        <li><strong>Key-person risk:</strong> продукт не существует без Дмитрия</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4 style="color: var(--gold)">O — Возможности</h4>
+      <ul>
+        <li><strong>Ниша</strong>: премиум-халяль-осознанность в КЗ почти не занята</li>
+        <li><strong>Trend биохакинг, осознанность, ретриты</strong> на подъёме</li>
+        <li><strong>B2B-корпоратив</strong> (аренда от 500к) — команды уставших топов</li>
+        <li><strong>Зимний сезон</strong> — готовимся к следующему пику</li>
+        <li><strong>KTS за забором</strong> — идеальная антитеза для сторителлинга</li>
+        <li><strong>Bardo-сообщество</strong> как подписка / клуб (LTV-рычаг)</li>
+        <li><strong>Франшиза / лицензирование методики</strong> через 18-24 мес</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4 style="color: var(--warn)">T — Угрозы</h4>
+      <ul>
+        <li><strong>Быстрый провал загрузки</strong>: 3 мес подряд снижение</li>
+        <li><strong>Зависимость от Дмитрия</strong> — если выпадет, продукт теряется</li>
+        <li><strong>Копирование методики</strong> конкурентами</li>
+        <li><strong>Летний провал</strong> (Jul 2025: 9 сеансов, маржа 19%)</li>
+        <li><strong>Макро:</strong> KZ экономика, порог УСН на 75 млн → ОСНО</li>
+        <li><strong>Спа-отели premium</strong> как скрытые конкуренты (см. 4.3)</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ───── 4. STP ───── -->
+  <h2 id="stp">4. STP — Сегментация, Таргетинг, Позиционирование <small>(+ JTBD, Персоны, CJM, VPC)</small></h2>
+
+  <h3>4.1. Сегменты <small>★ переработано в v1.3: +поведенческие оси</small></h3>
+  <p>По Котлеру, полная сегментация требует 4 осей одновременно: <em>geographic / demographic / psychographic / behavioral</em>. В v1.2 мы покрыли первые 3, в v1.3 добавляем <strong>поведенческие</strong> (частота, триггер, readiness-стадия, LTV-потенциал).</p>
+
+  <table>
+    <thead><tr>
+      <th>Сегмент</th><th>Профиль</th><th>Частота</th>
+      <th>Триггер визита</th><th>Readiness</th><th>LTV</th><th>Стратегия</th>
+    </tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>A. Бизнес-мужчины 35-50</strong></td>
+        <td>Руководители, предприниматели. Приходят компаниями 5-6 чел.</td>
+        <td>1-2 раза/квартал</td>
+        <td>Burnout, закрытие крупного проекта, юбилей</td>
+        <td>Trial → Regular</td>
+        <td>Высокий (600-900к/год)</td>
+        <td class="pill gold">HOLD &amp; EXPAND</td>
+      </tr>
+      <tr>
+        <td><strong>B. ЗОЖ + духовные практики</strong></td>
+        <td>30-45, интерес к йоге/медитации/биохакингу. Пары и малые группы.</td>
+        <td>1 раз/месяц</td>
+        <td>Рутина, коллекция практик, community</td>
+        <td>Interested → Advocate</td>
+        <td>Очень высокий (800к+/год)</td>
+        <td class="pill sage">GROW (ключевой рост)</td>
+      </tr>
+      <tr>
+        <td><strong>C. Женские группы</strong></td>
+        <td>30-45, 3-6 подруг. «Не клуб с алкоголем, а настоящая близость».</td>
+        <td>1-2 раза/год</td>
+        <td>ДР подруги, «нужно выдохнуть», эмоц. сброс</td>
+        <td>Unaware → Trial</td>
+        <td>Средний, но контент-evangelism</td>
+        <td class="pill sage">GROW</td>
+      </tr>
+      <tr>
+        <td><strong>D. Корпоратив / B2B</strong></td>
+        <td>HR крупных компаний, тим-билдинги и ретриты команд 8-15 чел.</td>
+        <td>Проект 2-4 раза/год</td>
+        <td>Burnout команды, запуск, ретрит</td>
+        <td>Unaware → Member (годовой пакет)</td>
+        <td>Очень высокий (2-4 млн/год)</td>
+        <td class="pill gold">DEVELOP</td>
+      </tr>
+      <tr>
+        <td><strong>E. Спортсмены / биохакинг</strong></td>
+        <td>Восстановление после нагрузок, клиенты премиум-фитнеса.</td>
+        <td>2 раза/месяц (при regular)</td>
+        <td>Посттренировочное восстановление</td>
+        <td>Aware → Trial</td>
+        <td>Высокий (cycle 1-2/мес)</td>
+        <td class="pill sage">TEST</td>
+      </tr>
+      <tr>
+        <td><strong>F. Иностранцы / экспаты</strong></td>
+        <td>HNWI туристы, аутентичный опыт в КЗ.</td>
+        <td>1 раз (за визит в страну)</td>
+        <td>Пребывание в Алматы 2-7 дней</td>
+        <td>Unaware → Trial</td>
+        <td>Высокий чек, низкая повторяемость</td>
+        <td class="pill">PILOT</td>
+      </tr>
+      <tr style="opacity:0.55;">
+        <td><strong>❌ Компании на застолье / алкоголь</strong></td>
+        <td>Классический банный формат с едой и выпивкой.</td>
+        <td>—</td><td>—</td><td>—</td><td>—</td>
+        <td class="pill danger">АНТИ-сегмент</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p><small><strong>Readiness stages:</strong> Unaware (не знают о нас) → Aware (слышали) → Interested (думают, изучают) → Trial (первый визит) → Regular (4+ визитов/год) → Advocate (рекомендуют, дают отзывы) → Member (клуб Bardo). Для каждой стадии — свой триггер перехода (см. Retention Ladder в разделе 11).</small></p>
+
+  <h3>4.2. Таргетинг (на 90 дней)</h3>
+  <ul>
+    <li><strong>Главный фокус:</strong> сегменты A (ядро — удержать и углубить) и B (расти — путь к Bardo-сообществу).</li>
+    <li><strong>Развиваем:</strong> D (корпоратив — канал высокого чека) и C (женские группы — генератор органического контента).</li>
+    <li><strong>Тестируем:</strong> E (спортсмены через клубы) и F (экспаты через отели).</li>
+  </ul>
+
+  <h3>4.3. Позиционирование <small>★ усилено в v1.3: true differentiation</small></h3>
+
+  <div class="callout warn">
+    <span class="kicker">урок ревью (M4)</span>
+    <p style="margin: 0;">В v1.2 позиционирование строилось <em>против KTS</em>. Но KTS — это анти-пример, а не конкурент. <strong>Настоящие конкуренты Dishandi за деньги клиента</strong> — это <em>спа-отели premium</em> (Ritz, Rixos), <em>ретрит-центры</em> (Rakxa в Бангкоке, Aman resorts) и <em>йога-студии premium-класса</em>. Все они тоже продают «тишину, восстановление, no-alcohol зоны, духовность».</p>
+  </div>
+
+  <h4>Formula differentiation (v1.3)</h4>
+  <table>
+    <thead><tr><th>Dimension</th><th>Dishandi</th><th>Spa-отель premium</th><th>Ретрит-центр</th><th>Йога-студия премиум</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Глубина изменения состояния</strong></td><td style="color: var(--gold-hi);">Ритуал (до 6 ч, методика Bardo)</td><td>Процедура (90 мин)</td><td>Программа (3-7 дней)</td><td>Сессия (90 мин)</td></tr>
+      <tr><td><strong>Пороговый формат</strong></td><td style="color: var(--gold-hi);">Компания 3-6 чел</td><td>Индивидуально / пара</td><td>Группа + индивид.</td><td>Индивид.</td></tr>
+      <tr><td><strong>Ценовая точка / чел</strong></td><td style="color: var(--gold-hi);">50к (ритуал в день)</td><td>40-80к (процедура)</td><td>300-500к (выезд)</td><td>15-25к (абон.)</td></tr>
+      <tr><td><strong>Эмоц. якорь</strong></td><td style="color: var(--gold-hi);">Жар + братство + методика</td><td>Комфорт + уход</td><td>Отрешение + перезагрузка</td><td>Дисциплина тела</td></tr>
+      <tr><td><strong>Что уникально</strong></td><td style="color: var(--gold-hi);">Только здесь синтез казахской бани + ритуал бардо + халяль-философия + личный бренд Дмитрия</td><td>Стандарты бренда</td><td>Место + учитель</td><td>Учитель + расписание</td></tr>
+    </tbody>
+  </table>
+
+  <h4>Новая формула позиционирования</h4>
+  <blockquote>
+    Для состоявшихся людей, уставших от шумного «отдыха», Dishandi — это <em>ритуал перехода в другое состояние</em>: единственное место, где казахская банная традиция, синтезированная с методикой Bardo и халяль-философией, даёт <em>глубокий физический сброс и братский формат</em> за полдня (до 6 часов) по цене, сравнимой с одной процедурой в спа-отеле.
+    <small>Доказательства: авторская методика Дмитрия, отзывы 4,7/5, отсутствие алкоголя, вид Алматы, 6 парных зон.</small>
+  </blockquote>
+
+  <h4>Три варианта слогана (на тест)</h4>
+  <ol>
+    <li><strong>«Баня как ритуал. Перезагрузка, которую чувствуешь неделю.»</strong></li>
+    <li><strong>«Не процедура. Переход.»</strong> <small>(позиционирование против спа-отелей)</small></li>
+    <li><strong>«Шесть часов тишины дороже недели отпуска.»</strong> <small>(time-value для топов)</small></li>
+  </ol>
+
+  <!-- ───── 4.4 JTBD (NEW) ───── -->
+  <h3>4.4. Jobs-to-be-Done <small>★ новое в v1.3 (M2)</small></h3>
+  <p>Клиент «нанимает» Bardo на конкретную работу. Разные «работы» = разные продукты, цены, контент. Три главные job выведены из сегментов A/B/D; после JTBD-интервью (см. Следующие шаги) список будет уточнён.</p>
+
+  <div class="grid cols-3">
+    <div class="card">
+      <h4>Job 1 · Физический сброс</h4>
+      <p style="font-size: 14px;"><em>«Помогите мне физически выйти из 16-часового дня за экраном и 3 месяцев без отпуска — чтобы тело вспомнило, что оно живое.»</em></p>
+      <p style="font-size: 13px; color: var(--ink-dim); margin-top: 10px;">
+        <strong>Кто:</strong> сегмент A (бизнесмены), E (спортсмены)<br>
+        <strong>Продукт:</strong> Bardo Light (акцент на пар, жар, телесность)<br>
+        <strong>Content:</strong> Reels «разбор методики», до/после телесно</p>
+    </div>
+    <div class="card">
+      <h4>Job 2 · Смена контекста</h4>
+      <p style="font-size: 14px;"><em>«Выньте меня из бытового или корпоративного контекста на полдня. Мне нужен другой мир — не клуб, не SPA, не дача.»</em></p>
+      <p style="font-size: 13px; color: var(--ink-dim); margin-top: 10px;">
+        <strong>Кто:</strong> сегмент C (женские группы), B (ЗОЖ)<br>
+        <strong>Продукт:</strong> Bardo Light в компании + тематика вечера<br>
+        <strong>Content:</strong> эстетика места, «ритуал пригласительного» (8.1)</p>
+    </div>
+    <div class="card">
+      <h4>Job 3 · Переформатирование команды</h4>
+      <p style="font-size: 14px;"><em>«У моей команды нет общего языка / выгорание / запустили проект. Хочу, чтобы мы вышли иными, как будто прошли через что-то вместе.»</em></p>
+      <p style="font-size: 13px; color: var(--ink-dim); margin-top: 10px;">
+        <strong>Кто:</strong> сегмент D (B2B)<br>
+        <strong>Продукт:</strong> Bardo Team Day / Annual Pass (см. 8.4)<br>
+        <strong>Content:</strong> кейсы-нарративы «до/после» команды</p>
+    </div>
+  </div>
+
+  <!-- ───── 4.6 CJM (NEW) ───── -->
+  <h3>4.6. Customer Journey Map <small>★ новое в v1.3 (M3)</small></h3>
+  <p>Путь клиента от awareness до loyalty для двух ключевых сегментов: <strong>A (бизнесмен)</strong> и <strong>B (ЗОЖ)</strong>. Фиксируем touchpoints, эмоции, friction и opportunities — это напрямую питает приоритеты 1-4.</p>
+
+  <h4>Сегмент A · Бизнесмен</h4>
+
+  <div class="journey">
+    <h4>Стадия 1 · Awareness</h4>
+    <div class="j-grid">
+      <div class="j-label">Touchpoint</div><div class="j-value">Сарафан от друга / партнёра; реже — Instagram Reels (случайно)</div>
+      <div class="j-label">Эмоция</div><div class="j-value">Скепсис («ещё одна баня»), любопытство («говорят, без алкоголя»)</div>
+      <div class="j-label">Friction</div><div class="j-value">Нет понимания, чем Bardo отличается от обычной бани. Не видит себя в формате.</div>
+      <div class="j-label">Opportunity</div><div class="j-value">Короткие Reels с участием бизнесменов (сегмент A узнаёт «своих»)</div>
+    </div>
+  </div>
+  <div class="journey">
+    <h4>Стадия 2 · Consideration</h4>
+    <div class="j-grid">
+      <div class="j-label">Touchpoint</div><div class="j-value">Ищет в 2GIS → рейтинг 4,7, читает 5-10 отзывов → открывает Instagram</div>
+      <div class="j-label">Эмоция</div><div class="j-value">Интерес, но сомнение в цене и в «нужно 3 чел»</div>
+      <div class="j-label">Friction</div><div class="j-value">Цена 150к на компанию без объяснения ценности. Не ясно, что входит в «6 часов».</div>
+      <div class="j-label">Opportunity</div><div class="j-value">Хайлайт «Что входит» + прайс-PDF в link-in-bio + видео Дмитрия на 30 сек</div>
+    </div>
+  </div>
+  <div class="journey">
+    <h4>Стадия 3 · Booking</h4>
+    <div class="j-grid">
+      <div class="j-label">Touchpoint</div><div class="j-value">WhatsApp → админ → уточнение даты → оплата предоплаты</div>
+      <div class="j-label">Эмоция</div><div class="j-value">Нетерпение («хочу быстро забронировать»), раздражение при долгом ответе</div>
+      <div class="j-label">Friction</div><div class="j-value">Текущая конверсия 6%! Долгий ответ, нет онлайн-календаря, не ясно как платить, компания не собрана (нужно 3 чел).</div>
+      <div class="j-label">Opportunity</div><div class="j-value">Altegio онлайн-запись, Message Help (&lt;5 мин ответ), автоматический «соберите компанию» с шаблоном сообщения для друзей</div>
+    </div>
+  </div>
+  <div class="journey">
+    <h4>Стадия 4 · First Visit</h4>
+    <div class="j-grid">
+      <div class="j-label">Touchpoint</div><div class="j-value">Приезд → встреча → халат → 6 часов → проводы → флакон ароматического масла</div>
+      <div class="j-label">Эмоция</div><div class="j-value">Ожидание → удивление (сервис) → катарсис (жар) → умиротворение → благодарность</div>
+      <div class="j-label">Friction</div><div class="j-value">Не понимает, что следует делать между парными. Боится молчания, тянется к телефону.</div>
+      <div class="j-label">Opportunity</div><div class="j-value">Напечатанная «карта ритуала» на первый визит + правило «телефон в ящике» как часть эстетики</div>
+    </div>
+  </div>
+  <div class="journey">
+    <h4>Стадия 5 · Post-visit</h4>
+    <div class="j-grid">
+      <div class="j-label">Touchpoint</div><div class="j-value">Через 2 дня — видео-сообщение от Дмитрия + запрос отзыва + Trio-сертификат</div>
+      <div class="j-label">Эмоция</div><div class="j-value">«Реально ли прошло 2 дня?», тёплое воспоминание, желание рассказать</div>
+      <div class="j-label">Friction</div><div class="j-value">Сейчас нет автоматического follow-up — клиент уходит в тишину.</div>
+      <div class="j-label">Opportunity</div><div class="j-value">Автоматизация через Altegio + Message Help (приоритет 4). Сертификат Trio (8.3) физически на выходе.</div>
+    </div>
+  </div>
+  <div class="journey">
+    <h4>Стадия 6 · Loyalty</h4>
+    <div class="j-grid">
+      <div class="j-label">Touchpoint</div><div class="j-value">Приглашение в клуб Bardo → приоритетные окна → Invitation Night</div>
+      <div class="j-label">Эмоция</div><div class="j-value">Принадлежность, статус, «я не случайный»</div>
+      <div class="j-label">Friction</div><div class="j-value">Клуба пока нет (продукт в разработке). Неясны бенефиты.</div>
+      <div class="j-label">Opportunity</div><div class="j-value">Запуск Bardo Club как отдельный продукт с 3 уровнями, Invitation Night (8.1) как trigger</div>
+    </div>
+  </div>
+
+  <h4>Сегмент B · ЗОЖ-практики</h4>
+
+  <div class="journey">
+    <h4>Стадии · сжато</h4>
+    <div class="j-grid">
+      <div class="j-label">Awareness</div><div class="j-value">Instagram-блогер упомянул Bardo в серии про «осознанные места Алматы» → клиентка заходит на страницу.</div>
+      <div class="j-label">Consideration</div><div class="j-value">Читает highlights полностью, проверяет «халяль ли», смотрит отзывы в 2GIS, обсуждает с мужем. Ищет «женские группы».</div>
+      <div class="j-label">Booking</div><div class="j-value">Пишет в Instagram Direct (не WhatsApp!). Уточняет тематику ближайших вечеров. Бронирует на 2 недели вперёд.</div>
+      <div class="j-label">First Visit</div><div class="j-value">Приходит с 3 подругами. Очень внимательна к эстетике, деталям. Снимает сторис, но просит «где нельзя снимать».</div>
+      <div class="j-label">Post-visit</div><div class="j-value">Сама пишет отзыв (без просьбы). Репостит сторис. В течение 2 недель рекомендует 2 подругам.</div>
+      <div class="j-label">Loyalty</div><div class="j-value">Становится Advocate. Идеальный кандидат в «invited» список на Invitation Night (8.1). Приводит мужа, потом его команду.</div>
+    </div>
+  </div>
+
+  <!-- ───── 4.7 VPC (NEW) ───── -->
+  <h3>4.7. Value Proposition Canvas <small>★ новое в v1.3 (M5)</small></h3>
+  <p>По Остервальдеру: для каждого сегмента — <em>Customer Profile</em> (Pains, Gains, Jobs) и <em>Value Map</em> (Pain Relievers, Gain Creators, Products). Это напрямую питает креативы таргета, сценарии WhatsApp и тексты на странице.</p>
+
+  <div class="vpc">
+    <h4>VPC · Сегмент A — Бизнесмены 35-50</h4>
+    <div class="vpc-grid">
+      <div class="vpc-col">
+        <h5>Customer · Pains</h5>
+        <ul>
+          <li>Не могу переключиться, 16 часов экрана</li>
+          <li>Стыдно предложить друзьям «что-то нормальное»</li>
+          <li>Боюсь потратить выходной на «непонятное»</li>
+          <li>Корпоративы с алкоголем бесят, но альтернатив нет</li>
+        </ul>
+      </div>
+      <div class="vpc-col">
+        <h5>Value Map · Pain Relievers</h5>
+        <ul>
+          <li>«Телефон в ящик» как часть ритуала — легитимно отключиться</li>
+          <li>Видео-приветствие Дмитрия → объясняет «что будет делать компания 6 часов»</li>
+          <li>Карта ритуала + прайс-PDF до визита → снимает «что там вообще делать»</li>
+          <li>Соц. доказательство: сегмент A в Reels → «у них получается»</li>
+        </ul>
+      </div>
+      <div class="vpc-col">
+        <h5>Customer · Gains</h5>
+        <ul>
+          <li>Физически чувствую, что отпустило на 2-3 дня</li>
+          <li>Рассказываю партнёрам / жене → история</li>
+          <li>Могу привести своих топов как benefit</li>
+          <li>Статус: «я был в Bardo» = «я серьёзно подхожу к здоровью»</li>
+        </ul>
+      </div>
+      <div class="vpc-col">
+        <h5>Value Map · Gain Creators + Products</h5>
+        <ul>
+          <li>Bardo Light (базовый продукт)</li>
+          <li>Сертификат Trio (8.3) — подарить партнёру</li>
+          <li>B2B Bardo Reset (8.4) — привести команду</li>
+          <li>Club Bardo → приглашение в «тот самый клуб»</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="vpc">
+    <h4>VPC · Сегмент B — ЗОЖ и практики</h4>
+    <div class="vpc-grid">
+      <div class="vpc-col">
+        <h5>Customer · Pains</h5>
+        <ul>
+          <li>Надоели поверхностные «spa-day»</li>
+          <li>Страшно попасть в «корпоратив с водкой» — не моё окружение</li>
+          <li>Хочу community с респектом к практикам, но не сектантским</li>
+          <li>Хочется привести мужа, но он скептик</li>
+        </ul>
+      </div>
+      <div class="vpc-col">
+        <h5>Value Map · Pain Relievers</h5>
+        <ul>
+          <li>Халяль-позиция + «без алкоголя» в первом касании</li>
+          <li>Эстетика места (фото, видео) = сигнал «свои»</li>
+          <li>Сеть инфлюенсеров-практиков → валидация</li>
+          <li>Invitation Night как «место, где собираются правильные»</li>
+        </ul>
+      </div>
+      <div class="vpc-col">
+        <h5>Customer · Gains</h5>
+        <ul>
+          <li>Новая практика для коллекции</li>
+          <li>Повод позвать подруг «на настоящее»</li>
+          <li>Контент для Instagram (эстетичный, умный)</li>
+          <li>Поводы приводить новых людей в свой круг</li>
+        </ul>
+      </div>
+      <div class="vpc-col">
+        <h5>Value Map · Gain Creators + Products</h5>
+        <ul>
+          <li>Bardo Light + тематические вечера (полнолуние, суббота тишины)</li>
+          <li>Арома-масла (8.2) → продукт для дома после визита</li>
+          <li>Club Bardo + приоритетное бронирование</li>
+          <li>Co-brand с йога-студией → совместные практики</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="vpc">
+    <h4>VPC · Сегмент D — B2B-корпоратив</h4>
+    <div class="vpc-grid">
+      <div class="vpc-col">
+        <h5>Customer · Pains</h5>
+        <ul>
+          <li>Burnout команды, но тренинги не работают</li>
+          <li>HR боится «корпоратива с водкой», тим-билдинги скучные</li>
+          <li>Нужен формат, который можно рассказать инвесторам / совету</li>
+          <li>T&amp;E-оформление должно быть чистым</li>
+        </ul>
+      </div>
+      <div class="vpc-col">
+        <h5>Value Map · Pain Relievers</h5>
+        <ul>
+          <li>Халяль-формат → легально для любой команды</li>
+          <li>Bardo Team Day с фасилитацией → это не просто баня, это формат</li>
+          <li>Корпоративный one-pager + кейсы для HR / совета</li>
+          <li>Счёт + акт + программа → оформление как T&amp;D</li>
+        </ul>
+      </div>
+      <div class="vpc-col">
+        <h5>Customer · Gains</h5>
+        <ul>
+          <li>Команда возвращается «другой» (ROI выгорания)</li>
+          <li>История для культуры компании — удержание ключевых</li>
+          <li>Wellness-инициатива для ESG / инвесторов</li>
+          <li>Повод для годового контракта (Annual Pass)</li>
+        </ul>
+      </div>
+      <div class="vpc-col">
+        <h5>Value Map · Gain Creators + Products</h5>
+        <ul>
+          <li>Bardo Reset (executive, 4-6 чел)</li>
+          <li>Bardo Team Day (8-12 чел, с фасилитацией)</li>
+          <li>Bardo Annual Pass (квартальные визиты для топ-15)</li>
+          <li>Сертификаты для HR как well-being benefit</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ───── 5. MARKETING MIX ───── -->
+  <h2 id="mix">5. Маркетинг-микс 7P</h2>
+  <div class="grid cols-2">
+    <div class="card">
+      <h4>Product</h4>
+      <p>Методика Dishandi Bardo остаётся ядром. Добавить: <strong>Bardo Intro</strong> (2 ч, first-trial), <strong>клубный уровень</strong>, <strong>тематические вечера</strong>, <strong>B2B-пакеты</strong> (см. 8.4).</p>
+    </div>
+    <div class="card">
+      <h4>Price</h4>
+      <p>Текущая цена 50к/чел защищает премиум. Добавить: <strong>сертификаты с дельтой</strong> (Trio, 8.3), <strong>клубное членство</strong> (годовая предоплата 10-15% скидка), <strong>корпоративные пакеты</strong> от 600к.</p>
+    </div>
+    <div class="card">
+      <h4>Place</h4>
+      <p>Физически — только Коктобе 18. Цифровая дистрибуция: <strong>Instagram → Altegio online-booking</strong>, <strong>2GIS Pro</strong>, <strong>партнёрские QR</strong> в фитнес-клубах/отелях.</p>
+    </div>
+    <div class="card">
+      <h4>Promotion</h4>
+      <p>
+      <span class="pill gold">Instagram content + Reels</span>
+      <span class="pill gold">Таргет Meta</span>
+      <span class="pill gold">2GIS SEO + Pro</span>
+      <span class="pill sage">Партнёрские рассылки</span>
+      <span class="pill sage">PR: интервью Дмитрия</span>
+      <span class="pill">Invitation Nights (8.1)</span></p>
+    </div>
+    <div class="card">
+      <h4>People</h4>
+      <p>Дмитрий (пар-мастер / бренд), Мадияр (маркетинг), Маша (SMM/контент), парильщики, админ, горничная. <strong>Узкое место: нет мастера-двойника</strong> у Дмитрия.</p>
+    </div>
+    <div class="card">
+      <h4>Process</h4>
+      <p>Ритуал встречи: <em>халаты, пейзаж, приветствие, проводы</em>. <strong>SOP необходим</strong> для стандартизации и future-replicability. Недостаёт: CRM, post-visit follow-up (приоритет 4).</p>
+    </div>
+    <div class="card">
+      <h4>Physical evidence</h4>
+      <p>Визуал сильный (фотосессия, видео-тур, brand-book). Задача — <strong>правильно дистрибуировать</strong>: обновить 2GIS, highlights Instagram, передать brand-book партнёрам, использовать в WhatsApp-воронке и таргете.</p>
+    </div>
+    <div class="card">
+      <h4>Positioning (расшир.)</h4>
+      <p>Не против KTS — <strong>против spa-отелей и ретритов</strong>. Единственные, кто предлагает полноценный 6-часовой ритуал в формате компании по цене одной процедуры (см. 4.3).</p>
+    </div>
+  </div>
+
+  <h3>IMC — интегрированные коммуникации</h3>
+  <p>Все точки контакта должны давать <em>consistent message</em>: пост, таргет, админ в WA, 2GIS, голос Дмитрия на видео, аромат в бане, текст на сертификате. Для этого — <strong>Brand Book v1 на 1 страницу</strong> к 45-му дню.</p>
+
+  <!-- ───── 6. GOALS ───── -->
+  <h2 id="goals">6. Цели (SMART)</h2>
+  <p><small>База — март 2026 (факт). Горизонт — 90 и 180 дней с даты запуска плана.</small></p>
+  <table>
+    <thead><tr><th>Метрика</th><th class="num">База (март 26)</th><th class="num">60 дней</th><th class="num">90 дней</th><th class="num">180 дней</th></tr></thead>
+    <tbody>
+      <tr><td>Сеансов / мес</td><td class="num">17</td><td class="num">25</td><td class="num">32</td><td class="num">42</td></tr>
+      <tr><td>Загрузка, %</td><td class="num">28%</td><td class="num">42%</td><td class="num">53%</td><td class="num">70%</td></tr>
+      <tr><td>Выручка, млн ₸</td><td class="num">5,2</td><td class="num">7,3</td><td class="num">9,4</td><td class="num">12,5</td></tr>
+      <tr><td>Прибыль, млн ₸</td><td class="num">0,94</td><td class="num">+2,0</td><td class="num">+3,4</td><td class="num">+5,3</td></tr>
+      <tr><td><strong>Маржа, %</strong></td><td class="num" style="color: var(--danger);">18%</td><td class="num">27%</td><td class="num"><strong>35%</strong></td><td class="num"><strong>42%</strong></td></tr>
+      <tr><td>Конверсия WhatsApp</td><td class="num">6%</td><td class="num">12%</td><td class="num">15%</td><td class="num">20%</td></tr>
+      <tr><td>Партнёров активных</td><td class="num">0</td><td class="num">3</td><td class="num">6</td><td class="num">10</td></tr>
+      <tr><td>База клиентов в Altegio</td><td class="num">0</td><td class="num">150</td><td class="num">300</td><td class="num">600</td></tr>
+      <tr><td>NPS (новое в v1.3)</td><td class="num">—</td><td class="num">замер</td><td class="num">65+</td><td class="num">75+</td></tr>
+      <tr><td>Brand awareness Алматы (опрос 50, новое)</td><td class="num">—</td><td class="num">базовый замер</td><td class="num">+5 п.п.</td><td class="num">+10 п.п.</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ───── 7. PRIORITIES ───── -->
+  <h2 id="priorities">7. Стратегические приоритеты</h2>
+
+  <div class="priority">
+    <div class="p-num">1</div>
+    <div>
+      <h3>Фикс воронки на существующем трафике</h3>
+      <p>Не увеличиваем бюджет на рекламу, пока не починим конверсию. Три точки:</p>
+      <ol>
+        <li><strong>2GIS:</strong> полное обновление карточки (описание, программы, цены, 20+ фото, видео-тур), подключение 2GIS Pro, <strong>коллтрекинг</strong>, ответы на отзывы.</li>
+        <li><strong>WhatsApp-скрипт:</strong> приветственное видео Дмитрия (30 сек) + прайс-PDF + 3 шаблона + онлайн-календарь.</li>
+        <li><strong>Instagram → WhatsApp:</strong> link-in-bio, CTA в сторис, закреплённый хайлайт.</li>
+      </ol>
+      <div class="tags">
+        <span class="pill gold">Бюджет: ~200к ₸</span>
+        <span class="pill sage">Эффект: +10-15 сеансов/мес</span>
+        <span class="pill">Срок: 30 дней</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="priority">
+    <div class="p-num">2</div>
+    <div>
+      <h3>Партнёрская сеть премиум-ниш</h3>
+      <p>Цель — 5-8 партнёров в 4 нишах: премиум-фитнес (World Class, Luxor, BALANCE, Maya Yoga), психологи/коучи, премиум-отели (Ritz, Rixos), event/HR-агентства.</p>
+      <p><strong>Модель:</strong> 10-15% комиссия + ваучеры для сотрудников партнёра.</p>
+      <div class="tags">
+        <span class="pill gold">Бюджет: ~100к ₸</span>
+        <span class="pill sage">Эффект: +5-10 сеансов/мес</span>
+        <span class="pill">Срок: 60-90 дней</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="priority">
+    <div class="p-num">3</div>
+    <div>
+      <h3>Bardo-сообщество и личный бренд Дмитрия</h3>
+      <p>Долгая игра. Результаты через 6-12 мес, но без неё дальнейший рост невозможен.</p>
+      <ul>
+        <li><strong>Контент-ядро:</strong> 2 формата/нед — «разбор методики» + «история гостя»</li>
+        <li><strong>Закрытый клуб Bardo:</strong> годовое членство, эксклюзивные вечеринки и практики</li>
+        <li><strong>Тематические вечера</strong> 1-2 раза в месяц</li>
+        <li><strong>PR:</strong> 1-2 интервью Дмитрия (The Steppe, Forbes KZ, подкасты)</li>
+      </ul>
+      <div class="tags">
+        <span class="pill gold">Бюджет: ~300к/мес</span>
+        <span class="pill sage">CAC ÷ 2 на горизонте 6 мес</span>
+        <span class="pill">Срок: 90+ дней</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="priority">
+    <div class="p-num">4</div>
+    <div>
+      <h3>CRM и система рефералов (Altegio + Message Help)</h3>
+      <p>Altegio = CRM + онлайн-запись + клиентские карточки. Message Help = агрегатор WhatsApp/Instagram/2GIS в одно окно.</p>
+      <ul>
+        <li>Клиентские карточки с историей, предпочтениями, источником</li>
+        <li>Шаблоны быстрых ответов, «забыли ответить» алерты</li>
+        <li>Автоматический post-visit follow-up через 2 дня</li>
+        <li>Реферальный трекинг через уникальные промокоды</li>
+        <li>Ре-активация клиентов 60+ дней без визита</li>
+      </ul>
+      <div class="tags">
+        <span class="pill gold">Бюджет: ~50к/мес + ~50к разовая настройка</span>
+        <span class="pill sage">+20-30% повторных, +5-10% конверсия</span>
+        <span class="pill">Срок: 30-60 дней</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ───── 8. TACTICAL INITIATIVES ───── -->
+  <h2 id="tactics">8. Тактические инициативы</h2>
+  <p>Четыре механики, развивающих стратегию. Каждая — самодостаточная, можно запускать параллельно. Все встроены в существующие приоритеты, но имеют собственные KPI и просчёт.</p>
+
+  <h3 id="t-club">8.1. Bardo Invitation Club — переосмысление вечеринок</h3>
+  <p><strong>Старая модель:</strong> массовые вечеринки 25к ₸ — обесценивают бренд. <strong>Новая:</strong> закрытый клуб по приглашениям + ограниченный платный блок по 50-75к.</p>
+  <ul>
+    <li><strong>Физическое пригласительное</strong> с фирменным ароматом → первый сенсорный контакт</li>
+    <li><strong>60% invited</strong> — узнаваемые лица Алматы, <strong>30%</strong> — регулярные клиенты с высоким LTV, <strong>10%</strong> — партнёры</li>
+    <li><strong>5-10 платных мест</strong> по 50-75к через лист ожидания — дефицит создаёт ценность</li>
+    <li><strong>Контент-машина:</strong> проф. съёмка → Reels → охваты приглашённых × бренд</li>
+  </ul>
+  <table>
+    <thead><tr><th>Сценарий</th><th class="num">Гостей</th><th class="num">Платных</th><th class="num">Цена</th><th class="num">Выручка</th><th class="num">Маржа</th></tr></thead>
+    <tbody>
+      <tr><td>Старая (массовая)</td><td class="num">15</td><td class="num">15</td><td class="num">25 000</td><td class="num">375 000</td><td class="num">+125 000</td></tr>
+      <tr><td>Новая (10+6)</td><td class="num">16</td><td class="num">6</td><td class="num">75 000</td><td class="num"><strong>450 000</strong></td><td class="num"><strong>+200 000</strong></td></tr>
+      <tr><td>Зрелая (12+8)</td><td class="num">20</td><td class="num">8</td><td class="num">100 000</td><td class="num"><strong>800 000</strong></td><td class="num"><strong>+520 000</strong></td></tr>
+    </tbody>
+  </table>
+  <div class="tags">
+    <span class="pill gold">~80к/мес</span>
+    <span class="pill sage">+200-500к/вечер</span>
+    <span class="pill">с 1-го месяца</span>
+  </div>
+
+  <h3 id="t-aroma">8.2. Сенсорный брендинг — арома-якорение</h3>
+  <ul>
+    <li><strong>Фирменная аромакомпозиция:</strong> пихта, сандал, чёрная смородина, ладан (финализирует парфюмер)</li>
+    <li><strong>Распыление в парных</strong> → гость проходит сеанс «в запахе»</li>
+    <li><strong>Подарок 5-10 мл</strong> на выходе — гость уносит запах домой → ассоциация Bardo дома</li>
+    <li><strong>Через 6 мес — продажа 30-100 мл</strong> как мерч + идеальный подарок «знающих»</li>
+  </ul>
+  <div class="tags">
+    <span class="pill gold">~150к разовый</span>
+    <span class="pill sage">+15-25% retention</span>
+    <span class="pill">30-45 дней до запуска</span>
+  </div>
+
+  <h3 id="t-cert">8.3. Реферальный сертификат «Bardo Trio»</h3>
+  <p>Новый клиент получает на выходе сертификат на 15 000 ₸. Активация: компания из 3 человек, каждому скидка 5 000 ₸.</p>
+  <table>
+    <thead><tr><th>Параметр</th><th class="num">Значение</th></tr></thead>
+    <tbody>
+      <tr><td>Сертификатов выдано / мес</td><td class="num">~30-40</td></tr>
+      <tr><td>Конверсия выдан→активирован (норма)</td><td class="num">25-35%</td></tr>
+      <tr><td>Активаций / мес</td><td class="num">~10</td></tr>
+      <tr><td>Доп. contribution / мес</td><td class="num" style="color: var(--ok);"><strong>+860 000 ₸</strong></td></tr>
+    </tbody>
+  </table>
+  <div class="tags">
+    <span class="pill gold">~30к + 10к/мес</span>
+    <span class="pill sage">+860к contribution</span>
+    <span class="pill">с 30-го дня</span>
+  </div>
+
+  <h3 id="t-b2b">8.4. B2B-сегмент — портрет компании и пакеты</h3>
+  <p><strong>ICP:</strong> 30-200 сотрудников, IT/банки/девелопмент/юр.фирмы/клиники, есть wellness-бюджет, Head of People/Founder. Триггеры: burnout, запуск, юбилей.</p>
+  <table>
+    <thead><tr><th>Пакет</th><th>Содержание</th><th class="num">Цена</th><th class="num">Контрибуция</th></tr></thead>
+    <tbody>
+      <tr><td>Bardo Reset (executive 4-6)</td><td>Премиум 6ч + чай + Дмитрий + ужин</td><td class="num">600 000</td><td class="num">+400 000</td></tr>
+      <tr><td>Bardo Team Day (8-12)</td><td>Аренда 8ч + гвоздестояние + фасилитация</td><td class="num">1 200 000</td><td class="num">+700 000</td></tr>
+      <tr><td>Bardo Annual Pass</td><td>4 визита/квартал для топ-15</td><td class="num">3 800 000/год</td><td class="num">+2 400 000/год</td></tr>
+      <tr><td>HR-сертификаты</td><td>Партии 10-50 шт по 50к</td><td class="num">от 500 000</td><td class="num">+~330 000</td></tr>
+    </tbody>
+  </table>
+  <p><strong>Воронка B2B:</strong> лонг-лист 80-100 ICP → точечный outreach 15-20/нед → demo-визит (Light 50% скидка) → квартальный/годовой пакет.</p>
+  <div class="tags">
+    <span class="pill gold">~150к разовый</span>
+    <span class="pill sage">+600к-1,2 млн за 90 дней</span>
+    <span class="pill">первая сделка к 60-му дню</span>
+  </div>
+
+  <h3>Совокупный эффект 4 инициатив (к 90-му дню)</h3>
+  <table>
+    <thead><tr><th>Инициатива</th><th class="num">Бюджет 90 дней</th><th class="num">Доп. выручка/мес (зрелое)</th><th class="num">Доп. contribution/мес</th></tr></thead>
+    <tbody>
+      <tr><td>8.1 Invitation Club</td><td class="num">240 000</td><td class="num">+150 000</td><td class="num">+100 000</td></tr>
+      <tr><td>8.2 Арома-якорение</td><td class="num">200 000</td><td class="num">+0 прямой / retention</td><td class="num">+200 000 (retention)</td></tr>
+      <tr><td>8.3 Bardo Trio</td><td class="num">60 000</td><td class="num">+1 350 000</td><td class="num">+860 000</td></tr>
+      <tr><td>8.4 B2B</td><td class="num">150 000</td><td class="num">+800 000</td><td class="num">+550 000</td></tr>
+      <tr style="color: var(--gold);"><td><strong>Итого</strong></td><td class="num"><strong>650 000</strong></td><td class="num"><strong>+2 300 000</strong></td><td class="num"><strong>+1 710 000</strong></td></tr>
+    </tbody>
+  </table>
+
+  <!-- ───── 9. ROADMAP ───── -->
+  <h2 id="roadmap">9. Roadmap 30 / 60 / 90</h2>
+  <div class="roadmap">
+    <div class="phase">
+      <h4>Дни 1-30 · Fix &amp; Foundation</h4>
+      <ul>
+        <li>Коллтрекинг 2GIS + WhatsApp</li>
+        <li>Обновить карточку 2GIS, оформить Pro</li>
+        <li>Приветственное видео Дмитрия (30 сек)</li>
+        <li>Прайс-PDF, link-in-bio воронка</li>
+        <li>Altegio + Message Help: внедрение</li>
+        <li>Follow-up по каждому клиенту</li>
+        <li>★ 8.2: ТЗ парфюмеру</li>
+        <li>★ 8.3: дизайн и печать сертификатов (200 шт)</li>
+        <li>★ 8.4: лонг-лист 80-100 ICP</li>
+        <li>★ JTBD-интервью 5-7 клиентов</li>
+        <li>★ Базовый замер NPS и brand awareness</li>
+      </ul>
+    </div>
+    <div class="phase">
+      <h4>Дни 31-60 · Launch</h4>
+      <ul>
+        <li>Запустить Bardo Intro</li>
+        <li>Первые 3 партнёрских контракта</li>
+        <li>Первое интервью про Дмитрия</li>
+        <li>Пересчёт break-even (28 сеансов)</li>
+        <li>A/B тест таргета</li>
+        <li>Серия Reels «методика Bardo»</li>
+        <li>★ 8.1: первая Invitation Night</li>
+        <li>★ 8.2: запуск аромы в парных + флаконы</li>
+        <li>★ 8.3: сертификаты вручаются всем</li>
+        <li>★ 8.4: 30 писем HR, 2-3 demo-визита</li>
+        <li>★ Brand Book v1 (1 страница)</li>
+        <li>★ CJM-аудит touchpoints на месте</li>
+      </ul>
+    </div>
+    <div class="phase">
+      <h4>Дни 61-90 · Scale</h4>
+      <ul>
+        <li>Запуск клубного членства Bardo</li>
+        <li>Партнёрская сеть 6-8 активных</li>
+        <li>Post-mortem 90 дней</li>
+        <li>Пересчёт unit-экономики на Q2</li>
+        <li>Подготовка к зимнему сезону</li>
+        <li>Тест канала TikTok</li>
+        <li>★ 8.1: вторая Invitation Night</li>
+        <li>★ 8.2: запуск продажи флаконов 30/100 мл</li>
+        <li>★ 8.3: замер конверсии Trio</li>
+        <li>★ 8.4: 1-2 закрытых корп.контракта</li>
+        <li>★ Замер brand metrics</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ───── 11. KPI + RETENTION LADDER ───── -->
+  <h2 id="kpi">10. KPI и трекинг + Retention Ladder</h2>
+  <div class="kpi-row">
+    <div class="kpi"><div class="v">28</div><div class="k">Сеансов break-even</div></div>
+    <div class="kpi"><div class="v">15%</div><div class="k">Конверсия WA день 60</div></div>
+    <div class="kpi"><div class="v">5</div><div class="k">Партнёров день 60</div></div>
+    <div class="kpi"><div class="v">14к</div><div class="k">CAC цель день 90</div></div>
+  </div>
+
+  <h3>Дашборд еженедельно</h3>
+  <p>Воронка по каналам · экономика (чек, margin, CAC, LTV, ROMI) · загрузка по дням/часам · % повторных · NPS + рейтинги · <strong>brand metrics раз в квартал</strong> (NPS, aided awareness, share of voice — M14).</p>
+
+  <h3>Retention Ladder — lifecycle marketing <small>★ новое в v1.3 (M12)</small></h3>
+  <p>Клиенты движутся по 5-стадийной лестнице. Для каждой стадии — свой триггер перехода, свои offers, свой контент. Перестраиваем работу команды вокруг этой карты.</p>
+
+  <div>
+    <div class="ladder-step">
+      <div class="step-num">1</div>
+      <div>
+        <div class="step-label">Trial</div>
+        <h4>Первый визит</h4>
+        <p>Новый клиент. Пришёл один раз, впечатления свежие.</p>
+      </div>
+      <div>
+        <div class="step-label">Trigger перехода</div>
+        <p>Второй визит в течение 60 дней</p>
+      </div>
+      <div>
+        <div class="step-label">Offer / action</div>
+        <p>• Trio-сертификат на выходе (8.3)<br>• Follow-up через 48ч<br>• Персональное видео-приглашение</p>
+      </div>
+    </div>
+
+    <div class="ladder-step">
+      <div class="step-num">2</div>
+      <div>
+        <div class="step-label">Repeater</div>
+        <h4>Повторный клиент</h4>
+        <p>2-3 визита за 6 месяцев. Продукт подтвердил ценность.</p>
+      </div>
+      <div>
+        <div class="step-label">Trigger перехода</div>
+        <p>4-й визит или подписка на клуб</p>
+      </div>
+      <div>
+        <div class="step-label">Offer / action</div>
+        <p>• Приглашение в клуб Bardo<br>• Приоритетные окна бронирования<br>• Информация о тематических вечерах</p>
+      </div>
+    </div>
+
+    <div class="ladder-step">
+      <div class="step-num">3</div>
+      <div>
+        <div class="step-label">Regular</div>
+        <h4>Регулярный клиент</h4>
+        <p>4+ визитов/год. Ядро экономики.</p>
+      </div>
+      <div>
+        <div class="step-label">Trigger перехода</div>
+        <p>Привёл первого нового клиента</p>
+      </div>
+      <div>
+        <div class="step-label">Offer / action</div>
+        <p>• Personal invite на Invitation Night<br>• Ранний доступ к новым форматам<br>• Тематические закрытые вечера</p>
+      </div>
+    </div>
+
+    <div class="ladder-step">
+      <div class="step-num">4</div>
+      <div>
+        <div class="step-label">Advocate</div>
+        <h4>Евангелист</h4>
+        <p>Регулярно приводит новых клиентов, пишет отзывы, репостит сторис.</p>
+      </div>
+      <div>
+        <div class="step-label">Trigger перехода</div>
+        <p>Покупка членства в клуб Bardo</p>
+      </div>
+      <div>
+        <div class="step-label">Offer / action</div>
+        <p>• Named invitation (по имени)<br>• Эксклюзивные практики (малая группа)<br>• Бонус за привод N клиентов</p>
+      </div>
+    </div>
+
+    <div class="ladder-step">
+      <div class="step-num">5</div>
+      <div>
+        <div class="step-label">Member</div>
+        <h4>Член клуба Bardo</h4>
+        <p>Годовое членство, участие в событиях, часть сообщества.</p>
+      </div>
+      <div>
+        <div class="step-label">Trigger сохранения</div>
+        <p>Ежегодное продление</p>
+      </div>
+      <div>
+        <div class="step-label">Offer / action</div>
+        <p>• Персональные ритуалы на значимые события<br>• Участие в кураторском совете<br>• Приоритет в развитии методики</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ───── 13. RISKS (EXPANDED) ───── -->
+  <h2 id="risks">11. Риски</h2>
+
+  <table>
+    <thead><tr><th>Риск</th><th>Вероятность</th><th>Влияние</th><th>Смягчение</th></tr></thead>
+    <tbody>
+      <tr><td>Не достигнем break-even за 60 дней</td><td><span class="pill warn">средняя</span></td><td><span class="pill danger">высокое</span></td><td>Plan B: временное снижение SMM-фикс, фокус на Trio-сертификаты как быстрый cash</td></tr>
+      <tr><td>Выпадение Дмитрия (болезнь, отпуск, выгорание)</td><td><span class="pill warn">средняя</span></td><td><span class="pill danger">очень высокое</span></td><td>Страхование ключевого сотрудника, медобследование, прозрачное общение с базой о «временном режиме»</td></tr>
+      <tr><td>Копирование методики конкурентами</td><td><span class="pill">низкая (год)</span></td><td><span class="pill warn">среднее</span></td><td>Регистрация торгового знака Bardo, PR-закрепление бренда</td></tr>
+      <tr><td>Провал партнёрского канала</td><td><span class="pill warn">средняя</span></td><td><span class="pill">среднее</span></td><td>Фокус на 2 лучших партнёра вместо 8 разных</td></tr>
+      <tr><td>Негативный отзыв-вирус</td><td><span class="pill">низкая</span></td><td><span class="pill warn">высокое</span></td><td>Регламент работы с негативом за 24 ч + Brand Book для администратора</td></tr>
+      <tr><td><strong>Летний провал сезонности</strong></td><td><span class="pill warn">высокая (повторяемая)</span></td><td><span class="pill warn">среднее</span></td><td>Заранее: летняя программа (охлаждающий ритуал, вечерние форматы, выездные ретриты), B2B-корпоративы вне сезона</td></tr>
+      <tr><td><strong>Переход с УСН на ОСНО</strong> при обороте 75+ млн</td><td><span class="pill warn">средняя (Q4 2026)</span></td><td><span class="pill warn">среднее (+3-5% налогов)</span></td><td>Налоговое планирование с бухгалтером, возможное разделение юр-лиц для работы в пределах УСН</td></tr>
+      <tr><td><strong>Валютный риск</strong> (часть расходников импортная)</td><td><span class="pill">низкая-средняя</span></td><td><span class="pill">среднее</span></td><td>Идентификация USD/EUR-номинированных статей (масла, ткани), локализация поставщиков</td></tr>
+      <tr><td><strong>Конкуренция от спа-отелей</strong> при их переориентации</td><td><span class="pill">низкая (12 мес)</span></td><td><span class="pill warn">высокое</span></td><td>Запуск Bardo Club + community = lock-in для high-LTV клиентов</td></tr>
+    </tbody>
+  </table>
+
+
+  <div class="callout ok" style="margin-top: 32px;">
+    <span class="kicker">✓ К 90-му дню</span>
+    <p style="margin:0;">Достижение <strong>32 сеансов/мес</strong>, возврат маржи к <strong>35%</strong>, <strong>+3,4 млн ₸ прибыли/мес</strong>, база клиентов <strong>300+ в Altegio</strong>, <strong>6 активных партнёров</strong>, запущенный <strong>клуб Bardo</strong>, закрытый Brand Book v1. Годовая траектория: <strong>~45 млн ₸ чистой прибыли за 12 месяцев</strong>.</p>
+  </div>
+
+  <hr style="border: none; border-top: 1px solid var(--line); margin: 48px 0 20px;">
+  <p><small>Версия 1.3. Следующая ревизия — через 30 дней по замеру KPI.</small></p>
+
+</div>
+</body>
+</html>
