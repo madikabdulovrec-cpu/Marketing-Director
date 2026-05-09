@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>План действий по увеличению розлива ГСМ — АЗС ТС — апрель 2026</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.65;
+    color: #1a2332;
+    background: #fafbfc;
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 48px 56px;
+  }
+
+  /* Шапка */
+  .header {
+    border-bottom: 3px solid #1e3a8a;
+    padding-bottom: 28px;
+    margin-bottom: 40px;
+  }
+  .header .meta {
+    color: #6b7280;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .header h1 {
+    font-size: 32px;
+    line-height: 1.25;
+    color: #0f172a;
+    margin-bottom: 12px;
+    font-weight: 700;
+  }
+  .header .subtitle {
+    color: #475569;
+    font-size: 16px;
+  }
+
+  /* Оглавление */
+  .toc {
+    background: #f1f5f9;
+    border-left: 4px solid #1e3a8a;
+    padding: 20px 28px;
+    margin-bottom: 48px;
+    border-radius: 4px;
+  }
+  .toc-title {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #1e3a8a;
+    margin-bottom: 12px;
+  }
+  .toc ol {
+    margin-left: 20px;
+    color: #334155;
+    font-size: 14px;
+  }
+  .toc ol li { margin-bottom: 4px; }
+  .toc a { color: #1e3a8a; text-decoration: none; }
+  .toc a:hover { text-decoration: underline; }
+
+  /* Секции */
+  section {
+    margin-bottom: 56px;
+    scroll-margin-top: 24px;
+  }
+  h2 {
+    font-size: 24px;
+    color: #0f172a;
+    margin-bottom: 20px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #e2e8f0;
+    font-weight: 700;
+  }
+  h3 {
+    font-size: 18px;
+    color: #1e3a8a;
+    margin-top: 24px;
+    margin-bottom: 12px;
+    font-weight: 600;
+  }
+  h4 {
+    font-size: 15px;
+    color: #334155;
+    margin-top: 16px;
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+  p { margin-bottom: 12px; color: #1e293b; }
+
+  ul, ol { margin: 12px 0 16px 28px; }
+  ul li, ol li { margin-bottom: 6px; }
+
+  /* Резюме */
+  .executive-summary {
+    background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+    color: #f8fafc;
+    padding: 32px 36px;
+    border-radius: 6px;
+    margin-bottom: 48px;
+  }
+  .executive-summary h2 {
+    color: #fff;
+    border-bottom: 2px solid rgba(255,255,255,0.2);
+  }
+  .executive-summary p { color: #e0e7ff; }
+  .executive-summary strong { color: #fff; }
+
+  /* Карточки приоритетов */
+  .priority {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-left: 5px solid #1e3a8a;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+    border-radius: 4px;
+  }
+  .priority.urgent { border-left-color: #b91c1c; }
+  .priority.medium { border-left-color: #d97706; }
+  .priority.long { border-left-color: #047857; }
+  .priority-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 10px;
+  }
+  .priority-title {
+    font-size: 17px;
+    font-weight: 600;
+    color: #0f172a;
+  }
+  .priority-tag {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 3px;
+    background: #1e3a8a;
+    color: #fff;
+  }
+  .priority.urgent .priority-tag { background: #b91c1c; }
+  .priority.medium .priority-tag { background: #d97706; }
+  .priority.long .priority-tag { background: #047857; }
+
+  /* Таблицы */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0 24px;
+    font-size: 14px;
+  }
+  th, td {
+    text-align: left;
+    padding: 10px 14px;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  th {
+    background: #f1f5f9;
+    color: #0f172a;
+    font-weight: 600;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  tr:hover td { background: #f8fafc; }
+  .num { text-align: right; font-variant-numeric: tabular-nums; }
+  .pos { color: #047857; font-weight: 600; }
+  .neg { color: #b91c1c; font-weight: 600; }
+
+  /* Боксы */
+  .box {
+    padding: 16px 20px;
+    border-radius: 4px;
+    margin: 16px 0;
+    font-size: 14px;
+  }
+  .box-warn {
+    background: #fef2f2;
+    border-left: 4px solid #b91c1c;
+    color: #7f1d1d;
+  }
+  .box-info {
+    background: #eff6ff;
+    border-left: 4px solid #1e3a8a;
+    color: #1e3a8a;
+  }
+  .box-success {
+    background: #f0fdf4;
+    border-left: 4px solid #047857;
+    color: #064e3b;
+  }
+  .box strong { display: block; margin-bottom: 4px; font-weight: 700; }
+
+  /* KPI */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin: 16px 0;
+  }
+  .kpi-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    padding: 16px 20px;
+    border-radius: 4px;
+  }
+  .kpi-name {
+    font-size: 12px;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 6px;
+  }
+  .kpi-target {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1e3a8a;
+  }
+  .kpi-base {
+    font-size: 12px;
+    color: #94a3b8;
+    margin-top: 4px;
+  }
+
+  /* Footer */
+  .footer {
+    margin-top: 64px;
+    padding-top: 24px;
+    border-top: 1px solid #e2e8f0;
+    color: #64748b;
+    font-size: 13px;
+    text-align: center;
+  }
+
+  /* Печать */
+  @media print {
+    body { padding: 24px; max-width: 100%; }
+    section { page-break-inside: avoid; }
+    .executive-summary { background: #1e3a8a !important; -webkit-print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="meta">Внутренний документ · конфиденциально</div>
+  <h1>План действий по увеличению среднесуточного розлива ГСМ</h1>
+  <div class="subtitle">Сеть АЗС ТС: ТОО «ОМС», ТОО «НП», ТОО «ТЖ» · 35 АЗС · Шымкент, Туркестан, Жетысай</div>
+  <div class="meta" style="margin-top: 14px;">Адресат: Генеральный директор · Апрель 2026 · Подготовил: Маркетинговый отдел</div>
+</div>
+
+<div class="toc">
+  <div class="toc-title">Содержание</div>
+  <ol>
+    <li><a href="#summary">Резюме для руководства</a></li>
+    <li><a href="#diagnostics">Диагностика — почему падает реализация</a></li>
+    <li><a href="#priorities">Стратегические приоритеты</a></li>
+    <li><a href="#plan">План действий: 14 дней / 30 дней / 90 дней</a></li>
+    <li><a href="#budget">Бюджет и ресурсы</a></li>
+    <li><a href="#kpi">KPI и контроль</a></li>
+    <li><a href="#risks">Риски и допущения</a></li>
+    <li><a href="#decisions">Решения, требуемые от руководства</a></li>
+  </ol>
+</div>
+
+<section id="summary" class="executive-summary">
+  <h2>1. Резюме для руководства</h2>
+  <p>Падение среднесуточного розлива ГСМ в трёх аффилированных компаниях (ОМС, НП, ТЖ, всего 35 АЗС) имеет <strong>системные причины</strong>, не привязанные к локальным факторам отдельных точек. Главные диагнозы:</p>
+  <ul style="color: #e0e7ff;">
+    <li><strong>Программа лояльности слабее, чем у конкурентов.</strong> Sinooil, Qazaq Oil, Royal Petrol начисляют бонусы за каждый литр топлива. ТС использует UDS только на бонусы за ТНП. В результате водитель не имеет финансовой мотивации возвращаться к нам.</li>
+    <li><strong>Канал Yandex.Заправки отключён.</strong> Прямой поток таксистов и B2B-водителей перенаправлен к конкурентам.</li>
+    <li><strong>Минимаркеты дают всего 5% выручки</strong> при отраслевой норме 15–25%. Недоиспользованный актив на 35 точках.</li>
+    <li><strong>Цены 95 (304 тг) и ДТ (332 тг)</strong> — на верхней границе рынка. Без программы лояльности водитель уходит туда, где дешевле на 3–5 тг.</li>
+  </ul>
+  <p style="margin-top: 16px;"><strong>Три ставки на 90 дней:</strong></p>
+  <ol style="color: #e0e7ff;">
+    <li>Перенастройка UDS — бонусы за каждый литр, удержание клиента.</li>
+    <li>Возврат Yandex.Заправок и расширение цифровых каналов.</li>
+    <li>Развитие минимаркетов с 5% до 10–12% выручки за счёт связки «топливо ↔ магазин».</li>
+  </ol>
+  <p style="margin-top: 16px;"><strong>Ожидаемый эффект к концу 90 дней:</strong> возврат среднесуточного розлива на уровень декабря 2025 + рост ТНП-выручки в 1,8–2,2 раза.</p>
+</section>
+
+<section id="diagnostics">
+  <h2>2. Диагностика — почему падает реализация</h2>
+  <p>Падение в трёх компаниях одновременно — это не локальная проблема, а системный отток. Анализ выявил четыре ключевые причины.</p>
+
+  <h3>2.1 Программа лояльности не удерживает клиента</h3>
+  <p>UDS на сети ТС работает только в режиме «бонусы за товары минимаркета». Клиент копит баллы, только если зашёл в магазин. Конкуренты:</p>
+  <table>
+    <thead>
+      <tr><th>Конкурент</th><th>Программа лояльности</th><th>Что начисляется</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Sinooil</td><td>Sinooil Smart</td><td>Бонусы за каждый литр + push-уведомления</td></tr>
+      <tr><td>Qazaq Oil</td><td>QazaqOil Plus</td><td>Бонусы за литры, кэшбэк, статусы</td></tr>
+      <tr><td>Royal Petrol</td><td>Карта лояльности</td><td>Бонусы за литры + скидки</td></tr>
+      <tr><td><strong>ТС</strong></td><td><strong>UDS</strong></td><td><strong>Только за ТНП-покупки</strong></td></tr>
+    </tbody>
+  </table>
+  <div class="box box-warn">
+    <strong>Главный вывод:</strong> при равных ценах водитель выбирает того, кто платит ему за каждую заправку. ТС ему не платит.
+  </div>
+
+  <h3>2.2 Канал Yandex.Заправки отключён</h3>
+  <p>Канал был закрыт по причине бюрократических сложностей в работе с Yandex. На текущем этапе это решение требует пересмотра:</p>
+  <ul>
+    <li>Yandex.Заправки бесплатно показывает наши АЗС таксистам Yandex и обычным водителям через приложение и навигатор.</li>
+    <li>Конкуренты (Sinooil, Qazaq Oil) присутствуют на платформе и получают этот трафик.</li>
+    <li>Особенно критично для трассовых АЗС (Шымкент → Жетысай → граница), где Yandex.Навигатор — основной маршрутный сервис.</li>
+  </ul>
+
+  <h3>2.3 Цены на верхней границе рынка</h3>
+  <table>
+    <thead>
+      <tr><th>Продукт</th><th>Цена ТС (тг)</th><th>Комментарий</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>АИ-92</td><td class="num">225</td><td>Госрегулируемая. Здесь конкуренция невозможна.</td></tr>
+      <tr><td>АИ-95</td><td class="num">304</td><td>Свободное ценообразование. <span class="neg">Требуется проверка vs. конкуренты.</span></td></tr>
+      <tr><td>ДТ</td><td class="num">332</td><td>Свободное ценообразование. <span class="neg">Особенно критично для дальнобоев и логистики.</span></td></tr>
+    </tbody>
+  </table>
+  <div class="box box-warn">
+    <strong>Слепая зона:</strong> у нас нет регулярного мониторинга цен конкурентов по каждой из 35 АЗС. Мы не знаем, дороже ли мы на 1 тг или на 7 тг — это разные сценарии.
+  </div>
+
+  <h3>2.4 Минимаркеты — недоиспользуемый актив</h3>
+  <p>На всех 35 АЗС работают минимаркеты, но они дают всего <strong>5% выручки</strong>. Отраслевые показатели сетей АЗС в Казахстане и СНГ:</p>
+  <ul>
+    <li>Норма для региональной сети с минимаркетами: <strong>15–25% выручки</strong></li>
+    <li>Маржа ТНП: <strong>25–40%</strong>, против 5–7% на топливе</li>
+    <li>Развитые сети получают до 35–50% операционной прибыли именно с минимаркетов</li>
+  </ul>
+  <p>То есть удвоение доли ТНП с 5% до 10% даст несоразмерно больший эффект на прибыль, чем рост розлива топлива на ту же величину.</p>
+</section>
+
+<section id="priorities">
+  <h2>3. Стратегические приоритеты</h2>
+
+  <div class="priority urgent">
+    <div class="priority-header">
+      <div class="priority-title">№1. Перенастройка UDS — бонусы на топливо</div>
+      <div class="priority-tag">Критично</div>
+    </div>
+    <p>Перевод программы лояльности с режима «бонусы за ТНП» на режим «бонусы за каждый литр». Это закрывает главную дыру удержания клиента.</p>
+    <ul>
+      <li>1–2% кэшбэка в баллах от каждой заправки</li>
+      <li>Welcome-бонус новому клиенту: 500–1 000 баллов при первой заправке</li>
+      <li>Списание баллов на следующую заправку (а не только на товары магазина)</li>
+      <li>Push-уведомления через UDS-приложение по геозоне (5 км вокруг АЗС)</li>
+      <li>Связка топливо ↔ магазин: бонусы можно копить и тратить в обе стороны</li>
+    </ul>
+  </div>
+
+  <div class="priority urgent">
+    <div class="priority-header">
+      <div class="priority-title">№2. Возврат Yandex.Заправок (пилот на 5–10 точек)</div>
+      <div class="priority-tag">Критично</div>
+    </div>
+    <p>Решение бюрократических сложностей, которые привели к отключению. Возврат канала на ключевых трассовых и городских АЗС.</p>
+    <ul>
+      <li>Юридический отдел: пересмотр условий договора с Yandex</li>
+      <li>Пилот на 5–10 наиболее загруженных точках на 60 дней</li>
+      <li>При положительной экономике — расширение на всю сеть</li>
+    </ul>
+  </div>
+
+  <div class="priority medium">
+    <div class="priority-header">
+      <div class="priority-title">№3. Развитие минимаркетов: с 5% до 10–12% выручки</div>
+      <div class="priority-tag">Высокий</div>
+    </div>
+    <p>Минимаркеты — самый недоиспользуемый актив. Каждый процент роста доли ТНП даёт прибыли больше, чем такой же процент роста розлива.</p>
+    <ul>
+      <li>Кофе-программа: «6-я чашка бесплатно», брендированный кофе</li>
+      <li>Кросс-промо «заправил от 30 л — кофе/хот-дог в подарок»</li>
+      <li>Расширение fresh-ассортимента (выпечка, готовая еда)</li>
+      <li>POS-материалы на колонках: «А вы уже зашли в наш магазин?»</li>
+      <li>Аудит выкладки и ассортимента в топ-10 точках</li>
+    </ul>
+  </div>
+
+  <div class="priority medium">
+    <div class="priority-header">
+      <div class="priority-title">№4. Мониторинг цен конкурентов и локальный аудит</div>
+      <div class="priority-tag">Высокий</div>
+    </div>
+    <p>Без точных данных по цене и трафику в каждой точке любая реклама — стрельба вслепую.</p>
+    <ul>
+      <li>Таблица: 35 АЗС × 4 ближайших конкурента × 3 продукта (95, ДТ, газ если есть). Обновление 2 раза в неделю.</li>
+      <li>Локальный аудит топ-5 проблемных АЗС: причина падения (новый конкурент, ремонт, B2B-отток)</li>
+      <li>Контрольная закупка качества и литражности по проблемным точкам</li>
+    </ul>
+  </div>
+
+  <div class="priority long">
+    <div class="priority-header">
+      <div class="priority-title">№5. Цифровая реклама — расширение за 2ГИС</div>
+      <div class="priority-tag">Средний</div>
+    </div>
+    <p>2ГИС в Шымкенте уже куплен, по плану — Туркестан. Дополнительно:</p>
+    <ul>
+      <li>Yandex Карты + Google Maps: обновление карточек, фото, цен, отзывов</li>
+      <li>Geo-таргет Instagram + TikTok: радиус 3–5 км вокруг АЗС, мужчины 25–55</li>
+      <li>Telegram-каналы городских пабликов Шымкента и Туркестана</li>
+      <li>Радио в утренний прайм (Жулдыз FM, Тенгри FM)</li>
+      <li>Биллборды на трассовых АЗС за 2–3 км до точки (Шымкент → Жетысай)</li>
+    </ul>
+  </div>
+
+  <div class="priority long">
+    <div class="priority-header">
+      <div class="priority-title">№6. Партнёрства локального уровня</div>
+      <div class="priority-tag">Средний</div>
+    </div>
+    <ul>
+      <li>Автомойки и СТО в радиусе 1 км от АЗС: «Заправил от 30 л — мойка 50%»</li>
+      <li>Шиномонтаж рядом: совместные купоны</li>
+      <li>Партнёрство с автоклубами и таксопарками (без вмешательства в B2B-блок)</li>
+    </ul>
+  </div>
+</section>
+
+<section id="plan">
+  <h2>4. План действий: 14 / 30 / 90 дней</h2>
+
+  <h3>4.1 Первые 14 дней — срочные шаги</h3>
+  <table>
+    <thead>
+      <tr><th>Действие</th><th>Ответственный</th><th>Результат</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Запуск таблицы мониторинга цен конкурентов (35 × 4 × 3)</td><td>Маркетинг</td><td>Еженедельный отчёт</td></tr>
+      <tr><td>Аудит UDS — как настроить бонусы на топливо</td><td>Маркетинг + UDS-вендор</td><td>Технический план</td></tr>
+      <tr><td>Юридический разбор договора с Yandex.Заправками</td><td>Юридический отдел</td><td>Список конкретных проблем</td></tr>
+      <tr><td>Локальный аудит топ-5 проблемных АЗС</td><td>Операционный отдел</td><td>Карта причин падения по точкам</td></tr>
+      <tr><td>Контрольная закупка качества (10 точек)</td><td>Безопасность / контроль</td><td>Отчёт по литражу и качеству</td></tr>
+      <tr><td>Обновление карточек на Yandex/Google Maps</td><td>Маркетинг</td><td>Все 35 АЗС обновлены</td></tr>
+      <tr><td>2ГИС Туркестан — запуск</td><td>Маркетинг</td><td>Кампания активна</td></tr>
+    </tbody>
+  </table>
+
+  <h3>4.2 Дни 15–30 — запуск ключевых инициатив</h3>
+  <table>
+    <thead>
+      <tr><th>Действие</th><th>Ответственный</th><th>Результат</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Перенастройка UDS — бонусы за литры (тех. реализация)</td><td>Маркетинг + UDS</td><td>Программа активна</td></tr>
+      <tr><td>POS-материалы на 35 АЗС (новая программа лояльности)</td><td>Маркетинг + операционка</td><td>Все точки оснащены</td></tr>
+      <tr><td>Возврат Yandex.Заправок — пилот на 5–10 точках</td><td>Юр. отдел + маркетинг</td><td>Подключение работает</td></tr>
+      <tr><td>Запуск кофе-программы в минимаркетах</td><td>ТНП-блок</td><td>Брендированный кофе на 35 точках</td></tr>
+      <tr><td>Кросс-промо «топливо → бесплатный кофе/хот-дог»</td><td>Маркетинг + ТНП</td><td>Промо активно</td></tr>
+      <tr><td>Geo-таргет Instagram/TikTok — старт</td><td>Маркетинг (SMM)</td><td>Кампания активна</td></tr>
+      <tr><td>Партнёрства с автомойками/СТО (10 пилотных)</td><td>Маркетинг</td><td>10 договоров</td></tr>
+    </tbody>
+  </table>
+
+  <h3>4.3 Дни 31–90 — масштабирование</h3>
+  <table>
+    <thead>
+      <tr><th>Действие</th><th>Ответственный</th><th>Результат</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Расширение Yandex.Заправок на всю сеть (по результатам пилота)</td><td>Юр. + маркетинг</td><td>Все 35 АЗС</td></tr>
+      <tr><td>Радио-кампания (Жулдыз FM, Тенгри FM)</td><td>Маркетинг</td><td>Запуск в Шымкенте + Туркестане</td></tr>
+      <tr><td>Биллборды на трассовых АЗС (Шымкент → Жетысай)</td><td>Маркетинг</td><td>Установлено 8–12 биллбордов</td></tr>
+      <tr><td>Расширение fresh-ассортимента в минимаркетах</td><td>ТНП-блок</td><td>Внедрено в 35 точках</td></tr>
+      <tr><td>Расширение партнёрской сети (автомойки, СТО)</td><td>Маркетинг</td><td>До 30 партнёров</td></tr>
+      <tr><td>Аудит результатов и корректировка плана</td><td>Маркетинг</td><td>Отчёт совету директоров</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="budget">
+  <h2>5. Бюджет и ресурсы</h2>
+  <p>Оценочный бюджет на первые 90 дней. Точные цифры подлежат уточнению по результатам тендеров и пилотов.</p>
+  <table>
+    <thead>
+      <tr><th>Статья</th><th class="num">Бюджет, тг</th><th>Комментарий</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Перенастройка UDS — бонусы на топливо</td><td class="num">300 000 – 500 000</td><td>Разовая настройка + бонусный фонд первого месяца</td></tr>
+      <tr><td>Yandex.Заправки</td><td class="num">0</td><td>Подключение бесплатное; комиссия с оборота</td></tr>
+      <tr><td>2ГИС Шымкент (уже куплено)</td><td class="num">— </td><td>Текущий бюджет</td></tr>
+      <tr><td>2ГИС Туркестан</td><td class="num">по плану</td><td>В рамках текущего бюджета</td></tr>
+      <tr><td>Geo-таргет Instagram/TikTok (90 дней)</td><td class="num">600 000 – 900 000</td><td>200–300 тыс. в месяц</td></tr>
+      <tr><td>Telegram-реклама в городских пабликах</td><td class="num">200 000 – 400 000</td><td>За 90 дней, обе локации</td></tr>
+      <tr><td>Радио (Жулдыз FM, Тенгри FM, прайм)</td><td class="num">800 000 – 1 200 000</td><td>2 месяца, 2 города</td></tr>
+      <tr><td>Биллборды на трассе</td><td class="num">600 000 – 900 000</td><td>8–12 щитов на 2–3 месяца</td></tr>
+      <tr><td>POS-материалы (35 АЗС)</td><td class="num">500 000 – 800 000</td><td>Брендирование, баннеры, наклейки</td></tr>
+      <tr><td>Кофе-программа (старт)</td><td class="num">400 000 – 600 000</td><td>Закупка кофе, посуды, оборудование</td></tr>
+      <tr><td>Внутренние ресурсы (мониторинг цен, аудит)</td><td class="num">внутренний</td><td>Силами текущей команды</td></tr>
+      <tr><th>Итого внешний бюджет</th><th class="num">3,4 – 5,3 млн тг</th><th>На 90 дней</th></tr>
+    </tbody>
+  </table>
+  <div class="box box-info">
+    <strong>Принципиальное замечание:</strong> главный рычаг (UDS на топливо + возврат Yandex) требует минимального бюджета — его блокирует не деньги, а решение и ресурсы юр. отдела.
+  </div>
+</section>
+
+<section id="kpi">
+  <h2>6. KPI и контроль</h2>
+  <p>Метрики, по которым отслеживаем эффект каждые 30 дней.</p>
+
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-name">Среднесуточный розлив</div>
+      <div class="kpi-target">+8–12%</div>
+      <div class="kpi-base">К базе апреля 2026</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-name">Доля держателей UDS-карты в трафике</div>
+      <div class="kpi-target">35–45%</div>
+      <div class="kpi-base">Текущая ~ требует измерения</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-name">Доля ТНП в выручке</div>
+      <div class="kpi-target">10–12%</div>
+      <div class="kpi-base">База: 5%</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-name">Средний чек минимаркета</div>
+      <div class="kpi-target">+25%</div>
+      <div class="kpi-base">К базе апреля 2026</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-name">Yandex.Заправки — заправок/день</div>
+      <div class="kpi-target">120–200</div>
+      <div class="kpi-base">На пилотные 5–10 точек</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-name">Возврат клиента в течение 30 дней</div>
+      <div class="kpi-target">≥ 55%</div>
+      <div class="kpi-base">Метрика повторной заправки по UDS</div>
+    </div>
+  </div>
+
+  <h3>Дашборд для генерального директора (ежемесячно)</h3>
+  <ul>
+    <li>Среднесуточный розлив по каждой компании (ОМС / НП / ТЖ) и по каждой АЗС</li>
+    <li>Динамика выручки ТНП и доля в общем обороте</li>
+    <li>Количество активных держателей UDS-карты, их доля в трафике</li>
+    <li>ARPU держателя карты vs. неклиента UDS</li>
+    <li>Цены конкурентов по каждой локации (сводная таблица)</li>
+    <li>Эффективность каналов рекламы: 2ГИС / Yandex / Instagram / TikTok / Telegram / радио</li>
+  </ul>
+</section>
+
+<section id="risks">
+  <h2>7. Риски и допущения</h2>
+  <table>
+    <thead>
+      <tr><th>Риск</th><th>Вероятность</th><th>Влияние</th><th>Стратегия смягчения</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Конкуренты ответят демпингом или усилением программ лояльности</td>
+        <td>Высокая</td>
+        <td>Среднее</td>
+        <td>Превентивный мониторинг, гибкость скидок по сегментам</td>
+      </tr>
+      <tr>
+        <td>Технические сложности с настройкой UDS на топливо</td>
+        <td>Средняя</td>
+        <td>Высокое</td>
+        <td>Привлечь UDS-вендора как партнёра; план Б — собственное приложение</td>
+      </tr>
+      <tr>
+        <td>Yandex повторно откажет в подключении</td>
+        <td>Средняя</td>
+        <td>Среднее</td>
+        <td>Параллельные переговоры с Bolt Fuel и аналогами</td>
+      </tr>
+      <tr>
+        <td>Реальные цены конкурентов окажутся ниже наших на 5+ тг</td>
+        <td>Низкая–Средняя</td>
+        <td>Высокое</td>
+        <td>Получим в первые 14 дней по результатам мониторинга, затем пересмотр ценовой политики</td>
+      </tr>
+      <tr>
+        <td>Падение реализации связано с локальными причинами (B2B-отток, ремонты дорог), не с маркетингом</td>
+        <td>Средняя</td>
+        <td>Высокое</td>
+        <td>Локальный аудит топ-5 точек в первые 14 дней — отделит маркетинговые проблемы от операционных</td>
+      </tr>
+      <tr>
+        <td>Бюрократия UDS-вендора замедлит запуск</td>
+        <td>Средняя</td>
+        <td>Среднее</td>
+        <td>Включить юр. отдел с самого начала, ставить дедлайны</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="decisions">
+  <h2>8. Решения, требуемые от руководства</h2>
+  <p>Для запуска плана необходимы следующие решения генерального директора:</p>
+  <ol>
+    <li><strong>Утверждение бюджета</strong> 3,4–5,3 млн тг на 90 дней (с разбивкой по статьям выше).</li>
+    <li><strong>Команда юр. отделу</strong> в течение 7 дней разобрать причины отключения Yandex.Заправок и предложить путь возврата.</li>
+    <li><strong>Доступ маркетинга к настройкам UDS</strong> или выделение ресурса со стороны UDS-вендора.</li>
+    <li><strong>Согласование ТНП-блока</strong> на запуск кофе-программы и расширение fresh-ассортимента.</li>
+    <li><strong>Назначение ответственного по локальному аудиту</strong> топ-5 проблемных АЗС (рекомендуется операционный директор).</li>
+    <li><strong>Регламент совместной работы</strong> с B2B-блоком — кросс-инициативы (например, B2B-клиенты как держатели UDS-карты), без вторжения в их зону ответственности.</li>
+  </ol>
+
+  <div class="box box-success">
+    <strong>Главный посыл:</strong> наша главная проблема не в недостатке трафика, а в том, что мы не удерживаем приехавшего клиента. Программа лояльности на топливо + возврат Yandex.Заправок + развитие минимаркетов — это три рычага, которые при минимальных вложениях возвращают сеть к декабрьским показателям и закладывают рост на следующий квартал.
+  </div>
+</section>
+
+<div class="footer">
+  Документ подготовлен маркетинговым отделом · АЗС ТС · апрель 2026<br>
+  Версия 1.0 — для рассмотрения генеральным директором
+</div>
+
+</body>
+</html>

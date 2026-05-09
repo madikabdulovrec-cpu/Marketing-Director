@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Промо-кампания «Розыгрыш топлива» — АЗС ТС — 30 дней</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    line-height: 1.55;
+    color: #1a2332;
+    background: #fafbfc;
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 32px 44px;
+  }
+  .head { border-bottom: 3px solid #1e3a8a; padding-bottom: 16px; margin-bottom: 24px; }
+  .head .meta { color: #64748b; font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
+  .head h1 { font-size: 24px; color: #0f172a; line-height: 1.25; }
+  .head .sub { color: #475569; font-size: 14px; margin-top: 6px; }
+
+  .summary {
+    background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+    color: #fff;
+    padding: 22px 26px;
+    border-radius: 5px;
+    margin-bottom: 28px;
+    font-size: 15px;
+  }
+  .summary p { color: #e0e7ff; margin-bottom: 8px; }
+  .summary p:last-child { margin-bottom: 0; }
+  .summary strong { color: #fff; }
+
+  h2 {
+    font-size: 14px;
+    color: #1e3a8a;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 26px 0 12px;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 5px;
+    font-weight: 700;
+  }
+  h3 { font-size: 15px; color: #334155; margin: 14px 0 8px; font-weight: 600; }
+  p { margin-bottom: 10px; font-size: 14px; }
+  ul, ol { margin: 8px 0 12px 22px; font-size: 14px; }
+  li { margin-bottom: 4px; }
+
+  /* Карточка приза */
+  .prize {
+    background: #fff;
+    border: 2px solid #1e3a8a;
+    border-radius: 6px;
+    padding: 22px 26px;
+    margin: 14px 0 22px;
+    position: relative;
+  }
+  .prize-label {
+    position: absolute;
+    top: -10px; left: 22px;
+    background: #1e3a8a;
+    color: #fff;
+    padding: 3px 12px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 700;
+    border-radius: 3px;
+  }
+  .prize-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 14px;
+  }
+  .prize-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .prize-item {
+    background: #f1f5f9;
+    padding: 14px 16px;
+    border-radius: 4px;
+    border-left: 4px solid #1e3a8a;
+  }
+  .prize-item .num {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1e3a8a;
+    line-height: 1;
+  }
+  .prize-item .lbl {
+    font-size: 12px;
+    color: #475569;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-top: 4px;
+  }
+  .prize-item .cost {
+    font-size: 12px;
+    color: #64748b;
+    margin-top: 6px;
+  }
+  .prize-total {
+    background: #fef3c7;
+    border-left: 4px solid #d97706;
+    padding: 10px 14px;
+    font-size: 14px;
+    border-radius: 3px;
+  }
+  .prize-total strong { color: #92400e; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 12px; }
+  th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid #e2e8f0; vertical-align: top; }
+  th { background: #f1f5f9; font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; font-weight: 700; }
+  .num { text-align: right; font-variant-numeric: tabular-nums; }
+
+  /* Каналы */
+  .channels {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  .channel {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-left: 4px solid #1e3a8a;
+    padding: 12px 16px;
+    border-radius: 3px;
+    font-size: 13px;
+  }
+  .channel-name {
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 4px;
+    font-size: 13px;
+  }
+  .channel-desc { color: #475569; margin-bottom: 4px; }
+  .channel-budget { color: #1e3a8a; font-weight: 600; font-size: 12px; }
+
+  /* Календарь */
+  .timeline {
+    border-left: 3px solid #1e3a8a;
+    padding-left: 18px;
+    margin: 12px 0;
+  }
+  .week {
+    margin-bottom: 14px;
+    position: relative;
+  }
+  .week::before {
+    content: '';
+    position: absolute;
+    left: -25px;
+    top: 6px;
+    width: 11px;
+    height: 11px;
+    background: #1e3a8a;
+    border-radius: 50%;
+    border: 2px solid #fff;
+  }
+  .week-h {
+    font-weight: 700;
+    color: #1e3a8a;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 4px;
+  }
+  .week ul { margin-left: 18px; margin-top: 4px; font-size: 13px; }
+
+  .box {
+    background: #fef3c7;
+    border-left: 4px solid #d97706;
+    padding: 12px 16px;
+    border-radius: 3px;
+    margin: 14px 0;
+    font-size: 13.5px;
+  }
+  .box strong { display: block; margin-bottom: 4px; color: #92400e; }
+
+  .kpi-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin: 8px 0 14px;
+  }
+  .kpi {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    padding: 12px 14px;
+    border-radius: 3px;
+  }
+  .kpi-name { font-size: 11px; color: #64748b; text-transform: uppercase; letter-spacing: 0.04em; }
+  .kpi-val { font-size: 18px; font-weight: 700; color: #1e3a8a; margin-top: 4px; }
+</style>
+</head>
+<body>
+
+<div class="head">
+  <div class="meta">Внутренний документ · конфиденциально</div>
+  <h1>Промо-кампания «Розыгрыш топлива от ТС»</h1>
+  <div class="sub">Сеть АЗС ТС: ТОО ОМС / НП / ТЖ · 35 АЗС · Шымкент, Туркестан, Жетысай · 30-дневный цикл · апрель–май 2026</div>
+  <div class="meta" style="margin-top: 10px;">Адресат: Генеральный директор · Цель: импульсный рост среднесуточного розлива + усиление цифрового присутствия</div>
+</div>
+
+<div class="summary">
+  <p><strong>Цель:</strong> за 30 дней нарастить среднесуточный розлив через стимуляцию повторных визитов и привлечение новой аудитории всех типов транспорта (легковой, грузовой, аграрный, коммерческий).</p>
+  <p><strong>Главный инструмент:</strong> розыгрыш топлива среди клиентов сети с условием участия — чек от 40 литров. Это поднимает средний чек и отсекает мелкие заправки.</p>
+  <p><strong>Усиление:</strong> расширение цифрового присутствия (2ГИС, Yandex.Direct, Instagram/TikTok Ads, Telegram, авто-блогеры) под информационную поддержку розыгрыша.</p>
+</div>
+
+<h2>1. Механика розыгрыша</h2>
+
+<div class="prize">
+  <div class="prize-label">Приз одному победителю</div>
+  <div class="prize-title">Топливный пакет — 700 литров</div>
+  <div class="prize-grid">
+    <div class="prize-item">
+      <div class="num">200 л</div>
+      <div class="lbl">АИ-95</div>
+      <div class="cost">≈ 60 800 тг</div>
+    </div>
+    <div class="prize-item">
+      <div class="num">300 л</div>
+      <div class="lbl">АИ-92</div>
+      <div class="cost">≈ 67 500 тг</div>
+    </div>
+    <div class="prize-item">
+      <div class="num">200 л</div>
+      <div class="lbl">ДТ</div>
+      <div class="cost">≈ 66 400 тг</div>
+    </div>
+  </div>
+  <div class="prize-total">
+    <strong>Стоимость одного приза: ≈ 195 тыс. тг</strong>
+    Розыгрыш проводится между всеми тремя компаниями (ОМС / НП / ТЖ): <strong>3 победителя</strong> — по одному на каждое ТОО. Общий призовой фонд: <strong>≈ 585 тыс. тг</strong>.
+  </div>
+</div>
+
+<h3>Условия участия</h3>
+<ul>
+  <li>Заправился на любой АЗС сети ТС <strong>от 40 литров</strong> (один чек) — попадаешь в розыгрыш</li>
+  <li>Любой вид топлива: АИ-92, АИ-95, ДТ</li>
+  <li>Регистрация чека — через WhatsApp-бот по QR-коду на чеке (либо лендинг)</li>
+  <li>Подписка на Instagram + TikTok @ts_azs (любой из двух)</li>
+  <li>Можно регистрировать несколько чеков — каждый увеличивает шанс</li>
+</ul>
+
+<h3>Период и итог</h3>
+<ul>
+  <li><strong>Период сбора чеков:</strong> 30 дней</li>
+  <li><strong>Итог:</strong> прямой эфир розыгрыша в Instagram + TikTok на 31-й день</li>
+  <li><strong>Победители:</strong> 3 человека (один из клиентов ОМС, один из НП, один из ТЖ) — для регионального охвата всех трёх компаний</li>
+</ul>
+
+<div class="box">
+  <strong>Почему «от 40 литров»</strong>
+  Условие отсекает мелкие «канистровые» заправки и поднимает средний чек: минимальная сумма участия ≈ 9 000 тг (АИ-92), 12 000 тг (АИ-95), 13 000 тг (ДТ). Это сразу влияет на показатели среднесуточного розлива во время кампании.
+</div>
+
+<h2>2. Цифровое присутствие — каналы поддержки</h2>
+
+<div class="channels">
+  <div class="channel">
+    <div class="channel-name">2ГИС</div>
+    <div class="channel-desc">Шымкент (куплено), запуск Туркестана. Расширение: Сарыагаш, Жетысай, Шардара, Кентау. Премиум-карточки для всех 35 АЗС с актуальными ценами.</div>
+    <div class="channel-budget">по тарифам 2ГИС</div>
+  </div>
+  <div class="channel">
+    <div class="channel-name">Yandex.Карты + Google Maps</div>
+    <div class="channel-desc">Обновление карточек 35 АЗС: фото, цены, услуги. Yandex.Бизнес — реклама в навигаторе по маршруту.</div>
+    <div class="channel-budget">200–300 тыс. тг</div>
+  </div>
+  <div class="channel">
+    <div class="channel-name">Instagram + Meta Ads</div>
+    <div class="channel-desc">Geo-таргет 5 км вокруг АЗС, мужчины 22–55. Креативы под легковой и грузовой транспорт.</div>
+    <div class="channel-budget">350–550 тыс. тг</div>
+  </div>
+  <div class="channel">
+    <div class="channel-name">TikTok Ads</div>
+    <div class="channel-desc">Шымкент / Туркестан, авто-интересы. Виральные ролики про розыгрыш и победителей.</div>
+    <div class="channel-budget">200–300 тыс. тг</div>
+  </div>
+  <div class="channel">
+    <div class="channel-name">Yandex.Direct</div>
+    <div class="channel-desc">Поиск: «АЗС Шымкент», «бензин Туркестан», «дизель оптом». Бренды конкурентов.</div>
+    <div class="channel-budget">250–350 тыс. тг</div>
+  </div>
+  <div class="channel">
+    <div class="channel-name">Telegram-каналы</div>
+    <div class="channel-desc">Городские паблики Шымкента и Туркестана + чаты дальнобоев + аграрные каналы.</div>
+    <div class="channel-budget">100–180 тыс. тг</div>
+  </div>
+  <div class="channel">
+    <div class="channel-name">Авто-блогеры (5–8 интеграций)</div>
+    <div class="channel-desc">Локальные TikTok/Instagram авто-блогеры Шымкента. Анонсы розыгрыша + эфир итогов.</div>
+    <div class="channel-budget">300–500 тыс. тг</div>
+  </div>
+  <div class="channel">
+    <div class="channel-name">Лендинг + WhatsApp-бот</div>
+    <div class="channel-desc">Регистрация чеков по QR. Сбор базы контактов клиентов как актив на будущее.</div>
+    <div class="channel-budget">200–300 тыс. тг (разово)</div>
+  </div>
+</div>
+
+<h2>3. Календарь — 30 дней</h2>
+
+<div class="timeline">
+  <div class="week">
+    <div class="week-h">Дни 1–5: подготовка</div>
+    <ul>
+      <li>Финализация механики, юр. правила розыгрыша, согласование с ТОО</li>
+      <li>Запуск лендинга + WhatsApp-бота</li>
+      <li>Производство креативов (3 версии: легковой / грузовой / агро)</li>
+      <li>Брифинг авто-блогеров</li>
+      <li>Печать POS-материалов на 35 АЗС (плакаты, наклейки на колонках, листовки)</li>
+      <li>Обновление карточек на Yandex/Google Maps</li>
+    </ul>
+  </div>
+
+  <div class="week">
+    <div class="week-h">День 6: старт кампании</div>
+    <ul>
+      <li>Анонс розыгрыша во всех каналах одновременно</li>
+      <li>Запуск Meta Ads, TikTok Ads, Yandex.Direct</li>
+      <li>POS-материалы во всех 35 АЗС</li>
+      <li>Первая волна публикаций у блогеров</li>
+      <li>Посты в Telegram-каналах</li>
+    </ul>
+  </div>
+
+  <div class="week">
+    <div class="week-h">Дни 6–30: активный сбор</div>
+    <ul>
+      <li>Постоянная работа цифровых каналов</li>
+      <li>Видео-контент с АЗС (репортажи, отзывы клиентов, динамика участия)</li>
+      <li>Еженедельные апдейты в соцсетях («осталось столько-то дней до розыгрыша»)</li>
+      <li>Вторая волна интеграций с блогерами в середине цикла</li>
+      <li>2ГИС Туркестан запуск (если ещё не запущен)</li>
+    </ul>
+  </div>
+
+  <div class="week">
+    <div class="week-h">День 31: розыгрыш и PR</div>
+    <ul>
+      <li>Прямой эфир розыгрыша в Instagram + TikTok</li>
+      <li>3 победителя (ОМС / НП / ТЖ) — публичное вручение</li>
+      <li>Видео-репортаж с вручения призов на каждой АЗС</li>
+      <li>Релиз для городских СМИ и пабликов</li>
+      <li>Анонс следующего цикла (если решено повторить)</li>
+    </ul>
+  </div>
+</div>
+
+<h2>4. Бюджет 30 дней</h2>
+<table>
+  <thead>
+    <tr><th>Статья</th><th class="num">Бюджет, тг</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Призовой фонд (3 победителя × 195 тыс.)</td><td class="num">585 000</td></tr>
+    <tr><td>Instagram + Meta Ads</td><td class="num">350 000 – 550 000</td></tr>
+    <tr><td>TikTok Ads</td><td class="num">200 000 – 300 000</td></tr>
+    <tr><td>Yandex.Direct</td><td class="num">250 000 – 350 000</td></tr>
+    <tr><td>Yandex.Карты / Google Maps реклама</td><td class="num">200 000 – 300 000</td></tr>
+    <tr><td>2ГИС Туркестан + регион</td><td class="num">по тарифу</td></tr>
+    <tr><td>Telegram-каналы</td><td class="num">100 000 – 180 000</td></tr>
+    <tr><td>Авто-блогеры (5–8 интеграций)</td><td class="num">300 000 – 500 000</td></tr>
+    <tr><td>Лендинг + WhatsApp-бот (разово)</td><td class="num">200 000 – 300 000</td></tr>
+    <tr><td>Креативы (фото / видео под 3 аудитории)</td><td class="num">250 000 – 400 000</td></tr>
+    <tr><td>POS-материалы (35 АЗС)</td><td class="num">300 000 – 500 000</td></tr>
+    <tr><th>Итого</th><th class="num">2,7 – 4,0 млн тг</th></tr>
+  </tbody>
+</table>
+
+<h2>5. KPI на 30 дней</h2>
+<div class="kpi-row">
+  <div class="kpi">
+    <div class="kpi-name">Среднесуточный розлив</div>
+    <div class="kpi-val">+10–15%</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-name">Участников розыгрыша</div>
+    <div class="kpi-val">5–10 тыс.</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-name">Чеков от 40 л в общем трафике</div>
+    <div class="kpi-val">+25%</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-name">База WhatsApp / лендинг</div>
+    <div class="kpi-val">5–10 тыс. контактов</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-name">Подписчиков Instagram</div>
+    <div class="kpi-val">+3–5 тыс.</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-name">Подписчиков TikTok</div>
+    <div class="kpi-val">+2–4 тыс.</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-name">Просмотров (digital всего)</div>
+    <div class="kpi-val">2–5 млн</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-name">Публикаций блогеров / пабликов</div>
+    <div class="kpi-val">25–40</div>
+  </div>
+</div>
+
+<h2>6. Решения, требуемые от руководства</h2>
+<ol>
+  <li>Утверждение бюджета <strong>2,7 – 4,0 млн тг</strong> на 30-дневный цикл.</li>
+  <li>Утверждение призового фонда: 3 победителя по 200 л АИ-95 + 300 л АИ-92 + 200 л ДТ.</li>
+  <li>Согласование юридических правил розыгрыша (с привлечением юр. отдела) — публичная оферта, условия участия, порядок определения победителей.</li>
+  <li>Назначение ответственного по проекту со стороны маркетинга (контроль креативов, эфиров, отчётности).</li>
+  <li>После итогов 31-го дня — решение о повторении цикла на следующий месяц с возможной корректировкой механики.</li>
+</ol>
+
+<div class="box">
+  <strong>Почему этот план сработает</strong>
+  Розыгрыш топлива на трёх видах ГСМ (95, 92, ДТ) одновременно охватывает все сегменты водителей региона: легковушки (95/92), грузовой и аграрный транспорт (ДТ), фермерство и логистика. Условие «от 40 литров» сразу влияет на средний чек. Цифровая поддержка обеспечивает охват, который окупает скромный размер приза (≈195 тыс. тг) через массовость участия и виральность контента.
+</div>
+
+</body>
+</html>

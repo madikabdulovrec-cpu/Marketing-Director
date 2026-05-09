@@ -5,6 +5,7 @@ dishandi_brief.md
 .claude/
 *.xlsx
 *.pdf
+*.docx
 
 # Скрипты сборки — не нужны на гите
 build_xlsx.py
@@ -13,3 +14,13 @@ render_*.py
 # Старые версии и ревью — оставляем только финальную v1.3
 strategy_dishandi_v1.html
 strategy_review_v1.2.html
+
+# Receipts-бот живёт в собственном репо: github.com/Evimiz-KZ/cheki-bot
+# Не зеркалим — иначе рассинхрон. Сводка по проекту лежит в memory/.
+receipts_bot/
+
+# Тяжёлые PNG-извлечения брендбука T.S (78 MB, исходный PDF и так в *.pdf)
+ТС приложение/_extracted/brandbook/
+
+# ТЗ T.S — это PDF без расширения, *.pdf не ловит
+ТС приложение/ТЗ для приложения T.S

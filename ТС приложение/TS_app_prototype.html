@@ -1,0 +1,1952 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>T.S Bonus — рабочий прототип</title>
+<meta name="viewport" content="width=1480">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700;800&family=Barlow+Semi+Condensed:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   T.S BONUS · РАБОЧИЙ ПРОТОТИП
+   STRICT BRANDBOOK 2024
+   Интерактивный кликабельный макет
+   ============================================================ */
+:root{
+  --tsBlue:#2491D5;
+  --tsBlueDeep:#0C339D;
+  --tsBlueDark:#06205F;
+  --black:#000;
+  --white:#FFF;
+  --gray1:#333;
+  --gray2:#666;
+  --gray3:#999;
+  --gray4:#CCC;
+  --skyLight:#9BE1E6;
+  --turquoise:#12C697;
+  --green:#28DF2A;
+  --red:#E64242;
+  --tsBlueBg:#E6F1F8;
+  --tsBlueSoft:#C8DFEF;
+  --skyBg:#DCF1F3;
+  --pageBg:#F4F7F9;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{
+  background:#0E1116;
+  background-image:
+    radial-gradient(1000px 600px at 100% 0%,rgba(36,145,213,.12),transparent 60%),
+    radial-gradient(800px 600px at 0% 100%,rgba(12,51,157,.18),transparent 60%);
+  font-family:'Barlow Semi Condensed',-apple-system,sans-serif;
+  color:var(--white);min-height:100vh;
+}
+body{padding:32px 0}
+
+.stage{
+  max-width:1400px;margin:0 auto;padding:0 32px;
+  display:grid;grid-template-columns:280px 1fr 280px;gap:32px;align-items:start;
+}
+
+/* ====== SIDEBAR (left) ====== */
+.sidebar{
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
+  padding:24px;backdrop-filter:blur(12px);
+  position:sticky;top:32px;
+}
+.sidebar h2{font-family:'Barlow';font-size:14px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;margin-bottom:18px;color:var(--skyLight)}
+.sidebar .nav-group{margin-bottom:22px}
+.sidebar .nav-group b{font-family:'Barlow';font-size:9.5px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.4);display:block;margin-bottom:8px}
+.sidebar .nav-list{display:flex;flex-direction:column;gap:2px}
+.sidebar .nav-item{
+  font-family:'Barlow';font-size:12px;font-weight:600;color:rgba(255,255,255,.7);
+  padding:8px 10px;cursor:pointer;letter-spacing:.04em;
+  display:flex;align-items:center;gap:8px;border-left:2px solid transparent;
+  transition:all .15s;
+}
+.sidebar .nav-item:hover{background:rgba(255,255,255,.06);color:#fff}
+.sidebar .nav-item.active{background:rgba(36,145,213,.18);color:#fff;border-left-color:var(--tsBlue)}
+.sidebar .nav-item .num{
+  font-size:9px;letter-spacing:.18em;font-weight:700;color:rgba(255,255,255,.4);
+  font-family:'Barlow';width:18px;text-align:right;
+}
+.sidebar .info{font-size:11px;color:rgba(255,255,255,.55);line-height:1.6;margin-top:10px}
+.sidebar .info b{color:#fff;font-weight:700}
+
+/* ====== STATUS PANEL (right) ====== */
+.status-panel{
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
+  padding:24px;backdrop-filter:blur(12px);position:sticky;top:32px;
+}
+.status-panel h3{font-family:'Barlow';font-size:13px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;margin-bottom:14px;color:var(--skyLight)}
+.status-panel .field-row{display:flex;justify-content:space-between;font-size:11px;color:rgba(255,255,255,.6);margin-bottom:8px;font-family:'Barlow';letter-spacing:.04em}
+.status-panel .field-row b{color:#fff;font-weight:700}
+.status-panel .reset-btn{
+  margin-top:14px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);
+  color:#fff;font-family:'Barlow';font-size:10.5px;font-weight:800;letter-spacing:.18em;
+  text-transform:uppercase;padding:11px 14px;cursor:pointer;width:100%;transition:.15s;
+}
+.status-panel .reset-btn:hover{background:rgba(255,255,255,.14)}
+.status-panel h3.log{margin-top:24px}
+.log-list{max-height:240px;overflow-y:auto;font-family:'Barlow Semi Condensed';font-size:11px;color:rgba(255,255,255,.55);line-height:1.5}
+.log-list div{padding:5px 0;border-bottom:1px solid rgba(255,255,255,.05);display:flex;gap:8px}
+.log-list div span{color:var(--skyLight);font-family:'Barlow';font-weight:700;flex-shrink:0;font-size:10px}
+
+/* ====== PHONE FRAME (center) ====== */
+.device-wrap{display:flex;justify-content:center;align-items:flex-start}
+.phone{
+  background:#0c0d10;border-radius:50px;padding:10px;width:392px;height:824px;
+  box-shadow:0 50px 90px -36px rgba(0,0,0,.7),0 0 0 1.5px rgba(255,255,255,.06);
+  position:relative;flex-shrink:0;
+}
+.phone::before{
+  content:"";position:absolute;top:14px;left:50%;transform:translateX(-50%);
+  width:120px;height:30px;border-radius:18px;background:#0c0d10;z-index:50;
+}
+.phone-screen{
+  background:var(--white);border-radius:42px;width:100%;height:100%;overflow:hidden;
+  position:relative;font-family:'Barlow Semi Condensed','Manrope',sans-serif;
+  font-size:13px;color:var(--gray1);
+}
+
+/* ====== SCREEN STATES ====== */
+.screen{
+  position:absolute;inset:0;display:none;flex-direction:column;
+  background:var(--white);
+  animation:fadeIn .3s ease;
+}
+.screen.active{display:flex}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+.statusbar{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:18px 30px 6px;font-size:13px;font-weight:700;color:var(--gray1);flex-shrink:0;z-index:10;
+}
+.statusbar.dark{color:var(--white)}
+.statusbar .dots{display:flex;gap:3px}
+.statusbar .dots span{width:5px;height:5px;border-radius:50%;background:currentColor}
+.statusbar .battery{width:26px;height:11px;border:1px solid currentColor;border-radius:2px;position:relative}
+.statusbar .battery::after{content:"";position:absolute;right:-3px;top:3px;width:2px;height:5px;background:currentColor;border-radius:0 1px 1px 0}
+.statusbar .battery::before{content:"";position:absolute;left:1px;top:1px;bottom:1px;width:80%;background:currentColor;border-radius:1px}
+
+.appbar{display:flex;align-items:center;justify-content:space-between;padding:10px 22px 14px;flex-shrink:0;z-index:5}
+.appbar h1{font-family:'Barlow';font-size:20px;font-weight:700;letter-spacing:-.3px}
+.appbar .btn{
+  width:38px;height:38px;background:var(--tsBlueBg);
+  display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--tsBlueDeep);
+  border:1px solid var(--tsBlueSoft);cursor:pointer;transition:.15s;
+}
+.appbar .btn:hover{background:var(--tsBlueSoft)}
+.appbar .btn.dark{background:rgba(255,255,255,.14);color:#fff;border-color:rgba(255,255,255,.18)}
+.appbar .btn.dark:hover{background:rgba(255,255,255,.22)}
+.appbar .greet{font-size:11px;color:var(--gray3);margin-bottom:3px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;font-family:'Barlow'}
+.appbar .back{cursor:pointer;width:36px;height:36px;display:flex;align-items:center;justify-content:center;border:1px solid var(--gray4);font-size:18px;color:var(--gray2);transition:.15s}
+.appbar .back:hover{background:var(--pageBg)}
+
+.scroll{flex:1;overflow-y:auto;padding:0 22px 100px;-webkit-overflow-scrolling:touch}
+.scroll::-webkit-scrollbar{display:none}
+.scroll{scrollbar-width:none}
+
+/* ============================================================
+              SCREEN: SPLASH
+============================================================ */
+.splash{
+  flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:linear-gradient(160deg,var(--tsBlueDeep) 0%,var(--tsBlue) 100%);
+  color:#fff;text-align:center;padding:40px 30px;position:relative;overflow:hidden;
+}
+.splash::before{
+  content:"";position:absolute;inset:0;
+  background:repeating-linear-gradient(115deg,transparent 0 10px,rgba(155,225,230,.10) 10px 16px,transparent 16px 32px);
+}
+.splash::after{
+  content:"";position:absolute;left:-80px;bottom:-160px;width:320px;height:400px;
+  background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 130'><path d='M50 10 C 20 50, 20 100, 50 120 C 80 100, 80 50, 50 10 Z' fill='none' stroke='%239BE1E6' stroke-width='.5' opacity='.6'/><path d='M50 25 C 28 58, 28 95, 50 110 C 72 95, 72 58, 50 25 Z' fill='none' stroke='%239BE1E6' stroke-width='.5' opacity='.4'/></svg>") no-repeat center/contain;
+}
+.splash-logo{position:relative;z-index:1;margin-bottom:36px;animation:logoIn .8s ease}
+@keyframes logoIn{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:scale(1)}}
+.splash h2{font-family:'Barlow';font-size:38px;font-weight:300;letter-spacing:-.7px;position:relative;z-index:1}
+.splash h2 b{font-weight:800;font-style:italic;color:var(--skyLight)}
+.splash p{font-size:14px;opacity:.9;margin-top:14px;font-family:'Barlow';letter-spacing:.2em;text-transform:uppercase;font-weight:600;position:relative;z-index:1}
+.splash .lang{margin-top:48px;display:flex;gap:0;position:relative;z-index:1;border:1px solid rgba(255,255,255,.4)}
+.splash .lang button{
+  background:transparent;border:0;color:#fff;padding:14px 32px;font-size:13px;
+  font-family:'Barlow';font-weight:700;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;transition:.15s;
+}
+.splash .lang button.act{background:#fff;color:var(--tsBlueDeep)}
+.splash .lang button:not(.act):hover{background:rgba(255,255,255,.08)}
+.splash .start{
+  margin-top:30px;background:var(--skyLight);color:var(--tsBlueDeep);
+  font-family:'Barlow';font-size:13px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;
+  padding:16px 50px;border:0;cursor:pointer;position:relative;z-index:1;transition:.15s;
+}
+.splash .start:hover{background:#fff;transform:translateY(-1px)}
+.splash .ver{
+  position:absolute;bottom:24px;left:0;right:0;display:flex;justify-content:space-between;padding:0 30px;
+  font-size:10px;font-family:'Barlow';letter-spacing:.3em;text-transform:uppercase;font-weight:600;opacity:.55;z-index:1;
+}
+
+/* ============================================================
+              SCREEN: AUTH (login + otp + profile)
+============================================================ */
+.auth{padding:14px 26px 24px;flex:1;display:flex;flex-direction:column}
+.auth .step{font-size:10px;font-weight:800;letter-spacing:.3em;text-transform:uppercase;color:var(--tsBlue);margin-top:14px;font-family:'Barlow'}
+.auth h2{font-family:'Barlow';font-size:34px;font-weight:300;letter-spacing:-.8px;line-height:1.05;margin-top:18px}
+.auth h2 b{font-weight:800;font-style:italic;color:var(--tsBlue)}
+.auth p.sub{font-size:13.5px;color:var(--gray2);margin-top:14px;line-height:1.5}
+.auth p.sub a{color:var(--tsBlue);font-weight:700;cursor:pointer}
+.field{margin-top:22px}
+.field label{font-size:10.5px;font-weight:800;color:var(--gray3);letter-spacing:.3em;text-transform:uppercase;font-family:'Barlow'}
+.field .inp{
+  background:#fff;border:1px solid var(--gray4);padding:16px 18px;
+  display:flex;align-items:center;gap:8px;margin-top:8px;font-size:16px;color:var(--gray1);font-weight:600;
+  font-family:'Barlow';letter-spacing:-.1px;
+}
+.field .inp.focus{border-color:var(--tsBlue);box-shadow:inset 0 0 0 1px var(--tsBlue)}
+.field .inp input{
+  background:transparent;border:0;outline:0;font-family:inherit;font-size:inherit;font-weight:inherit;
+  color:inherit;flex:1;
+}
+.field .inp .pre{color:var(--gray3);font-weight:600}
+.btn-prim{
+  margin-top:26px;background:var(--tsBlue);color:#fff;border:1px solid var(--tsBlue);
+  padding:18px;text-align:center;font-size:13px;font-weight:800;
+  font-family:'Barlow';letter-spacing:.2em;text-transform:uppercase;cursor:pointer;transition:.15s;
+}
+.btn-prim:hover{background:var(--tsBlueDeep);border-color:var(--tsBlueDeep)}
+.btn-prim.deep{background:var(--tsBlueDeep);border-color:var(--tsBlueDeep)}
+.btn-prim.deep:hover{background:#08246F;border-color:#08246F}
+.btn-prim:disabled{background:var(--gray4);border-color:var(--gray4);cursor:not-allowed;color:#fff}
+.btn-sec{margin-top:10px;background:#fff;border:1px solid var(--gray4);color:var(--gray1);padding:15px;text-align:center;font-size:12px;font-weight:700;font-family:'Barlow';letter-spacing:.2em;text-transform:uppercase;cursor:pointer;transition:.15s}
+.btn-sec:hover{background:var(--pageBg)}
+.auth-foot{margin-top:auto;padding-bottom:20px;text-align:center;font-size:11px;color:var(--gray3);line-height:1.6}
+.auth-foot a{color:var(--tsBlue);font-weight:700;cursor:pointer}
+
+/* OTP */
+.otp{display:flex;gap:8px;justify-content:space-between;margin-top:26px}
+.otp .o{
+  flex:1;height:62px;background:#fff;border:1px solid var(--gray4);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Barlow';font-size:28px;font-weight:600;color:var(--gray1);
+  transition:.15s;
+}
+.otp .o.fill{border-color:var(--tsBlue);color:var(--tsBlueDeep)}
+.otp .o.cur{border-color:var(--tsBlue);box-shadow:inset 0 0 0 1px var(--tsBlue);animation:blink 1s infinite}
+@keyframes blink{0%,100%{box-shadow:inset 0 0 0 1px var(--tsBlue)}50%{box-shadow:inset 0 0 0 1px var(--tsBlue),0 0 0 4px rgba(36,145,213,.2)}}
+.kbd{margin-top:auto;padding:14px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.kbd b{
+  background:#fff;border:1px solid var(--gray4);padding:18px 0;text-align:center;
+  font-family:'Barlow';font-size:24px;font-weight:500;color:var(--gray1);cursor:pointer;
+  transition:.1s;user-select:none;
+}
+.kbd b:active{background:var(--tsBlueBg);border-color:var(--tsBlue);transform:scale(.95)}
+.kbd b.empty{background:transparent;border:none;cursor:default}
+.kbd b.empty:active{background:transparent;transform:none}
+
+/* ============================================================
+              SCREEN: HOME
+============================================================ */
+.hero{
+  background:linear-gradient(135deg,var(--tsBlueDeep) 0%,var(--tsBlue) 100%);
+  padding:26px;color:#fff;position:relative;overflow:hidden;
+  border:1px solid var(--tsBlueDeep);
+}
+.hero::before{
+  content:"";position:absolute;right:-50px;top:-40px;width:200px;height:240px;
+  background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 130'><path d='M50 10 C 20 50, 20 100, 50 120 C 80 100, 80 50, 50 10 Z' fill='none' stroke='%239BE1E6' stroke-width='.6' opacity='.55'/><path d='M50 30 C 30 60, 30 95, 50 110 C 70 95, 70 60, 50 30 Z' fill='none' stroke='%239BE1E6' stroke-width='.6' opacity='.4'/></svg>") no-repeat center/contain;
+}
+.hero::after{
+  content:"";position:absolute;left:-30px;bottom:-80px;width:160px;height:120px;
+  background:repeating-linear-gradient(115deg,transparent 0 8px,rgba(155,225,230,.18) 8px 12px,transparent 12px 26px);
+}
+.hero .lvl{
+  display:inline-flex;align-items:center;gap:6px;background:var(--turquoise);color:#fff;
+  padding:6px 14px;font-size:11px;font-weight:800;letter-spacing:.2em;
+  margin-bottom:16px;text-transform:uppercase;font-family:'Barlow';position:relative;z-index:1;
+}
+.hero .balance-label{font-size:11px;opacity:.85;font-weight:700;letter-spacing:.2em;text-transform:uppercase;position:relative;z-index:1}
+.hero .balance{
+  font-family:'Barlow';
+  font-size:54px;font-weight:300;letter-spacing:-1.8px;margin-top:8px;
+  display:flex;align-items:baseline;gap:8px;line-height:1;position:relative;z-index:1;
+}
+.hero .balance b{font-weight:800;font-style:italic}
+.hero .balance small{font-family:'Barlow Semi Condensed';font-size:14px;font-weight:600;opacity:.85;letter-spacing:.06em;text-transform:uppercase}
+.hero .progress{margin-top:18px;height:4px;background:rgba(255,255,255,.18);overflow:hidden;position:relative;z-index:1}
+.hero .progress span{display:block;height:100%;background:var(--skyLight);transition:width .6s}
+.hero .pmeta{display:flex;justify-content:space-between;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-top:10px;position:relative;z-index:1;opacity:.85}
+
+.hero .qr-cta{
+  margin-top:20px;background:var(--white);color:var(--tsBlueDeep);
+  padding:16px 18px;display:flex;align-items:center;gap:14px;font-size:13px;font-weight:700;
+  position:relative;z-index:1;cursor:pointer;transition:.15s;
+}
+.hero .qr-cta:hover{transform:translateY(-1px);box-shadow:0 8px 24px -8px rgba(0,0,0,.3)}
+.hero .qr-cta .qico{
+  width:46px;height:46px;background:var(--tsBlueDeep);
+  color:#fff;display:flex;align-items:center;justify-content:center;font-size:20px;
+}
+.hero .qr-cta .arr{margin-left:auto;font-size:22px;color:var(--tsBlueDeep)}
+.hero .qr-cta .label{line-height:1.2;font-family:'Barlow';letter-spacing:.04em}
+.hero .qr-cta .label small{display:block;font-size:11px;color:var(--gray3);font-weight:700;letter-spacing:.2em;text-transform:uppercase;margin-bottom:2px}
+
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:18px;border:1px solid var(--gray4)}
+.tile{
+  background:#fff;padding:16px 6px 14px;text-align:center;cursor:pointer;
+  border-right:1px solid var(--gray4);border-bottom:1px solid var(--gray4);
+  transition:.15s;
+}
+.tile:hover{background:var(--tsBlueBg)}
+.tile:nth-child(4n){border-right:none}
+.tile:nth-child(n+5){border-bottom:none}
+.tile .ti{
+  width:42px;height:42px;background:var(--tsBlueBg);
+  display:flex;align-items:center;justify-content:center;font-size:20px;margin:0 auto 8px;
+  color:var(--tsBlueDeep);border:1px solid var(--tsBlueSoft);
+}
+.tile .ti.cyan{background:var(--skyBg);border-color:var(--skyLight)}
+.tile .ti.tq{background:#D4F5EB;color:var(--turquoise);border-color:#A8E6D4}
+.tile .ti.dark{background:var(--tsBlueDeep);color:#fff;border-color:var(--tsBlueDeep)}
+.tile span{font-size:11px;font-weight:700;color:var(--gray1);line-height:1.2;display:block;letter-spacing:.04em;text-transform:uppercase;font-family:'Barlow'}
+
+.s-h{
+  display:flex;align-items:flex-end;justify-content:space-between;
+  margin:22px 4px 12px;border-bottom:1px solid var(--gray4);padding-bottom:10px;
+}
+.s-h h6{font-family:'Barlow';font-size:15px;font-weight:700;letter-spacing:-.2px}
+.s-h .en{display:block;font-size:9.5px;font-weight:700;letter-spacing:.3em;color:var(--gray3);text-transform:uppercase;margin-top:3px}
+.s-h a{font-size:11px;font-weight:700;color:var(--tsBlue);letter-spacing:.18em;text-transform:uppercase;cursor:pointer}
+
+.stories{display:flex;gap:10px;overflow-x:auto;padding-bottom:6px}
+.stories::-webkit-scrollbar{display:none}
+.story{
+  flex-shrink:0;width:96px;height:130px;color:#fff;padding:12px;
+  display:flex;flex-direction:column;justify-content:flex-end;cursor:pointer;
+  font-family:'Barlow';font-size:11px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;
+  position:relative;overflow:hidden;transition:.15s;
+}
+.story:hover{transform:translateY(-2px)}
+.story.s1{background:var(--tsBlueDeep)}
+.story.s1::before{content:"";position:absolute;inset:0;background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 110'><path d='M40 12 C 18 38, 18 78, 40 100 C 62 78, 62 38, 40 12 Z' fill='none' stroke='%239BE1E6' stroke-width='.8' opacity='.6'/></svg>") no-repeat center/cover;opacity:.7}
+.story.s2{background:var(--tsBlue)}
+.story.s2::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(115deg,transparent 0 6px,rgba(255,255,255,.18) 6px 10px,transparent 10px 22px)}
+.story.s3{background:var(--turquoise)}
+.story.s3::before{content:"";position:absolute;inset:0;background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 110'><path d='M40 12 C 18 38, 18 78, 40 100 C 62 78, 62 38, 40 12 Z' fill='%23ffffff' opacity='.18'/></svg>") no-repeat center/cover}
+.story.s4{background:var(--skyLight);color:var(--tsBlueDeep)}
+.story.s4::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(115deg,transparent 0 6px,rgba(12,51,157,.15) 6px 10px,transparent 10px 22px)}
+.story.s5{background:#000}
+.story::after{content:"";position:absolute;top:10px;left:10px;right:10px;height:2px;background:rgba(255,255,255,.4);z-index:1}
+.story span{position:relative;z-index:1}
+.story.s4 span{color:var(--tsBlueDeep)}
+
+/* news card */
+.news-card{background:#fff;border:1px solid var(--gray4);margin-bottom:12px;overflow:hidden;cursor:pointer;transition:.15s}
+.news-card:hover{transform:translateY(-2px);box-shadow:0 12px 28px -16px rgba(12,51,157,.4)}
+.news-img{
+  height:140px;position:relative;color:#fff;padding:18px;
+  display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;
+  background:linear-gradient(135deg,var(--tsBlueDeep) 0%,var(--tsBlue) 100%);
+}
+.news-img.cyan{background:var(--skyLight);color:var(--tsBlueDeep)}
+.news-img.tq{background:var(--turquoise)}
+.news-img::before{
+  content:"";position:absolute;right:-30px;top:-30px;width:160px;height:200px;
+  background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 130'><path d='M50 10 C 20 50, 20 100, 50 120 C 80 100, 80 50, 50 10 Z' fill='none' stroke='%23ffffff' stroke-width='.7' opacity='.45'/></svg>") no-repeat center/contain;
+}
+.news-img .badge{
+  display:inline-block;background:rgba(255,255,255,.22);padding:4px 11px;font-size:10px;
+  font-weight:800;text-transform:uppercase;letter-spacing:.2em;width:fit-content;margin-bottom:10px;
+  font-family:'Barlow';
+}
+.news-img.cyan .badge{background:var(--tsBlueDeep);color:#fff}
+.news-img h5{font-family:'Barlow';font-size:18px;font-weight:600;line-height:1.1;letter-spacing:-.4px}
+.news-img h5 b{font-weight:800;font-style:italic}
+.news-body{padding:14px 18px}
+.news-body p{font-size:13px;color:var(--gray2);line-height:1.5}
+.news-body .meta{display:flex;gap:14px;margin-top:10px;font-size:10px;color:var(--gray3);font-weight:700;letter-spacing:.2em;text-transform:uppercase;font-family:'Barlow'}
+
+/* ============================================================
+              TABBAR (bottom)
+============================================================ */
+.tabbar{
+  position:absolute;left:0;right:0;bottom:0;
+  background:#fff;border-top:1px solid var(--gray4);
+  display:flex;justify-content:space-around;padding:10px 0 18px;z-index:20;
+}
+.tabbar .tb{
+  display:flex;flex-direction:column;align-items:center;gap:4px;
+  color:var(--gray3);font-size:9.5px;font-weight:700;letter-spacing:.18em;
+  text-transform:uppercase;font-family:'Barlow';cursor:pointer;flex:1;transition:.15s;
+}
+.tabbar .tb .ic{font-size:20px;line-height:1}
+.tabbar .tb.active{color:var(--tsBlueDeep)}
+.tabbar .tb.active .ic{color:var(--tsBlue)}
+.tabbar .tb.center{position:relative;top:-26px}
+.tabbar .tb.center .ic{
+  width:64px;height:64px;border-radius:50%;background:var(--tsBlue);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-size:26px;
+  border:3px solid #fff;box-shadow:0 14px 28px -10px rgba(36,145,213,.6),0 0 0 1px var(--tsBlueDeep);
+  transition:.15s;
+}
+.tabbar .tb.center:hover .ic{transform:scale(1.05)}
+.tabbar .tb.center span{display:none}
+
+/* ============================================================
+              SCREEN: QR (modal)
+============================================================ */
+.qr-screen{
+  flex:1;background:linear-gradient(180deg,var(--tsBlueDeep) 0%,#000 100%);
+  color:#fff;display:flex;flex-direction:column;align-items:center;padding:18px 20px 0;position:relative;overflow:hidden;
+}
+.qr-screen::before{
+  content:"";position:absolute;inset:0;
+  background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 130'><path d='M50 10 C 20 50, 20 100, 50 120 C 80 100, 80 50, 50 10 Z' fill='none' stroke='%239BE1E6' stroke-width='.5' opacity='.4'/></svg>") no-repeat center 35%/300px;
+  pointer-events:none;
+}
+.qr-screen .head{width:100%;display:flex;justify-content:space-between;align-items:center;padding:8px 4px;position:relative;z-index:1}
+.qr-screen .head .x{
+  width:38px;height:38px;background:rgba(255,255,255,.12);
+  display:flex;align-items:center;justify-content:center;font-size:18px;
+  border:1px solid rgba(255,255,255,.18);cursor:pointer;
+}
+.qr-screen .head h2{font-family:'Barlow';font-size:16px;font-weight:700;letter-spacing:.2em;text-transform:uppercase}
+.qr-card{
+  background:#fff;padding:30px;margin-top:40px;text-align:center;width:100%;
+  border:1px solid var(--white);position:relative;z-index:1;
+}
+.qr-grid{
+  width:240px;height:240px;margin:0 auto;background:
+    linear-gradient(45deg,#000 25%,transparent 25%) 0 0/16px 16px,
+    linear-gradient(-45deg,#000 25%,transparent 25%) 0 8px/16px 16px,
+    linear-gradient(45deg,transparent 75%,#000 75%) 8px -8px/16px 16px,
+    linear-gradient(-45deg,transparent 75%,#000 75%) 8px 0/16px 16px,
+    #fff;
+  position:relative;
+}
+.qr-grid::before,.qr-grid::after,.qr-grid .ce{
+  content:"";position:absolute;width:54px;height:54px;background:#fff;border:10px solid #000;
+}
+.qr-grid::before{top:-4px;left:-4px}
+.qr-grid::after{top:-4px;right:-4px}
+.qr-grid .ce{bottom:-4px;left:-4px}
+.qr-grid .lg{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:54px;height:54px;background:var(--tsBlue);
+  display:flex;align-items:center;justify-content:center;color:#fff;
+  font-family:'Barlow';font-weight:800;font-size:18px;font-style:italic;
+  box-shadow:0 0 0 6px #fff;
+}
+.qr-card h3{font-family:'Barlow';font-size:17px;font-weight:700;margin-top:24px;color:var(--gray1);letter-spacing:.2em;text-transform:uppercase}
+.qr-card p{font-size:13px;color:var(--gray2);margin-top:8px;line-height:1.5}
+.qr-card .num{
+  font-family:'Barlow';font-size:22px;font-weight:600;letter-spacing:4px;color:var(--tsBlueDeep);
+  margin-top:18px;padding:14px 20px;background:var(--tsBlueBg);display:inline-block;border:1px solid var(--tsBlueSoft);
+}
+.qr-tip{
+  margin-top:auto;padding:18px 18px 28px;font-size:12px;text-align:center;color:rgba(255,255,255,.78);line-height:1.6;
+  position:relative;z-index:1;letter-spacing:.04em;
+}
+.qr-tip b{display:block;margin-bottom:6px;font-family:'Barlow';font-size:12px;font-weight:800;color:var(--skyLight);letter-spacing:.3em;text-transform:uppercase}
+
+/* ============================================================
+              SCREEN: MAP
+============================================================ */
+.map-screen{flex:1;background:#E1ECF3;position:relative;overflow:hidden}
+.map-bg{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(circle at 30% 20%,#D7E6F0,transparent 40%),
+    radial-gradient(circle at 70% 60%,#CFE0EC,transparent 50%),
+    #DCE7F0;
+}
+.map-bg::after{
+  content:"";position:absolute;inset:0;
+  background:
+    linear-gradient(90deg,transparent 49.6%,#B8CDDB 49.8%,#B8CDDB 50.2%,transparent 50.4%),
+    linear-gradient(0deg,transparent 49.6%,#B8CDDB 49.8%,#B8CDDB 50.2%,transparent 50.4%);
+  opacity:.5;
+}
+.pin{position:absolute;width:42px;height:50px;display:flex;flex-direction:column;align-items:center;cursor:pointer;transition:.2s}
+.pin:hover{transform:translateY(-2px)}
+.pin .head{
+  width:42px;height:42px;background:var(--tsBlue);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Barlow';font-size:16px;font-weight:800;font-style:italic;letter-spacing:-.5px;
+  border:3px solid #fff;box-shadow:0 4px 10px rgba(0,0,0,.25);
+}
+.pin .tail{width:0;height:0;border-left:7px solid transparent;border-right:7px solid transparent;border-top:9px solid var(--tsBlue);margin-top:-2px;filter:drop-shadow(0 2px 2px rgba(0,0,0,.2))}
+.pin.tq .head{background:var(--turquoise)}
+.pin.tq .tail{border-top-color:var(--turquoise)}
+.pin.deep .head{background:var(--tsBlueDeep)}
+.pin.deep .tail{border-top-color:var(--tsBlueDeep)}
+.pin.act .head{transform:scale(1.2);box-shadow:0 0 0 8px rgba(255,255,255,.4),0 6px 14px rgba(0,0,0,.3)}
+.search-bar{
+  position:absolute;top:60px;left:18px;right:18px;background:#fff;padding:14px 18px;
+  display:flex;align-items:center;gap:10px;font-size:14px;color:var(--gray3);font-weight:600;
+  border:1px solid var(--gray4);box-shadow:0 4px 12px -4px rgba(0,0,0,.12);
+}
+.search-bar .filter{margin-left:auto;width:32px;height:32px;background:var(--tsBlueDeep);color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px}
+.map-fab{position:absolute;right:18px;bottom:280px;display:flex;flex-direction:column;gap:8px;z-index:5}
+.map-fab .f{width:46px;height:46px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--tsBlueDeep);border:1px solid var(--gray4);box-shadow:0 4px 12px -4px rgba(0,0,0,.15);cursor:pointer;transition:.15s}
+.map-fab .f:hover{background:var(--tsBlueBg)}
+.map-sheet{
+  position:absolute;left:0;right:0;bottom:0;background:#fff;
+  padding:18px 22px 100px;border-top:1px solid var(--gray4);z-index:5;
+  animation:slideUp .3s ease;
+}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.map-sheet .grip{width:50px;height:5px;background:var(--gray4);margin:0 auto 18px;cursor:pointer}
+.map-sheet .station-row{display:flex;justify-content:space-between;align-items:flex-start}
+.map-sheet h4{font-family:'Barlow';font-size:22px;font-weight:600;letter-spacing:-.5px}
+.map-sheet h4 b{font-weight:800;font-style:italic;color:var(--tsBlueDeep)}
+.map-sheet .addr{font-size:13px;color:var(--gray2);margin-top:4px;font-weight:600}
+.map-sheet .open{font-size:12px;color:var(--turquoise);font-weight:800;margin-top:10px;letter-spacing:.18em;text-transform:uppercase;font-family:'Barlow'}
+.map-sheet .open .dot{display:inline-block;width:8px;height:8px;background:var(--green);margin-right:7px;vertical-align:1px}
+.map-sheet .actions{display:flex;gap:10px;margin-top:16px}
+.map-sheet .actions .a{flex:1;background:var(--tsBlueBg);color:var(--tsBlueDeep);font-family:'Barlow';font-size:11px;font-weight:800;padding:14px 0;text-align:center;letter-spacing:.18em;text-transform:uppercase;border:1px solid var(--tsBlueSoft);cursor:pointer;transition:.15s}
+.map-sheet .actions .a:hover{background:var(--tsBlueSoft)}
+.map-sheet .actions .a.prim{background:var(--tsBlue);color:#fff;border-color:var(--tsBlue)}
+.map-sheet .actions .a.prim:hover{background:var(--tsBlueDeep);border-color:var(--tsBlueDeep)}
+.fuel-mini{display:flex;gap:8px;margin-top:14px;font-family:'Barlow';font-size:11px;color:var(--gray2);font-weight:700;flex-wrap:wrap;letter-spacing:.06em;text-transform:uppercase}
+.fuel-mini span{background:var(--pageBg);padding:7px 12px;border:1px solid var(--gray4)}
+.fuel-mini b{color:var(--tsBlueDeep);font-weight:800}
+
+/* ============================================================
+              SCREEN: PUMP
+============================================================ */
+.pump-screen{flex:1;display:flex;flex-direction:column;background:var(--pageBg);overflow-y:auto}
+.pump-screen::-webkit-scrollbar{display:none}
+.pump-hero{background:linear-gradient(135deg,var(--tsBlueDeep),var(--tsBlue));color:#fff;padding:22px 22px 28px;position:relative;overflow:hidden;flex-shrink:0}
+.pump-hero::before{
+  content:"";position:absolute;right:-40px;top:-40px;width:200px;height:240px;
+  background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 130'><path d='M50 10 C 20 50, 20 100, 50 120 C 80 100, 80 50, 50 10 Z' fill='none' stroke='%239BE1E6' stroke-width='.7' opacity='.4'/></svg>") no-repeat center/contain;
+}
+.pump-hero h2{font-family:'Barlow';font-size:26px;font-weight:300;letter-spacing:-.7px;position:relative;z-index:1}
+.pump-hero h2 b{font-weight:800;font-style:italic}
+.pump-hero p{font-size:13px;opacity:.85;margin-top:6px;letter-spacing:.06em;text-transform:uppercase;font-weight:600;font-family:'Barlow';position:relative;z-index:1}
+.station{
+  background:rgba(255,255,255,.14);padding:13px 16px;margin-top:18px;
+  display:flex;justify-content:space-between;align-items:center;font-size:13px;font-weight:700;
+  border:1px solid rgba(255,255,255,.2);position:relative;z-index:1;font-family:'Barlow';letter-spacing:.04em;
+}
+.fuels{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border:1px solid var(--gray4);margin:18px}
+.fuel{
+  background:#fff;padding:18px;border-right:1px solid var(--gray4);border-bottom:1px solid var(--gray4);
+  display:flex;flex-direction:column;gap:4px;cursor:pointer;transition:.15s;
+}
+.fuel:nth-child(2n){border-right:none}
+.fuel:nth-child(n+3){border-bottom:none}
+.fuel.act{background:var(--tsBlueBg)}
+.fuel:hover:not(.act){background:var(--pageBg)}
+.fuel .name{font-family:'Barlow';font-size:14px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--tsBlueDeep)}
+.fuel .price{font-family:'Barlow';font-size:28px;font-weight:300;color:var(--tsBlueDeep);margin-top:8px;letter-spacing:-.7px;line-height:1}
+.fuel .price b{font-weight:800;font-style:italic}
+.fuel .price small{font-size:12px;color:var(--gray3);font-weight:600;margin-left:4px;letter-spacing:.06em;text-transform:uppercase}
+.section-lab{padding:0 22px 10px;font-family:'Barlow';font-size:10.5px;font-weight:800;color:var(--gray3);text-transform:uppercase;letter-spacing:.3em}
+.pump-pads{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin:0 18px;border:1px solid var(--gray4)}
+.pad{background:#fff;border-right:1px solid var(--gray4);padding:14px 0;text-align:center;font-family:'Barlow';font-size:13px;font-weight:700;color:var(--gray2);letter-spacing:.04em;cursor:pointer;transition:.15s}
+.pad:last-child{border-right:none}
+.pad:hover:not(.act){background:var(--pageBg)}
+.pad.act{background:var(--tsBlueDeep);color:#fff}
+.amount-card{background:#fff;border:1px solid var(--gray4);margin:18px;padding:20px}
+.amount-card .row{display:flex;justify-content:space-between;font-size:13px;font-weight:600;margin-top:8px;color:var(--gray2);font-family:'Barlow';letter-spacing:.02em}
+.amount-card .row b{color:var(--gray1);font-weight:800}
+.amount-card .total{font-family:'Barlow';font-size:36px;font-weight:300;color:var(--tsBlueDeep);letter-spacing:-1.2px;line-height:1}
+.amount-card .total b{font-weight:800;font-style:italic}
+
+/* ============================================================
+              SCREEN: BONUSES, etc. — list rows
+============================================================ */
+.list{border:1px solid var(--gray4)}
+.list .row{
+  background:#fff;padding:16px;display:flex;align-items:center;gap:14px;
+  border-bottom:1px solid var(--gray4);cursor:pointer;transition:.15s;
+}
+.list .row:hover{background:var(--pageBg)}
+.list .row:last-child{border-bottom:none}
+.row .ic{
+  width:44px;height:44px;background:var(--tsBlueBg);color:var(--tsBlueDeep);
+  display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;border:1px solid var(--tsBlueSoft);
+}
+.row .ic.tq{background:#D4F5EB;color:var(--turquoise);border-color:#A8E6D4}
+.row .ic.cyan{background:var(--skyBg);color:var(--tsBlueDeep);border-color:var(--skyLight)}
+.row .ic.dark{background:var(--tsBlueDeep);color:#fff;border-color:var(--tsBlueDeep)}
+.row .ic.gray{background:var(--pageBg);color:var(--gray2);border-color:var(--gray4)}
+.row .info{flex:1;min-width:0}
+.row .info b{display:block;font-family:'Barlow';font-size:14.5px;font-weight:600;line-height:1.2;letter-spacing:-.1px}
+.row .info span{font-size:11px;color:var(--gray3);font-weight:600;margin-top:4px;display:block;letter-spacing:.04em}
+.row .amt{font-family:'Barlow';font-size:18px;font-weight:300;color:var(--gray1);text-align:right;flex-shrink:0;letter-spacing:-.4px;line-height:1}
+.row .amt b{font-weight:800;font-style:italic}
+.row .amt.up{color:var(--turquoise)}
+.row .amt.down{color:var(--gray1)}
+.row .amt small{display:block;font-family:'Barlow';font-size:10px;color:var(--gray3);font-weight:700;margin-top:4px;letter-spacing:.18em;text-transform:uppercase}
+
+.s-tabs{display:flex;gap:0;margin:10px 0 16px;border:1px solid var(--gray4);overflow:hidden}
+.s-tab{flex:1;font-family:'Barlow';font-size:11px;font-weight:700;color:var(--gray3);padding:13px 4px;text-align:center;letter-spacing:.18em;text-transform:uppercase;border-right:1px solid var(--gray4);cursor:pointer;transition:.15s}
+.s-tab:last-child{border-right:none}
+.s-tab:hover:not(.act){background:var(--pageBg);color:var(--gray1)}
+.s-tab.act{background:var(--tsBlueDeep);color:#fff}
+
+/* ============================================================
+              SCREEN: LEVELS
+============================================================ */
+.lvls{display:flex;flex-direction:column;border:1px solid var(--gray4)}
+.lvl-card{background:#fff;padding:20px;border-bottom:1px solid var(--gray4);position:relative;overflow:hidden}
+.lvl-card:last-child{border-bottom:none}
+.lvl-card .badge-l{
+  display:inline-flex;align-items:center;gap:6px;padding:5px 12px;
+  font-family:'Barlow';font-size:11px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;
+  background:var(--tsBlueBg);color:var(--tsBlueDeep);
+}
+.lvl-card.tq .badge-l{background:var(--turquoise);color:#fff}
+.lvl-card.cur{background:linear-gradient(135deg,var(--tsBlueBg),#fff)}
+.lvl-card h5{font-family:'Barlow';font-size:18px;font-weight:600;margin-top:10px;letter-spacing:-.3px}
+.lvl-card .pct{font-family:'Barlow';font-size:54px;font-weight:300;color:var(--tsBlueDeep);margin-top:8px;letter-spacing:-1.8px;line-height:1}
+.lvl-card .pct b{font-weight:800;font-style:italic}
+.lvl-card .pct small{font-family:'Barlow Semi Condensed';font-size:12px;color:var(--gray3);font-weight:700;margin-left:10px;letter-spacing:.18em;text-transform:uppercase}
+.lvl-card.tq .pct{color:var(--turquoise)}
+.lvl-card .thr{font-family:'Barlow';font-size:12px;color:var(--gray2);margin-top:8px;font-weight:700;letter-spacing:.15em;text-transform:uppercase}
+.lvl-card::after{
+  content:"";position:absolute;right:-40px;top:-30px;width:140px;height:180px;
+  background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 130'><path d='M50 10 C 20 50, 20 100, 50 120 C 80 100, 80 50, 50 10 Z' fill='none' stroke='%239BE1E6' stroke-width='.7' opacity='.7'/></svg>") no-repeat center/contain;
+  pointer-events:none;
+}
+
+/* ============================================================
+              SCREEN: B2B CARDS
+============================================================ */
+.bcard{
+  background:linear-gradient(135deg,var(--tsBlueDeep),var(--tsBlue));color:#fff;
+  padding:20px;margin-top:10px;position:relative;overflow:hidden;height:170px;
+  display:flex;flex-direction:column;justify-content:space-between;border:1px solid var(--tsBlueDeep);
+  cursor:pointer;transition:.15s;
+}
+.bcard:hover{transform:translateY(-2px);box-shadow:0 14px 30px -16px rgba(12,51,157,.5)}
+.bcard.tq{background:var(--turquoise);border-color:var(--turquoise)}
+.bcard.dark{background:#000;border-color:#000}
+.bcard::before{
+  content:"";position:absolute;right:-30px;top:-30px;width:140px;height:180px;
+  background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 130'><path d='M50 10 C 20 50, 20 100, 50 120 C 80 100, 80 50, 50 10 Z' fill='none' stroke='%23ffffff' stroke-width='.6' opacity='.4'/></svg>") no-repeat center/contain;
+}
+.bcard::after{
+  content:"";position:absolute;left:0;right:0;bottom:0;height:16px;
+  background:repeating-linear-gradient(115deg,transparent 0 6px,rgba(255,255,255,.1) 6px 10px,transparent 10px 22px);
+}
+.bcard .top{display:flex;justify-content:space-between;align-items:flex-start;font-family:'Barlow';font-size:10.5px;font-weight:800;opacity:.85;letter-spacing:.3em;text-transform:uppercase;position:relative;z-index:1}
+.bcard .num{font-family:'Barlow';font-size:16px;letter-spacing:3.5px;font-weight:600;margin-top:8px;position:relative;z-index:1}
+.bcard .vol{font-family:'Barlow';font-size:38px;font-weight:300;margin-top:auto;letter-spacing:-1.2px;position:relative;z-index:1;line-height:1}
+.bcard .vol b{font-weight:800;font-style:italic}
+.bcard .vol small{font-family:'Barlow Semi Condensed';font-size:13px;font-weight:600;opacity:.85;margin-left:6px;letter-spacing:.1em;text-transform:uppercase}
+.bcard .bot{display:flex;justify-content:space-between;font-family:'Barlow';font-size:10.5px;font-weight:700;opacity:.85;margin-top:10px;position:relative;z-index:1;letter-spacing:.18em;text-transform:uppercase}
+
+/* ============================================================
+              SCREEN: PROFILE
+============================================================ */
+.p-head{
+  background:linear-gradient(135deg,var(--tsBlueDeep),var(--tsBlue));color:#fff;
+  padding:30px 22px 36px;text-align:center;position:relative;overflow:hidden;
+}
+.p-head::before{
+  content:"";position:absolute;right:-40px;bottom:-100px;width:240px;height:300px;
+  background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 130'><path d='M50 10 C 20 50, 20 100, 50 120 C 80 100, 80 50, 50 10 Z' fill='none' stroke='%239BE1E6' stroke-width='.6' opacity='.4'/></svg>") no-repeat center/contain;
+}
+.p-head .ava{
+  width:90px;height:90px;border-radius:50%;background:#fff;color:var(--tsBlueDeep);
+  display:flex;align-items:center;justify-content:center;font-family:'Barlow';
+  font-size:30px;font-weight:800;font-style:italic;margin:0 auto 14px;letter-spacing:-.5px;
+  border:3px solid var(--skyLight);position:relative;z-index:1;
+}
+.p-head h3{font-family:'Barlow';font-size:24px;font-weight:600;letter-spacing:-.4px;position:relative;z-index:1}
+.p-head h3 b{font-weight:800;font-style:italic}
+.p-head p{font-family:'Barlow Semi Condensed';font-size:13px;opacity:.85;margin-top:4px;font-weight:600;letter-spacing:.06em;position:relative;z-index:1}
+.p-head .lvl{
+  display:inline-flex;align-items:center;gap:6px;padding:7px 16px;
+  background:var(--turquoise);color:#fff;font-family:'Barlow';
+  font-size:12px;font-weight:800;letter-spacing:.2em;margin-top:14px;text-transform:uppercase;
+  position:relative;z-index:1;
+}
+.p-list{padding:0;display:flex;flex-direction:column;gap:0;border:1px solid var(--gray4);margin:18px 22px}
+.p-row{background:#fff;padding:16px;display:flex;align-items:center;gap:14px;font-family:'Barlow';font-size:14px;font-weight:600;color:var(--gray1);border-bottom:1px solid var(--gray4);letter-spacing:.04em;cursor:pointer;transition:.15s}
+.p-row:hover{background:var(--pageBg)}
+.p-row:last-child{border-bottom:none}
+.p-row .ic{width:36px;height:36px;background:var(--tsBlueBg);color:var(--tsBlueDeep);display:flex;align-items:center;justify-content:center;font-size:16px;border:1px solid var(--tsBlueSoft)}
+.p-row .ic.tq{background:#D4F5EB;color:var(--turquoise);border-color:#A8E6D4}
+.p-row .arr{margin-left:auto;color:var(--gray3);font-size:18px}
+.p-row.danger .ic{background:#fff;color:var(--gray2);border-color:var(--gray4)}
+
+/* ============================================================
+              SCREEN: NOTIFICATIONS
+============================================================ */
+.notif{padding:18px 22px;display:flex;flex-direction:column;gap:0;border:1px solid var(--gray4);margin:0 0 20px}
+.n-card{background:#fff;padding:16px;display:flex;gap:13px;border-bottom:1px solid var(--gray4);cursor:pointer;transition:.15s}
+.n-card:last-child{border-bottom:none}
+.n-card:hover{background:var(--pageBg)}
+.n-card .ic{width:42px;height:42px;background:var(--tsBlueBg);color:var(--tsBlueDeep);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;border:1px solid var(--tsBlueSoft)}
+.n-card .ic.tq{background:#D4F5EB;color:var(--turquoise);border-color:#A8E6D4}
+.n-card .ic.cyan{background:var(--skyBg);color:var(--tsBlueDeep);border-color:var(--skyLight)}
+.n-card .ic.dark{background:var(--tsBlueDeep);color:#fff;border-color:var(--tsBlueDeep)}
+.n-card.unread{background:var(--tsBlueBg)}
+.n-card.unread:hover{background:var(--tsBlueSoft)}
+.n-card .b{flex:1;min-width:0}
+.n-card .b h6{font-family:'Barlow';font-size:14.5px;font-weight:600;line-height:1.25;letter-spacing:-.2px}
+.n-card .b p{font-family:'Barlow Semi Condensed';font-size:13px;color:var(--gray2);margin-top:5px;line-height:1.45;font-weight:500}
+.n-card .b time{font-family:'Barlow';font-size:10.5px;color:var(--gray3);margin-top:8px;display:block;font-weight:800;letter-spacing:.2em;text-transform:uppercase}
+
+/* ============================================================
+              SCREEN: SUPPORT CHAT
+============================================================ */
+.chat{flex:1;display:flex;flex-direction:column;padding:14px 22px 90px;background:var(--pageBg);position:relative;overflow-y:auto}
+.chat::before{
+  content:"";position:absolute;right:-40px;bottom:80px;width:200px;height:240px;
+  background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 130'><path d='M50 10 C 20 50, 20 100, 50 120 C 80 100, 80 50, 50 10 Z' fill='none' stroke='%23CCDCEA' stroke-width='.7' opacity='.7'/></svg>") no-repeat center/contain;
+  pointer-events:none;
+}
+.chat-day{text-align:center;font-family:'Barlow';font-size:11px;color:var(--gray3);margin:14px 0 10px;font-weight:800;letter-spacing:.3em;text-transform:uppercase;position:relative;z-index:1}
+.bubble{max-width:80%;padding:14px 18px;font-size:14px;line-height:1.5;margin-top:10px;font-family:'Barlow Semi Condensed';position:relative;z-index:1;animation:bubbleIn .25s ease}
+@keyframes bubbleIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.bubble.in{background:#fff;border:1px solid var(--gray4);align-self:flex-start}
+.bubble.out{background:var(--tsBlue);color:#fff;align-self:flex-end}
+.bubble .t{font-size:10px;opacity:.7;margin-top:6px;display:block;letter-spacing:.1em;text-transform:uppercase;font-weight:700;font-family:'Barlow'}
+.qa{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;position:relative;z-index:1}
+.qa b{background:#fff;border:1px solid var(--gray4);font-size:11.5px;font-weight:700;color:var(--gray1);padding:10px 14px;letter-spacing:.04em;cursor:pointer;transition:.15s}
+.qa b:hover{background:var(--tsBlueBg);border-color:var(--tsBlue);color:var(--tsBlueDeep)}
+.chat-inp{
+  position:absolute;left:14px;right:14px;bottom:14px;background:#fff;
+  padding:12px 16px;display:flex;align-items:center;gap:10px;font-size:13px;color:var(--gray3);
+  border:1px solid var(--gray4);z-index:5;
+}
+.chat-inp input{flex:1;background:transparent;border:0;outline:0;font-family:inherit;font-size:14px;color:var(--gray1)}
+.chat-inp .send{margin-left:auto;width:36px;height:36px;background:var(--tsBlue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:16px;cursor:pointer;transition:.15s}
+.chat-inp .send:hover{background:var(--tsBlueDeep)}
+
+/* ============================================================
+              SCREEN: INVITE
+============================================================ */
+.invite-hero{
+  background:linear-gradient(160deg,var(--tsBlueDeep),var(--tsBlue));color:#fff;
+  padding:30px 22px;text-align:center;margin:0 22px;position:relative;overflow:hidden;
+  border:1px solid var(--tsBlueDeep);
+}
+.invite-hero::before{
+  content:"";position:absolute;left:-50px;bottom:-100px;width:240px;height:300px;
+  background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 130'><path d='M50 10 C 20 50, 20 100, 50 120 C 80 100, 80 50, 50 10 Z' fill='none' stroke='%239BE1E6' stroke-width='.6' opacity='.4'/></svg>") no-repeat center/contain;
+}
+.invite-hero::after{
+  content:"";position:absolute;right:0;top:0;bottom:0;width:80px;
+  background:repeating-linear-gradient(115deg,transparent 0 4px,rgba(155,225,230,.18) 4px 8px,transparent 8px 18px);
+}
+.invite-hero .gift{font-size:54px;display:block;line-height:1;position:relative;z-index:1}
+.invite-hero h3{font-family:'Barlow';font-size:28px;font-weight:300;margin-top:14px;letter-spacing:-.5px;line-height:1.1;position:relative;z-index:1}
+.invite-hero h3 b{font-weight:800;font-style:italic;color:var(--skyLight)}
+.invite-hero p{font-size:13px;opacity:.92;margin-top:10px;line-height:1.5;font-family:'Barlow Semi Condensed';letter-spacing:.04em;position:relative;z-index:1}
+.code{
+  margin-top:20px;background:rgba(155,225,230,.16);border:1px dashed var(--skyLight);
+  padding:14px;font-family:'Barlow';font-size:22px;font-weight:800;letter-spacing:8px;color:var(--skyLight);
+  font-style:italic;position:relative;z-index:1;cursor:pointer;
+}
+.invite-foot{padding:16px 22px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.invite-foot button{font-family:'Barlow';background:#fff;border:1px solid var(--gray4);padding:14px;font-size:11px;font-weight:800;color:var(--gray1);display:flex;align-items:center;justify-content:center;gap:8px;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;transition:.15s}
+.invite-foot button:hover{background:var(--pageBg)}
+.invite-foot button.prim{background:var(--tsBlueDeep);color:#fff;border-color:var(--tsBlueDeep)}
+.invite-foot button.prim:hover{background:#08246F}
+
+/* ============================================================
+              SCREEN: ACHIEVEMENTS
+============================================================ */
+.ach-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--gray4);margin:14px 0}
+.ach{background:#fff;padding:16px 8px;text-align:center;border-right:1px solid var(--gray4);border-bottom:1px solid var(--gray4)}
+.ach:nth-child(3n){border-right:none}
+.ach:nth-child(n+7){border-bottom:none}
+.ach .em{font-size:32px;line-height:1;display:block;margin-bottom:10px}
+.ach b{font-family:'Barlow';font-size:12px;font-weight:700;line-height:1.2;display:block;letter-spacing:-.1px}
+.ach span{font-family:'Barlow';font-size:10px;color:var(--gray3);font-weight:700;display:block;margin-top:5px;letter-spacing:.18em;text-transform:uppercase}
+.ach.lock{opacity:.4}
+.ach .pr{height:3px;background:var(--gray4);margin-top:8px;overflow:hidden}
+.ach .pr i{display:block;height:100%;background:var(--tsBlue)}
+
+/* ============================================================
+              SCREEN: NEWS DETAIL
+============================================================ */
+.news-hero{
+  height:280px;background:linear-gradient(135deg,#0C339D,#2491D5);
+  position:relative;color:#fff;padding:60px 26px 26px;
+  display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;flex-shrink:0;
+}
+.news-hero::before{
+  content:"";position:absolute;right:-60px;top:-40px;width:260px;height:340px;
+  background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 130'><path d='M50 10 C 20 50, 20 100, 50 120 C 80 100, 80 50, 50 10 Z' fill='none' stroke='%239BE1E6' stroke-width='.6' opacity='.5'/></svg>") no-repeat center/contain;
+}
+.news-hero::after{
+  content:"";position:absolute;left:0;right:0;bottom:0;height:16px;
+  background:repeating-linear-gradient(115deg,transparent 0 6px,rgba(155,225,230,.18) 6px 10px,transparent 10px 22px);
+}
+.news-hero .top-controls{position:absolute;top:18px;left:18px;right:18px;display:flex;justify-content:space-between;z-index:2}
+.news-hero .top-controls .x{
+  width:38px;height:38px;background:rgba(255,255,255,.2);
+  display:flex;align-items:center;justify-content:center;font-size:16px;
+  border:1px solid rgba(255,255,255,.2);cursor:pointer;
+}
+.news-hero .badge-l{
+  display:inline-block;background:var(--skyLight);color:var(--tsBlueDeep);
+  padding:5px 12px;font-family:'Barlow';font-size:11px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;
+  width:fit-content;margin-bottom:14px;position:relative;z-index:1;
+}
+.news-hero h2{font-family:'Barlow';font-size:34px;font-weight:300;line-height:1.05;letter-spacing:-.7px;position:relative;z-index:1}
+.news-hero h2 b{font-weight:800;font-style:italic;color:var(--skyLight)}
+
+/* ============================================================
+              SCREEN: COMPLAINT FORM
+============================================================ */
+.form{padding:18px 22px;display:flex;flex-direction:column;gap:16px}
+.form .lab{font-family:'Barlow';font-size:10.5px;font-weight:800;color:var(--gray3);letter-spacing:.3em;text-transform:uppercase;margin-bottom:8px}
+.form .inp{background:#fff;border:1px solid var(--gray4);padding:14px 16px;font-family:'Barlow';font-size:14px;color:var(--gray1);font-weight:600;letter-spacing:-.1px}
+.form .inp.area{height:110px;align-items:flex-start;color:var(--gray3);font-weight:500;line-height:1.5;padding-top:13px;font-family:'Barlow Semi Condensed';font-size:13px}
+.form .inp textarea{width:100%;height:100%;background:transparent;border:0;outline:0;font-family:inherit;font-size:inherit;font-weight:inherit;color:var(--gray1);resize:none}
+.stars{display:flex;gap:8px;margin-top:6px;font-size:30px;color:var(--gray4)}
+.stars b{cursor:pointer;transition:.15s}
+.stars b.act{color:var(--tsBlue)}
+.notice{
+  background:var(--skyBg);border:1px solid var(--skyLight);
+  color:var(--tsBlueDeep);font-size:12px;padding:14px 16px;line-height:1.55;
+}
+.notice b{font-family:'Barlow';font-weight:800;display:block;margin-bottom:5px;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase}
+
+/* ============================================================
+              TOAST
+============================================================ */
+.toast{
+  position:absolute;left:22px;right:22px;bottom:120px;
+  background:var(--tsBlueDeep);color:#fff;
+  padding:14px 18px;font-family:'Barlow';font-size:13px;font-weight:700;
+  letter-spacing:.04em;display:flex;align-items:center;gap:10px;z-index:60;
+  box-shadow:0 18px 40px -16px rgba(0,0,0,.5);
+  transform:translateY(20px);opacity:0;pointer-events:none;
+  transition:all .25s;
+}
+.toast.show{transform:translateY(0);opacity:1}
+.toast .ic{
+  width:30px;height:30px;background:var(--turquoise);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:15px;
+}
+.toast b{display:block;font-weight:800;font-size:13.5px}
+.toast span{display:block;font-size:11px;opacity:.8;margin-top:2px;font-weight:600}
+</style>
+</head>
+<body>
+
+<div class="stage">
+
+  <!-- ============= SIDEBAR : SCREEN INDEX ============= -->
+  <aside class="sidebar">
+    <h2>T.S Bonus</h2>
+    <div class="info" style="margin-bottom:24px">Полный кликабельный прототип<br><b>23 экрана</b> · работающая навигация</div>
+
+    <div class="nav-group">
+      <b>Онбординг</b>
+      <div class="nav-list">
+        <div class="nav-item" data-go="splash"><span class="num">01</span>Splash + язык</div>
+        <div class="nav-item" data-go="login"><span class="num">02</span>Вход по номеру</div>
+        <div class="nav-item" data-go="otp"><span class="num">03</span>SMS‑код</div>
+        <div class="nav-item" data-go="profile-setup"><span class="num">04</span>Заполнить профиль</div>
+      </div>
+    </div>
+
+    <div class="nav-group">
+      <b>Главная</b>
+      <div class="nav-list">
+        <div class="nav-item" data-go="home"><span class="num">05</span>Home</div>
+        <div class="nav-item" data-go="qr"><span class="num">06</span>QR на кассе</div>
+        <div class="nav-item" data-go="map"><span class="num">07</span>Карта АЗС</div>
+        <div class="nav-item" data-go="pump"><span class="num">08</span>Заправка</div>
+      </div>
+    </div>
+
+    <div class="nav-group">
+      <b>Бонусы</b>
+      <div class="nav-list">
+        <div class="nav-item" data-go="bonuses"><span class="num">09</span>Бонусы и история</div>
+        <div class="nav-item" data-go="levels"><span class="num">10</span>Уровни лояльности</div>
+        <div class="nav-item" data-go="certs"><span class="num">11</span>Сертификаты</div>
+        <div class="nav-item" data-go="news-detail"><span class="num">12</span>Акция · детально</div>
+      </div>
+    </div>
+
+    <div class="nav-group">
+      <b>B2B и социалка</b>
+      <div class="nav-list">
+        <div class="nav-item" data-go="fuel-cards"><span class="num">13</span>Топливные карты</div>
+        <div class="nav-item" data-go="invite"><span class="num">14</span>Пригласить друга</div>
+        <div class="nav-item" data-go="achievements"><span class="num">15</span>Достижения</div>
+        <div class="nav-item" data-go="notifications"><span class="num">16</span>Уведомления</div>
+      </div>
+    </div>
+
+    <div class="nav-group">
+      <b>Профиль</b>
+      <div class="nav-list">
+        <div class="nav-item" data-go="profile"><span class="num">17</span>Профиль</div>
+        <div class="nav-item" data-go="support"><span class="num">18</span>Поддержка</div>
+        <div class="nav-item" data-go="complaint"><span class="num">19</span>Жалоба</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ============= PHONE FRAME ============= -->
+  <div class="device-wrap">
+    <div class="phone">
+      <div class="phone-screen" id="phone">
+
+      <!-- ============= SCREEN: SPLASH ============= -->
+      <div class="screen active" data-screen="splash">
+        <div class="splash">
+          <div class="splash-logo">
+            <svg width="220" height="80" viewBox="0 0 240 88" fill="none">
+              <g stroke="#9BE1E6" stroke-width="3" stroke-linecap="round">
+                <line x1="6" y1="34" x2="76" y2="34"/>
+                <line x1="20" y1="44" x2="76" y2="44"/>
+                <line x1="32" y1="54" x2="76" y2="54"/>
+              </g>
+              <path d="M 30 44 Q 60 22, 100 44 Q 60 66, 30 44 Z" fill="#9BE1E6"/>
+              <g stroke="#9BE1E6" stroke-width="3" stroke-linecap="round">
+                <line x1="164" y1="34" x2="234" y2="34"/>
+                <line x1="164" y1="44" x2="220" y2="44"/>
+                <line x1="164" y1="54" x2="208" y2="54"/>
+              </g>
+              <path d="M 140 44 Q 180 22, 210 44 Q 180 66, 140 44 Z" fill="#9BE1E6"/>
+              <circle cx="120" cy="44" r="34" fill="#FFFFFF" stroke="#9BE1E6" stroke-width="2"/>
+              <g stroke="#0C339D" stroke-width="2.2" stroke-linecap="round">
+                <line x1="106" y1="22" x2="106" y2="32"/>
+                <line x1="111" y1="22" x2="111" y2="32"/>
+                <line x1="116" y1="22" x2="116" y2="32"/>
+              </g>
+              <text x="120" y="56" text-anchor="middle" font-family="Barlow,Manrope" font-size="26" font-weight="800" font-style="italic" fill="#0C339D">T.S</text>
+            </svg>
+          </div>
+          <h2>T.S <b>Bonus</b></h2>
+          <p>Ваш путь — наша забота</p>
+          <div class="lang">
+            <button class="act" data-lang="ru">Русский</button>
+            <button data-lang="kz">Қазақша</button>
+          </div>
+          <button class="start" data-go="login">Начать</button>
+          <div class="ver"><span>Since 2000</span><span>v 4.0.0</span></div>
+        </div>
+      </div>
+
+      <!-- ============= SCREEN: LOGIN ============= -->
+      <div class="screen" data-screen="login">
+        <div class="statusbar"><b>9:41</b><div class="dots"><span></span><span></span><span></span></div><div class="battery"></div></div>
+        <div class="auth">
+          <div data-back style="cursor:pointer;font-size:24px;color:var(--gray2);width:36px;height:36px;display:flex;align-items:center;justify-content:center;border:1px solid var(--gray4)">←</div>
+          <div class="step">Шаг 1 из 3</div>
+          <h2>Введите номер<br><b>телефона</b></h2>
+          <p class="sub">Мы отправим SMS с кодом подтверждения. Без пароля.</p>
+          <div class="field">
+            <label>Номер</label>
+            <div class="inp focus">
+              <span class="pre">+7</span>
+              <input type="tel" id="phoneInput" value="707 123 45 67" placeholder="(___) ___ __ __">
+            </div>
+          </div>
+          <button class="btn-prim" data-go="otp">Получить код</button>
+          <div class="auth-foot">Нажимая «Получить код», вы соглашаетесь<br>с <a>условиями</a> и <a>политикой</a> T.S Bonus</div>
+        </div>
+      </div>
+
+      <!-- ============= SCREEN: OTP ============= -->
+      <div class="screen" data-screen="otp">
+        <div class="statusbar"><b>9:41</b><div class="dots"><span></span><span></span><span></span></div><div class="battery"></div></div>
+        <div class="auth">
+          <div data-back style="cursor:pointer;font-size:24px;color:var(--gray2);width:36px;height:36px;display:flex;align-items:center;justify-content:center;border:1px solid var(--gray4)">←</div>
+          <div class="step">Шаг 2 из 3</div>
+          <h2>Введите код<br>из <b>SMS</b></h2>
+          <p class="sub">Отправили на +7 707 ••• 45 67. <a data-back>Изменить</a></p>
+          <div class="otp" id="otp">
+            <div class="o" data-i="0"></div>
+            <div class="o" data-i="1"></div>
+            <div class="o" data-i="2"></div>
+            <div class="o" data-i="3"></div>
+            <div class="o" data-i="4"></div>
+          </div>
+          <p class="sub" style="text-align:center;margin-top:18px">
+            <span id="otp-hint">Введите код · подсказка: <b style="color:var(--tsBlueDeep);font-family:Barlow">42718</b></span>
+          </p>
+          <div class="kbd" id="kbd">
+            <b data-k="1">1</b><b data-k="2">2</b><b data-k="3">3</b>
+            <b data-k="4">4</b><b data-k="5">5</b><b data-k="6">6</b>
+            <b data-k="7">7</b><b data-k="8">8</b><b data-k="9">9</b>
+            <b class="empty"></b><b data-k="0">0</b><b data-k="back">⌫</b>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============= SCREEN: PROFILE SETUP ============= -->
+      <div class="screen" data-screen="profile-setup">
+        <div class="statusbar"><b>9:41</b><div class="dots"><span></span><span></span><span></span></div><div class="battery"></div></div>
+        <div class="auth">
+          <div class="step">Шаг 3 из 3</div>
+          <h2>Заполните<br><b>профиль</b></h2>
+          <p class="sub">Дарим <b style="color:var(--turquoise);font-weight:800">+1 000 ₸</b> бонусов в день рождения</p>
+          <div class="field">
+            <label>Фамилия и имя</label>
+            <div class="inp"><input type="text" id="profileName" value="Алмат Серикбаев" placeholder="Ваше имя"></div>
+          </div>
+          <div class="field">
+            <label>Дата рождения</label>
+            <div class="inp"><input type="text" id="profileBirth" value="15 марта 1992" placeholder="ДД ММ ГГГГ"></div>
+          </div>
+          <div class="field">
+            <label>E‑mail (необязательно)</label>
+            <div class="inp"><input type="email" id="profileEmail" value="a.serikbaev@mail.ru" placeholder="email@example.com"></div>
+          </div>
+          <button class="btn-prim deep" data-go="home" data-action="signup">Готово</button>
+          <button class="btn-sec" data-go="home" data-action="skip">Пропустить</button>
+        </div>
+      </div>
+
+      <!-- ============= SCREEN: HOME ============= -->
+      <div class="screen" data-screen="home">
+        <div class="statusbar"><b>9:41</b><div class="dots"><span></span><span></span><span></span></div><div class="battery"></div></div>
+        <div class="appbar">
+          <div>
+            <div class="greet">Доброе утро</div>
+            <h1 id="userName">Алмат</h1>
+          </div>
+          <div style="display:flex;gap:8px">
+            <div class="btn" data-go="notifications">🔔</div>
+            <div class="btn" data-go="profile">⚙</div>
+          </div>
+        </div>
+        <div class="scroll">
+          <div class="hero">
+            <span class="lvl">Gold · 5%</span>
+            <div class="balance-label">Бонусный счёт</div>
+            <div class="balance"><b id="balance">8 420</b><small>бонусов</small></div>
+            <div class="progress"><span style="width:72%"></span></div>
+            <div class="pmeta"><span>До бесплатной заправки</span><span>1 580 ₸</span></div>
+            <div class="qr-cta" data-go="qr">
+              <div class="qico">▦</div>
+              <div class="label">
+                <small>QR‑код</small>
+                Показать на кассе
+              </div>
+              <div class="arr">›</div>
+            </div>
+          </div>
+
+          <div class="tiles">
+            <div class="tile" data-go="pump"><div class="ti">⛽</div><span>Заправка</span></div>
+            <div class="tile" data-go="map"><div class="ti cyan">📍</div><span>Карта</span></div>
+            <div class="tile" data-go="certs"><div class="ti tq">🎁</div><span>Серти‑<br>фикаты</span></div>
+            <div class="tile" data-go="bonuses"><div class="ti">📜</div><span>История</span></div>
+            <div class="tile" data-go="fuel-cards"><div class="ti">💳</div><span>Карты<br>топливные</span></div>
+            <div class="tile" data-go="invite"><div class="ti dark">📨</div><span>Пригласить</span></div>
+            <div class="tile" data-go="achievements"><div class="ti tq">🏆</div><span>Достижения</span></div>
+            <div class="tile" data-go="support"><div class="ti cyan">💬</div><span>Поддержка</span></div>
+          </div>
+
+          <div class="s-h"><div><h6>Акции</h6><span class="en">Stories · Promotions</span></div><a data-go="news-detail">Все →</a></div>
+          <div class="stories">
+            <div class="story s1" data-go="news-detail"><span>+5% к выходным</span></div>
+            <div class="story s2" data-go="news-detail"><span>Новые цены</span></div>
+            <div class="story s3" data-go="news-detail"><span>Gold всем</span></div>
+            <div class="story s4" data-go="news-detail"><span>Розыгрыш</span></div>
+            <div class="story s5" data-go="news-detail"><span>Кешбэк</span></div>
+          </div>
+
+          <div class="s-h"><div><h6>Новости</h6><span class="en">News</span></div><a>Все →</a></div>
+          <div class="news-card" data-go="news-detail">
+            <div class="news-img">
+              <span class="badge">Шымкент</span>
+              <h5>Открыли 50‑ю АЗС<br><b>в Шымкенте</b></h5>
+            </div>
+            <div class="news-body">
+              <p>Сеть T.S теперь и на юге Казахстана. Дарим +500 бонусов первым 1000 клиентам.</p>
+              <div class="meta"><span>📅 2 мая</span><span>👁 12.4K</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="tabbar">
+          <div class="tb active" data-tab="home" data-go="home"><div class="ic">⌂</div>Главная</div>
+          <div class="tb" data-tab="map" data-go="map"><div class="ic">📍</div>АЗС</div>
+          <div class="tb center" data-go="qr"><div class="ic">▦</div></div>
+          <div class="tb" data-tab="bonuses" data-go="bonuses"><div class="ic">🎁</div>Бонусы</div>
+          <div class="tb" data-tab="profile" data-go="profile"><div class="ic">👤</div>Профиль</div>
+        </div>
+      </div>
+
+      <!-- ============= SCREEN: QR ============= -->
+      <div class="screen" data-screen="qr">
+        <div class="statusbar dark"><b>9:41</b><div class="dots"><span></span><span></span><span></span></div><div class="battery"></div></div>
+        <div class="qr-screen">
+          <div class="head">
+            <div class="x" data-back>×</div>
+            <h2>Ваш QR</h2>
+            <div class="x">⛶</div>
+          </div>
+          <div class="qr-card">
+            <div class="qr-grid"><div class="ce"></div><div class="lg">T.S</div></div>
+            <h3>Покажите кассиру</h3>
+            <p>Код обновится через <b id="qrTimer" style="color:var(--tsBlueDeep)">00:58</b></p>
+            <div class="num">7077 1234 5678</div>
+          </div>
+          <div class="qr-tip">
+            <b>Как это работает</b>
+            Покажите код на кассе АЗС перед оплатой —<br>бонусы зачислятся автоматически
+          </div>
+        </div>
+      </div>
+
+      <!-- ============= SCREEN: MAP ============= -->
+      <div class="screen" data-screen="map">
+        <div class="statusbar"><b>9:41</b><div class="dots"><span></span><span></span><span></span></div><div class="battery"></div></div>
+        <div class="map-screen">
+          <div class="map-bg"></div>
+          <div class="search-bar">🔍 <span>Найти АЗС или адрес</span><div class="filter">⚙</div></div>
+          <div class="pin" data-pin="1" style="top:170px;left:70px"><div class="head">T.S</div><div class="tail"></div></div>
+          <div class="pin tq" data-pin="2" style="top:240px;left:200px"><div class="head">T.S</div><div class="tail"></div></div>
+          <div class="pin" data-pin="3" style="top:300px;left:100px"><div class="head">T.S</div><div class="tail"></div></div>
+          <div class="pin act deep" data-pin="4" style="top:340px;left:220px"><div class="head">T.S</div><div class="tail"></div></div>
+          <div class="pin" data-pin="5" style="top:410px;left:80px"><div class="head">T.S</div><div class="tail"></div></div>
+          <div class="map-fab">
+            <div class="f">⊕</div>
+            <div class="f">⊖</div>
+            <div class="f">📍</div>
+          </div>
+          <div class="map-sheet">
+            <div class="grip"></div>
+            <div class="station-row">
+              <div>
+                <h4 id="stationName">АЗС <b>T.S #14</b></h4>
+                <div class="addr" id="stationAddr">пр. Назарбаева, 142, Алматы</div>
+                <div class="open"><span class="dot"></span>Открыто 24/7 · 1.2 км</div>
+              </div>
+              <span style="background:var(--turquoise);color:#fff;padding:5px 12px;font-family:'Barlow';font-size:11px;font-weight:800;letter-spacing:.2em;text-transform:uppercase">Gold</span>
+            </div>
+            <div class="fuel-mini">
+              <span>АИ‑92 <b>248</b></span>
+              <span>АИ‑95 <b>275</b></span>
+              <span>АИ‑98 <b>312</b></span>
+              <span>ДТ <b>295</b></span>
+            </div>
+            <div class="actions">
+              <div class="a" data-toast="Звоним на АЗС…">📞 Позвонить</div>
+              <div class="a prim" data-go="pump">🧭 Заправиться</div>
+            </div>
+          </div>
+        </div>
+        <div class="tabbar">
+          <div class="tb" data-tab="home" data-go="home"><div class="ic">⌂</div>Главная</div>
+          <div class="tb active" data-tab="map" data-go="map"><div class="ic">📍</div>АЗС</div>
+          <div class="tb center" data-go="qr"><div class="ic">▦</div></div>
+          <div class="tb" data-tab="bonuses" data-go="bonuses"><div class="ic">🎁</div>Бонусы</div>
+          <div class="tb" data-tab="profile" data-go="profile"><div class="ic">👤</div>Профиль</div>
+        </div>
+      </div>
+
+      <!-- ============= SCREEN: PUMP ============= -->
+      <div class="screen" data-screen="pump">
+        <div class="statusbar"><b>9:41</b><div class="dots"><span></span><span></span><span></span></div><div class="battery"></div></div>
+        <div class="pump-screen">
+          <div class="pump-hero">
+            <div data-back style="cursor:pointer;width:34px;height:34px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:18px;border:1px solid rgba(255,255,255,.25);margin-bottom:10px">←</div>
+            <h2>Заправка</h2>
+            <p>АЗС T.S #14, Алматы</p>
+            <div class="station">
+              <div>⛽ Колонка <b>№3</b></div>
+              <div>Сменить ›</div>
+            </div>
+          </div>
+          <div class="fuels" id="fuels">
+            <div class="fuel" data-fuel="92" data-price="248"><span class="name">АИ‑92</span><span class="price"><b>248</b><small>₸/л</small></span></div>
+            <div class="fuel act" data-fuel="95" data-price="275"><span class="name">АИ‑95</span><span class="price"><b>275</b><small>₸/л</small></span></div>
+            <div class="fuel" data-fuel="98" data-price="312"><span class="name">АИ‑98</span><span class="price"><b>312</b><small>₸/л</small></span></div>
+            <div class="fuel" data-fuel="DT" data-price="295"><span class="name">ДТ</span><span class="price"><b>295</b><small>₸/л</small></span></div>
+          </div>
+          <div class="section-lab">Объём</div>
+          <div class="pump-pads" id="pads">
+            <div class="pad" data-vol="10">10 л</div>
+            <div class="pad act" data-vol="20">20 л</div>
+            <div class="pad" data-vol="30">30 л</div>
+            <div class="pad" data-vol="full">До полн.</div>
+          </div>
+          <div class="amount-card">
+            <div class="row"><span><span id="pumpVol">20</span> л · АИ‑<span id="pumpFuel">95</span></span><b id="pumpSum">5 500 ₸</b></div>
+            <div class="row"><span>Бонусом</span><b style="color:var(--turquoise)">−500 ₸</b></div>
+            <div class="row" style="margin-top:14px;font-size:14px;align-items:flex-end"><b>К оплате</b><span class="total"><b id="pumpTotal">5 000</b><small style="font-size:16px;color:var(--gray3);font-weight:600;font-family:'Barlow Semi Condensed'">₸</small></span></div>
+            <button class="btn-prim deep" style="margin-top:14px;width:100%" data-action="pay">Оплатить</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============= SCREEN: BONUSES ============= -->
+      <div class="screen" data-screen="bonuses">
+        <div class="statusbar"><b>9:41</b><div class="dots"><span></span><span></span><span></span></div><div class="battery"></div></div>
+        <div class="appbar">
+          <div data-back class="back">←</div>
+          <h1>Бонусы</h1>
+          <div class="btn" data-go="levels">ⓘ</div>
+        </div>
+        <div class="scroll">
+          <div class="hero" style="padding:24px">
+            <span class="lvl">Gold · 5%</span>
+            <div class="balance-label">Доступно</div>
+            <div class="balance"><b>8 420</b><small>бонусов</small></div>
+            <div style="font-size:12px;opacity:.85;margin-top:8px;font-family:'Barlow Semi Condensed';letter-spacing:.06em;text-transform:uppercase;font-weight:600;position:relative;z-index:1">≈ 8 420 ₸ при заправке</div>
+            <div class="progress"><span style="width:72%"></span></div>
+            <div class="pmeta"><span>До статуса 280 000 ₸</span><span>72%</span></div>
+          </div>
+
+          <div class="s-tabs" id="bonus-tabs">
+            <div class="s-tab act" data-filter="all">Все</div>
+            <div class="s-tab" data-filter="up">Начисления</div>
+            <div class="s-tab" data-filter="down">Списания</div>
+            <div class="s-tab" data-filter="gift">Подарки</div>
+          </div>
+
+          <div class="list" id="bonus-list">
+            <div class="row" data-type="up">
+              <div class="ic tq">⛽</div>
+              <div class="info"><b>Заправка АИ‑95 · 20л</b><span>АЗС #14 · Сегодня, 09:24</span></div>
+              <div class="amt up"><b>+275</b><small>5%</small></div>
+            </div>
+            <div class="row" data-type="down">
+              <div class="ic gray">💳</div>
+              <div class="info"><b>Списание бонусов</b><span>АЗС #14 · Сегодня, 09:24</span></div>
+              <div class="amt down">−500</div>
+            </div>
+            <div class="row" data-type="gift">
+              <div class="ic cyan">🎂</div>
+              <div class="info"><b>День рождения</b><span>15 марта · Подарок T.S</span></div>
+              <div class="amt up"><b>+1 000</b></div>
+            </div>
+            <div class="row" data-type="up">
+              <div class="ic">📨</div>
+              <div class="info"><b>Друг присоединился</b><span>Бонус за инвайт · 10 марта</span></div>
+              <div class="amt up"><b>+500</b></div>
+            </div>
+            <div class="row" data-type="up">
+              <div class="ic tq">⛽</div>
+              <div class="info"><b>Заправка ДТ · 35л</b><span>АЗС #07 · 8 марта</span></div>
+              <div class="amt up"><b>+515</b></div>
+            </div>
+            <div class="row" data-type="gift">
+              <div class="ic cyan">🎁</div>
+              <div class="info"><b>Сертификат от Айгуль</b><span>5 000 ₸ · 5 марта</span></div>
+              <div class="amt up"><b>+5 000</b></div>
+            </div>
+          </div>
+        </div>
+        <div class="tabbar">
+          <div class="tb" data-tab="home" data-go="home"><div class="ic">⌂</div>Главная</div>
+          <div class="tb" data-tab="map" data-go="map"><div class="ic">📍</div>АЗС</div>
+          <div class="tb center" data-go="qr"><div class="ic">▦</div></div>
+          <div class="tb active" data-tab="bonuses" data-go="bonuses"><div class="ic">🎁</div>Бонусы</div>
+          <div class="tb" data-tab="profile" data-go="profile"><div class="ic">👤</div>Профиль</div>
+        </div>
+      </div>
+
+      <!-- ============= SCREEN: LEVELS ============= -->
+      <div class="screen" data-screen="levels">
+        <div class="statusbar"><b>9:41</b><div class="dots"><span></span><span></span><span></span></div><div class="battery"></div></div>
+        <div class="appbar"><div data-back class="back">←</div><h1>Уровни лояльности</h1><div></div></div>
+        <div class="scroll">
+          <p style="font-size:13px;color:var(--gray2);line-height:1.55;padding:0 4px 16px;font-weight:500">Чем больше заправляетесь — тем выше процент бонусов на следующие покупки.</p>
+          <div class="lvls">
+            <div class="lvl-card">
+              <span class="badge-l">Стандарт</span>
+              <h5>Старт для всех</h5>
+              <div class="pct"><b>1</b>%<small>с заправки</small></div>
+              <div class="thr">До 150 000 ₸</div>
+            </div>
+            <div class="lvl-card">
+              <span class="badge-l">Стандарт+</span>
+              <h5>Регулярные клиенты</h5>
+              <div class="pct"><b>3</b>%<small>с заправки</small></div>
+              <div class="thr">150 000 — 250 000 ₸</div>
+            </div>
+            <div class="lvl-card cur tq">
+              <span class="badge-l">Gold · ваш уровень</span>
+              <h5>Премиум статус</h5>
+              <div class="pct"><b>5</b>%<small>с заправки</small></div>
+              <div class="thr">От 350 000 ₸</div>
+              <div style="font-size:12.5px;color:var(--gray2);margin-top:14px;line-height:1.55;font-weight:500;font-family:'Barlow Semi Condensed'">+ персональные акции, удвоенный бонус за инвайт, приоритет в поддержке.</div>
+            </div>
+          </div>
+          <div class="notice" style="margin-top:18px">
+            <b>Как считается оборот?</b>
+            Сумма ваших заправок за последние 90 дней. Не сжигается, пока вы активно пользуетесь сетью.
+          </div>
+        </div>
+      </div>
+
+      <!-- ============= SCREEN: CERTS ============= -->
+      <div class="screen" data-screen="certs">
+        <div class="statusbar"><b>9:41</b><div class="dots"><span></span><span></span><span></span></div><div class="battery"></div></div>
+        <div class="appbar"><div data-back class="back">←</div><h1>Сертификаты</h1><div class="btn">+</div></div>
+        <div class="scroll">
+          <div class="s-tabs">
+            <div class="s-tab act">Активные · 2</div>
+            <div class="s-tab">Использованные</div>
+          </div>
+          <div style="background:linear-gradient(135deg,#0C339D,#2491D5);color:#fff;padding:18px;margin-bottom:10px;position:relative;overflow:hidden;border:1px solid #0C339D">
+            <div style="position:absolute;right:-30px;bottom:-30px;width:140px;height:180px;background:url(&quot;data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 130'><path d='M50 10 C 20 50, 20 100, 50 120 C 80 100, 80 50, 50 10 Z' fill='none' stroke='%23ffffff' stroke-width='.6' opacity='.45'/></svg>&quot;) no-repeat center/contain"></div>
+            <div style="font-family:Barlow;font-size:11px;font-weight:800;letter-spacing:.3em;text-transform:uppercase;opacity:.85;position:relative;z-index:1">Подарочный сертификат</div>
+            <div style="font-family:Barlow;font-size:42px;font-weight:300;margin-top:6px;letter-spacing:-1.6px;position:relative;z-index:1;line-height:1"><b style="font-weight:800;font-style:italic">5 000</b><small style="font-size:16px;font-weight:600;opacity:.9;margin-left:6px">₸</small></div>
+            <div style="font-size:13px;opacity:.92;margin-top:10px;font-family:Barlow Semi Condensed;font-weight:500;position:relative;z-index:1">От Айгуль · «С ДР, друг!»</div>
+            <div style="display:flex;justify-content:space-between;font-family:Barlow;font-size:11px;opacity:.85;margin-top:16px;font-weight:700;position:relative;z-index:1;letter-spacing:.2em;text-transform:uppercase"><span>№ TS‑5821‑3902</span><span>До 15.06.26</span></div>
+          </div>
+          <div style="background:var(--turquoise);color:#fff;padding:18px;margin-bottom:10px;position:relative;overflow:hidden;border:1px solid var(--turquoise)">
+            <div style="position:absolute;right:-30px;bottom:-30px;width:140px;height:180px;background:url(&quot;data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 130'><path d='M50 10 C 20 50, 20 100, 50 120 C 80 100, 80 50, 50 10 Z' fill='none' stroke='%23ffffff' stroke-width='.6' opacity='.45'/></svg>&quot;) no-repeat center/contain"></div>
+            <div style="font-family:Barlow;font-size:11px;font-weight:800;letter-spacing:.3em;text-transform:uppercase;opacity:.85;position:relative;z-index:1">Накопленный сертификат</div>
+            <div style="font-family:Barlow;font-size:42px;font-weight:300;margin-top:6px;letter-spacing:-1.6px;position:relative;z-index:1;line-height:1"><b style="font-weight:800;font-style:italic">2 500</b><small style="font-size:16px;font-weight:600;opacity:.9;margin-left:6px">₸</small></div>
+            <div style="font-size:13px;opacity:.92;margin-top:10px;font-family:Barlow Semi Condensed;font-weight:500;position:relative;z-index:1">За 3 заправки на АИ‑98</div>
+            <div style="display:flex;justify-content:space-between;font-family:Barlow;font-size:11px;opacity:.85;margin-top:16px;font-weight:700;position:relative;z-index:1;letter-spacing:.2em;text-transform:uppercase"><span>№ TS‑1148‑0034</span><span>До 31.12.26</span></div>
+          </div>
+          <div class="s-h"><div><h6>Купить сертификат</h6><span class="en">Buy</span></div></div>
+          <div class="news-card" data-toast="Откроем покупку сертификата">
+            <div class="news-img cyan">
+              <span class="badge">Новинка</span>
+              <h5>Подарите топливо<br><b>близким</b></h5>
+            </div>
+            <div class="news-body">
+              <p>От 3 000 до 50 000 ₸ — отправьте e‑открытку и оплатите бонусами или картой.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============= SCREEN: NEWS DETAIL ============= -->
+      <div class="screen" data-screen="news-detail">
+        <div class="statusbar dark"><b>9:41</b><div class="dots"><span></span><span></span><span></span></div><div class="battery"></div></div>
+        <div class="news-hero">
+          <div class="top-controls">
+            <div class="x" data-back>←</div>
+            <div class="x" data-toast="Поделиться акцией">↗</div>
+          </div>
+          <span class="badge-l">Акция · до 31 мая</span>
+          <h2>+5% бонусов<br><b>к выходным</b></h2>
+        </div>
+        <div class="scroll" style="padding-top:20px">
+          <p style="font-size:13.5px;line-height:1.6;color:var(--gray2);font-family:'Barlow Semi Condensed'">Все клиенты T.S получают <b style="color:var(--gray1);font-weight:700">удвоенные бонусы</b> при заправке в субботу и воскресенье — независимо от уровня лояльности.</p>
+          <h6 style="font-family:Barlow;font-size:15px;font-weight:700;margin-top:20px;margin-bottom:10px;letter-spacing:-.2px">Как принять участие</h6>
+          <ol style="font-size:13px;color:var(--gray2);line-height:1.8;padding-left:22px;font-weight:500;font-family:'Barlow Semi Condensed'">
+            <li>Откройте приложение в выходной день</li>
+            <li>Покажите QR‑код кассиру при оплате</li>
+            <li>Бонусы зачислятся в течение 5 минут</li>
+          </ol>
+          <div class="notice" style="margin-top:18px"><b>Не суммируется</b>Не сочетается с подарочными сертификатами и инвайт‑бонусом.</div>
+          <button class="btn-prim" style="width:100%;margin-top:18px" data-go="qr">Заправиться сейчас</button>
+        </div>
+      </div>
+
+      <!-- ============= SCREEN: FUEL CARDS ============= -->
+      <div class="screen" data-screen="fuel-cards">
+        <div class="statusbar"><b>9:41</b><div class="dots"><span></span><span></span><span></span></div><div class="battery"></div></div>
+        <div class="appbar"><div data-back class="back">←</div><h1>Топливные карты</h1><div class="btn">+</div></div>
+        <div class="scroll">
+          <div style="font-size:13px;color:var(--gray2);padding:0 4px 10px;line-height:1.5;font-weight:500;font-family:'Barlow Semi Condensed'">Корпоративные литры от вашей компании · ТОО «Ас‑Логистик»</div>
+          <div class="bcard">
+            <div class="top"><span>АИ‑95 · CORP</span><span>T.S</span></div>
+            <div class="num">5821 •••• 3902</div>
+            <div class="vol"><b>128.5</b><small>литров</small></div>
+            <div class="bot"><span>Лимит мес: 200 л</span><span>До 12/26</span></div>
+          </div>
+          <div class="bcard tq">
+            <div class="top"><span>ДТ · PREMIUM</span><span>T.S</span></div>
+            <div class="num">5821 •••• 1148</div>
+            <div class="vol"><b>340</b><small>литров</small></div>
+            <div class="bot"><span>Лимит мес: 500 л</span><span>До 08/27</span></div>
+          </div>
+          <div class="bcard dark">
+            <div class="top"><span>Universal · BLACK</span><span>T.S</span></div>
+            <div class="num">5821 •••• 7702</div>
+            <div class="vol"><b>∞</b><small>безлимит</small></div>
+            <div class="bot"><span>Корпоративный</span><span>До 04/28</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============= SCREEN: INVITE ============= -->
+      <div class="screen" data-screen="invite">
+        <div class="statusbar"><b>9:41</b><div class="dots"><span></span><span></span><span></span></div><div class="battery"></div></div>
+        <div class="appbar"><div data-back class="back">←</div><h1>Пригласить друга</h1><div></div></div>
+        <div class="scroll" style="padding:0 0 80px">
+          <div class="invite-hero">
+            <span class="gift">🎁</span>
+            <h3>Получите <b>500 ₸</b><br>за каждого друга</h3>
+            <p>А он — 500 ₸ приветственный бонус<br>на первую заправку</p>
+            <div class="code" data-toast="Код скопирован" data-copy="ALMAT-42S">ALMAT‑42S</div>
+          </div>
+          <div class="invite-foot">
+            <button data-toast="Код скопирован" data-copy="ALMAT-42S">📋 Копировать</button>
+            <button class="prim" data-toast="Открываем меню «Поделиться»">↗ Поделиться</button>
+          </div>
+          <div class="s-h" style="margin:6px 22px"><div><h6>Приглашены</h6><span class="en">3 of 10</span></div></div>
+          <div class="list" style="margin:0 22px">
+            <div class="row">
+              <div class="ic tq">✓</div>
+              <div class="info"><b>Айдар Касенов</b><span>Заправился · +500 бонусов</span></div>
+              <div class="amt up"><b>+500</b></div>
+            </div>
+            <div class="row">
+              <div class="ic tq">✓</div>
+              <div class="info"><b>Дина Б.</b><span>Заправилась · +500 бонусов</span></div>
+              <div class="amt up"><b>+500</b></div>
+            </div>
+            <div class="row">
+              <div class="ic gray">⏱</div>
+              <div class="info"><b>+7 707 ••• 22 19</b><span>Зарегистрирован, ждём заправки</span></div>
+              <div class="amt"><small>Pending</small></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============= SCREEN: ACHIEVEMENTS ============= -->
+      <div class="screen" data-screen="achievements">
+        <div class="statusbar"><b>9:41</b><div class="dots"><span></span><span></span><span></span></div><div class="battery"></div></div>
+        <div class="appbar"><div data-back class="back">←</div><h1>Достижения</h1><div class="btn">ⓘ</div></div>
+        <div class="scroll">
+          <div class="hero" style="margin:0 0 4px;padding:22px">
+            <div class="balance-label">Открыто</div>
+            <div class="balance"><b>7</b><small style="color:var(--skyLight)">/ 12</small></div>
+            <div class="progress"><span style="width:58%"></span></div>
+            <div class="pmeta"><span>Достижений</span><span>58%</span></div>
+          </div>
+          <div class="ach-grid">
+            <div class="ach"><span class="em">🚀</span><b>Первая заправка</b><span>+100</span></div>
+            <div class="ach"><span class="em">📨</span><b>3 друга</b><span>+1 500</span></div>
+            <div class="ach"><span class="em">⭐</span><b>Gold</b><span>Open</span></div>
+            <div class="ach lock"><span class="em">🌍</span><b>5 городов</b><span>3 / 5</span><div class="pr"><i style="width:60%"></i></div></div>
+            <div class="ach lock"><span class="em">🔥</span><b>10 заправок</b><span>7 / 10</span><div class="pr"><i style="width:70%"></i></div></div>
+            <div class="ach"><span class="em">🎂</span><b>День рождения</b><span>+1 000</span></div>
+            <div class="ach"><span class="em">⛽</span><b>500 литров</b><span>Open</span></div>
+            <div class="ach lock"><span class="em">💎</span><b>АИ‑98 ×5</b><span>0 / 5</span><div class="pr"><i style="width:0"></i></div></div>
+            <div class="ach lock"><span class="em">🏆</span><b>Топ‑1</b><span>—</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============= SCREEN: NOTIFICATIONS ============= -->
+      <div class="screen" data-screen="notifications">
+        <div class="statusbar"><b>9:41</b><div class="dots"><span></span><span></span><span></span></div><div class="battery"></div></div>
+        <div class="appbar"><div data-back class="back">←</div><h1>Уведомления</h1><div class="btn" id="markAllRead">⋯</div></div>
+        <div class="scroll" style="padding:18px 22px 30px">
+          <div class="notif" style="margin:0">
+            <div class="n-card unread">
+              <div class="ic tq">⛽</div>
+              <div class="b">
+                <h6>+275 бонусов начислено</h6>
+                <p>За заправку АИ‑95 на АЗС #14 (20 л · 5 500 ₸).</p>
+                <time>Сегодня · 09:24</time>
+              </div>
+            </div>
+            <div class="n-card unread">
+              <div class="ic cyan">🎁</div>
+              <div class="b">
+                <h6>Подарок от Айгуль</h6>
+                <p>Сертификат 5 000 ₸ — в разделе «Сертификаты».</p>
+                <time>Вчера · 19:02</time>
+              </div>
+            </div>
+            <div class="n-card">
+              <div class="ic">📢</div>
+              <div class="b">
+                <h6>Новая акция: +5% к выходным</h6>
+                <p>В субботу и воскресенье — удвоенные бонусы.</p>
+                <time>2 мая</time>
+              </div>
+            </div>
+            <div class="n-card">
+              <div class="ic dark">⭐</div>
+              <div class="b">
+                <h6>Вы достигли уровня Gold</h6>
+                <p>5% бонусов с каждой заправки и персональные акции.</p>
+                <time>28 апреля</time>
+              </div>
+            </div>
+            <div class="n-card">
+              <div class="ic gray">⚠</div>
+              <div class="b">
+                <h6>Сертификат скоро сгорит</h6>
+                <p>2 500 ₸ нужно использовать до 31 мая 2026.</p>
+                <time>20 апреля</time>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============= SCREEN: PROFILE ============= -->
+      <div class="screen" data-screen="profile">
+        <div class="statusbar dark"><b>9:41</b><div class="dots"><span></span><span></span><span></span></div><div class="battery"></div></div>
+        <div class="p-head">
+          <div class="ava" id="profileAva">АС</div>
+          <h3>Алмат <b>Серикбаев</b></h3>
+          <p>+7 707 123 45 67 · с марта 2024</p>
+          <div class="lvl">Gold · 5%</div>
+        </div>
+        <div class="p-list">
+          <div class="p-row"><div class="ic">👤</div>Личные данные<div class="arr">›</div></div>
+          <div class="p-row"><div class="ic tq">🎂</div>День рождения · 15 марта<div class="arr">›</div></div>
+          <div class="p-row" data-go="invite"><div class="ic">📨</div>Пригласить друга<div class="arr">›</div></div>
+          <div class="p-row"><div class="ic">🔔</div>Push‑уведомления<div class="arr">›</div></div>
+          <div class="p-row"><div class="ic">🌐</div>Тіл · Қазақша / Рус<div class="arr">›</div></div>
+          <div class="p-row" data-go="support"><div class="ic">💬</div>Поддержка<div class="arr">›</div></div>
+          <div class="p-row" data-go="complaint"><div class="ic">⚠</div>Оставить жалобу<div class="arr">›</div></div>
+          <div class="p-row danger" data-action="logout"><div class="ic">⏻</div>Выйти<div class="arr">›</div></div>
+        </div>
+        <div class="tabbar">
+          <div class="tb" data-tab="home" data-go="home"><div class="ic">⌂</div>Главная</div>
+          <div class="tb" data-tab="map" data-go="map"><div class="ic">📍</div>АЗС</div>
+          <div class="tb center" data-go="qr"><div class="ic">▦</div></div>
+          <div class="tb" data-tab="bonuses" data-go="bonuses"><div class="ic">🎁</div>Бонусы</div>
+          <div class="tb active" data-tab="profile" data-go="profile"><div class="ic">👤</div>Профиль</div>
+        </div>
+      </div>
+
+      <!-- ============= SCREEN: SUPPORT ============= -->
+      <div class="screen" data-screen="support">
+        <div class="statusbar"><b>9:41</b><div class="dots"><span></span><span></span><span></span></div><div class="battery"></div></div>
+        <div class="appbar" style="border-bottom:1px solid var(--gray4)">
+          <div style="display:flex;align-items:center;gap:12px">
+            <div data-back class="back">←</div>
+            <div>
+              <h1 style="font-size:16px">Поддержка <b style="font-weight:800;font-style:italic;color:var(--tsBlue)">T.S</b></h1>
+              <div style="font-size:10px;color:var(--turquoise);font-weight:800;letter-spacing:.18em;text-transform:uppercase;font-family:Barlow"><span style="display:inline-block;width:8px;height:8px;background:var(--green);margin-right:5px;vertical-align:1px"></span>Онлайн</div>
+            </div>
+          </div>
+          <div class="btn">⋮</div>
+        </div>
+        <div class="chat" id="chatBox">
+          <div class="chat-day">Сегодня</div>
+          <div class="bubble in">Здравствуйте, Алмат. Я Айгуль, оператор T.S. Чем помочь?<span class="t">10:14</span></div>
+          <div class="qa" id="chatQa">
+            <b data-q="Не начислились бонусы за заправку утром на АЗС #14">Не начислились бонусы</b>
+            <b data-q="Где ближайшая АЗС?">Где ближайшая АЗС?</b>
+            <b data-q="Хочу сменить телефон">Сменить телефон</b>
+            <b data-q="Хочу оставить жалобу">Жалоба</b>
+          </div>
+        </div>
+        <div class="chat-inp">📎<input type="text" id="chatInput" placeholder="Сообщение…"><div class="send" id="chatSend">›</div></div>
+      </div>
+
+      <!-- ============= SCREEN: COMPLAINT ============= -->
+      <div class="screen" data-screen="complaint">
+        <div class="statusbar"><b>9:41</b><div class="dots"><span></span><span></span><span></span></div><div class="battery"></div></div>
+        <div class="appbar"><div data-back class="back">←</div><h1>Оставить жалобу</h1><div></div></div>
+        <div class="form">
+          <div>
+            <div class="lab">АЗС</div>
+            <div class="inp">📍 АЗС T.S #14 · пр. Назарбаева 142</div>
+          </div>
+          <div>
+            <div class="lab">Дата и время</div>
+            <div class="inp">2 мая 2026 · 09:24</div>
+          </div>
+          <div>
+            <div class="lab">Оценка</div>
+            <div class="stars" id="stars">
+              <b data-s="1">★</b><b data-s="2">★</b><b data-s="3">★</b><b data-s="4">★</b><b data-s="5">★</b>
+            </div>
+          </div>
+          <div>
+            <div class="lab">Что случилось</div>
+            <div class="inp area"><textarea id="complaintText" placeholder="Опишите ситуацию. Например: грубость кассира, проблема с колонкой, чек не пробит."></textarea></div>
+          </div>
+          <div>
+            <div class="lab">Фото / чек</div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--gray4)">
+              <div style="aspect-ratio:1;background:#fff;border-right:1px solid var(--gray4);display:flex;align-items:center;justify-content:center;font-size:22px;color:var(--gray3);cursor:pointer" data-toast="Камера откроется при работе на устройстве">📷</div>
+              <div style="aspect-ratio:1;background:#fff;border-right:1px solid var(--gray4)"></div>
+              <div style="aspect-ratio:1;background:#fff"></div>
+            </div>
+          </div>
+          <div class="notice"><b>+200 ₸ бонусов за подтверждённую жалобу</b>Если мы найдём нарушение — наградим бонусами и устраним проблему.</div>
+          <button class="btn-prim deep" data-action="complaint">Отправить</button>
+        </div>
+      </div>
+
+      <!-- ============= TOAST ============= -->
+      <div class="toast" id="toast">
+        <div class="ic" id="toastIc">✓</div>
+        <div>
+          <b id="toastTitle">Готово</b>
+          <span id="toastSub">Действие выполнено</span>
+        </div>
+      </div>
+
+      </div><!-- /phone-screen -->
+    </div><!-- /phone -->
+  </div><!-- /device-wrap -->
+
+  <!-- ============= STATUS PANEL ============= -->
+  <aside class="status-panel">
+    <h3>Состояние</h3>
+    <div class="field-row"><span>Экран</span><b id="state-screen">splash</b></div>
+    <div class="field-row"><span>Пользователь</span><b id="state-user">—</b></div>
+    <div class="field-row"><span>Язык</span><b id="state-lang">RU</b></div>
+    <div class="field-row"><span>Уровень</span><b id="state-level">Gold · 5%</b></div>
+    <div class="field-row"><span>Баланс</span><b id="state-balance">8 420</b></div>
+    <div class="field-row"><span>История</span><b id="state-stack">1</b></div>
+    <button class="reset-btn" id="resetBtn">↺ Сбросить</button>
+
+    <h3 class="log">Лог действий</h3>
+    <div class="log-list" id="logList">
+      <div><span>00:00</span>Прототип запущен</div>
+    </div>
+  </aside>
+
+</div>
+
+<script>
+/* ============================================================
+   PROTOTYPE CONTROLLER
+   ============================================================ */
+const App = {
+  history:[],
+  state:{
+    screen:'splash',
+    user:'—',
+    lang:'RU',
+    level:'Gold · 5%',
+    balance:8420,
+    fuel:'95',
+    fuelPrice:275,
+    volume:20,
+    otp:'',
+    rating:0,
+  },
+
+  init(){
+    this.bind();
+    this.show('splash',true);
+    this.log('Прототип запущен');
+    this.startQrTimer();
+  },
+
+  bind(){
+    // generic data-go
+    document.body.addEventListener('click', e=>{
+      const goEl=e.target.closest('[data-go]');
+      if(goEl){ this.go(goEl.dataset.go, goEl); return; }
+      const backEl=e.target.closest('[data-back]');
+      if(backEl){ this.back(); return; }
+      const toastEl=e.target.closest('[data-toast]');
+      if(toastEl){ this.toast('Готово',toastEl.dataset.toast); }
+      const copyEl=e.target.closest('[data-copy]');
+      if(copyEl){ this.copy(copyEl.dataset.copy); }
+      const actEl=e.target.closest('[data-action]');
+      if(actEl){ this.action(actEl.dataset.action,actEl); }
+    });
+
+    // language buttons
+    document.querySelectorAll('[data-lang]').forEach(b=>{
+      b.addEventListener('click',()=>{
+        document.querySelectorAll('[data-lang]').forEach(x=>x.classList.remove('act'));
+        b.classList.add('act');
+        this.state.lang=b.dataset.lang.toUpperCase();
+        this.updateState();
+        this.log('Язык: '+this.state.lang);
+      });
+    });
+
+    // OTP keyboard
+    document.getElementById('kbd').addEventListener('click',e=>{
+      const k=e.target.closest('[data-k]');
+      if(!k) return;
+      if(k.dataset.k==='back'){
+        this.state.otp=this.state.otp.slice(0,-1);
+      } else {
+        if(this.state.otp.length<5) this.state.otp+=k.dataset.k;
+      }
+      this.renderOtp();
+      if(this.state.otp.length===5){
+        const correct=this.state.otp==='42718';
+        setTimeout(()=>{
+          if(correct){ this.go('profile-setup'); this.toast('Код принят','Добро пожаловать!'); }
+          else { this.toast('Ошибка','Неверный код','red'); this.state.otp=''; this.renderOtp(); }
+        },300);
+      }
+    });
+
+    // sidebar nav highlighting
+    document.querySelectorAll('.nav-item[data-go]').forEach(n=>{
+      n.addEventListener('click',()=>{
+        document.querySelectorAll('.nav-item').forEach(x=>x.classList.remove('active'));
+        n.classList.add('active');
+      });
+    });
+
+    // bonus filter tabs
+    document.getElementById('bonus-tabs').addEventListener('click',e=>{
+      const t=e.target.closest('[data-filter]');
+      if(!t) return;
+      document.querySelectorAll('#bonus-tabs .s-tab').forEach(x=>x.classList.remove('act'));
+      t.classList.add('act');
+      const f=t.dataset.filter;
+      document.querySelectorAll('#bonus-list .row').forEach(r=>{
+        r.style.display=(f==='all'||r.dataset.type===f)?'flex':'none';
+      });
+      this.log('Фильтр бонусов: '+t.textContent);
+    });
+
+    // map pins
+    document.querySelectorAll('.pin[data-pin]').forEach(p=>{
+      p.addEventListener('click',()=>{
+        document.querySelectorAll('.pin').forEach(x=>x.classList.remove('act'));
+        p.classList.add('act');
+        const stations=[
+          ['АЗС <b>T.S #07</b>','ул. Толе би, 88, Алматы'],
+          ['АЗС <b>T.S #14</b>','пр. Назарбаева, 142, Алматы'],
+          ['АЗС <b>T.S #22</b>','пр. Райымбека, 230, Алматы'],
+          ['АЗС <b>T.S #14</b>','пр. Назарбаева, 142, Алматы'],
+          ['АЗС <b>T.S #38</b>','ул. Сейфуллина, 506, Алматы'],
+        ];
+        const s=stations[parseInt(p.dataset.pin)-1];
+        document.getElementById('stationName').innerHTML='АЗС '+s[0].split(' ')[1];
+        document.getElementById('stationAddr').textContent=s[1];
+        this.log('АЗС: '+s[1]);
+      });
+    });
+
+    // pump fuel selection
+    document.getElementById('fuels').addEventListener('click',e=>{
+      const f=e.target.closest('.fuel');
+      if(!f) return;
+      document.querySelectorAll('#fuels .fuel').forEach(x=>x.classList.remove('act'));
+      f.classList.add('act');
+      this.state.fuel=f.dataset.fuel;
+      this.state.fuelPrice=parseInt(f.dataset.price);
+      this.updatePump();
+      this.log('Топливо: АИ‑'+this.state.fuel);
+    });
+
+    // pump volume selection
+    document.getElementById('pads').addEventListener('click',e=>{
+      const p=e.target.closest('.pad');
+      if(!p) return;
+      document.querySelectorAll('#pads .pad').forEach(x=>x.classList.remove('act'));
+      p.classList.add('act');
+      this.state.volume=p.dataset.vol==='full'?40:parseInt(p.dataset.vol);
+      this.updatePump();
+      this.log('Объём: '+(p.dataset.vol==='full'?'до полного':p.dataset.vol+' л'));
+    });
+
+    // stars
+    document.getElementById('stars').addEventListener('click',e=>{
+      const s=e.target.closest('[data-s]');
+      if(!s) return;
+      const n=parseInt(s.dataset.s);
+      this.state.rating=n;
+      document.querySelectorAll('#stars b').forEach((b,i)=>{
+        b.classList.toggle('act',i<n);
+      });
+      this.log('Оценка: '+n+' / 5');
+    });
+
+    // notifications mark all read
+    document.getElementById('markAllRead').addEventListener('click',()=>{
+      document.querySelectorAll('.n-card.unread').forEach(c=>c.classList.remove('unread'));
+      this.toast('Прочитано','Все уведомления отмечены как прочитанные');
+      this.log('Все push прочитаны');
+    });
+
+    // chat
+    document.getElementById('chatQa').addEventListener('click',e=>{
+      const q=e.target.closest('[data-q]');
+      if(!q) return;
+      this.sendChat(q.dataset.q);
+    });
+    document.getElementById('chatSend').addEventListener('click',()=>{
+      const i=document.getElementById('chatInput');
+      if(i.value.trim()){ this.sendChat(i.value); i.value=''; }
+    });
+    document.getElementById('chatInput').addEventListener('keypress',e=>{
+      if(e.key==='Enter'){
+        const i=e.target;
+        if(i.value.trim()){ this.sendChat(i.value); i.value=''; }
+      }
+    });
+
+    // reset
+    document.getElementById('resetBtn').addEventListener('click',()=>{
+      this.history=[];
+      this.state.otp='';
+      this.state.user='—';
+      this.state.balance=8420;
+      this.state.rating=0;
+      document.querySelectorAll('#stars b').forEach(b=>b.classList.remove('act'));
+      this.go('splash');
+      this.log('Прототип сброшен');
+    });
+  },
+
+  go(screen,el){
+    if(screen===this.state.screen) return;
+    this.history.push(this.state.screen);
+    this.show(screen);
+    this.log('→ '+screen);
+  },
+
+  back(){
+    const prev=this.history.pop();
+    if(prev){ this.show(prev); this.log('← '+prev); }
+  },
+
+  show(screen,initial=false){
+    document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+    const target=document.querySelector(`[data-screen="${screen}"]`);
+    if(target){ target.classList.add('active'); }
+    this.state.screen=screen;
+    this.updateSidebar(screen);
+    this.updateState();
+    if(screen==='qr') this.startQrTimer();
+  },
+
+  updateSidebar(screen){
+    document.querySelectorAll('.nav-item').forEach(n=>{
+      n.classList.toggle('active',n.dataset.go===screen);
+    });
+  },
+
+  updateState(){
+    document.getElementById('state-screen').textContent=this.state.screen;
+    document.getElementById('state-user').textContent=this.state.user;
+    document.getElementById('state-lang').textContent=this.state.lang;
+    document.getElementById('state-level').textContent=this.state.level;
+    document.getElementById('state-balance').textContent=this.state.balance.toLocaleString('ru-RU');
+    document.getElementById('state-stack').textContent=this.history.length+1;
+  },
+
+  renderOtp(){
+    document.querySelectorAll('#otp .o').forEach((o,i)=>{
+      o.textContent=this.state.otp[i]||'';
+      o.classList.toggle('fill',!!this.state.otp[i]);
+      o.classList.toggle('cur',i===this.state.otp.length);
+    });
+  },
+
+  updatePump(){
+    const sum=this.state.volume*this.state.fuelPrice;
+    const total=sum-500;
+    document.getElementById('pumpVol').textContent=this.state.volume;
+    document.getElementById('pumpFuel').textContent=this.state.fuel;
+    document.getElementById('pumpSum').textContent=sum.toLocaleString('ru-RU')+' ₸';
+    document.getElementById('pumpTotal').textContent=total.toLocaleString('ru-RU');
+  },
+
+  action(name,el){
+    if(name==='signup'){
+      const n=document.getElementById('profileName').value;
+      this.state.user=n.split(' ')[0]||'Гость';
+      document.getElementById('userName').textContent=this.state.user;
+      const initials=n.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+      document.getElementById('profileAva').textContent=initials;
+      this.toast('Регистрация','Добро пожаловать в T.S Bonus!');
+      this.log('Регистрация: '+n);
+    }
+    if(name==='skip'){
+      this.state.user='Гость';
+      this.toast('Пропущено','Заполните профиль позже');
+      this.log('Регистрация пропущена');
+    }
+    if(name==='pay'){
+      const earn=Math.round(this.state.volume*this.state.fuelPrice*0.05);
+      this.state.balance=this.state.balance-500+earn;
+      this.toast('Оплачено','+'+earn+' бонусов начислено');
+      this.log('Оплата заправки. Баланс: '+this.state.balance);
+      this.updateState();
+      setTimeout(()=>this.go('home'),1200);
+    }
+    if(name==='complaint'){
+      if(this.state.rating===0){ this.toast('Не хватает','Поставьте оценку','red'); return; }
+      this.toast('Жалоба отправлена','Рассмотрим в течение 24ч. +200 ₸ при подтверждении');
+      this.log('Жалоба отправлена. Оценка: '+this.state.rating);
+      setTimeout(()=>{ this.back(); this.state.rating=0; document.querySelectorAll('#stars b').forEach(b=>b.classList.remove('act')); document.getElementById('complaintText').value=''; },1400);
+    }
+    if(name==='logout'){
+      this.toast('Выход','Вы вышли из аккаунта');
+      this.log('Logout');
+      this.history=[];
+      setTimeout(()=>this.go('splash'),900);
+    }
+  },
+
+  copy(text){
+    if(navigator.clipboard){
+      navigator.clipboard.writeText(text).catch(()=>{});
+    }
+    this.log('Скопировано: '+text);
+  },
+
+  toast(title,sub,kind){
+    const t=document.getElementById('toast');
+    document.getElementById('toastTitle').textContent=title;
+    document.getElementById('toastSub').textContent=sub;
+    const ic=document.getElementById('toastIc');
+    if(kind==='red'){ ic.style.background='var(--red)'; ic.textContent='!'; }
+    else { ic.style.background='var(--turquoise)'; ic.textContent='✓'; }
+    t.classList.add('show');
+    clearTimeout(this._toastT);
+    this._toastT=setTimeout(()=>t.classList.remove('show'),2400);
+  },
+
+  log(text){
+    const list=document.getElementById('logList');
+    const time=new Date().toLocaleTimeString('ru-RU').slice(0,5);
+    const div=document.createElement('div');
+    div.innerHTML='<span>'+time+'</span>'+text;
+    list.insertBefore(div,list.firstChild);
+    while(list.children.length>30) list.removeChild(list.lastChild);
+  },
+
+  qrTimer:60,
+  startQrTimer(){
+    clearInterval(this._qrInt);
+    const el=document.getElementById('qrTimer');
+    if(!el) return;
+    this._qrInt=setInterval(()=>{
+      if(this.state.screen!=='qr'){ clearInterval(this._qrInt); return; }
+      this.qrTimer--;
+      if(this.qrTimer<=0){ this.qrTimer=60; this.toast('Обновлено','QR‑код перевыпущен'); }
+      el.textContent='00:'+String(this.qrTimer).padStart(2,'0');
+    },1000);
+  },
+
+  sendChat(text){
+    const box=document.getElementById('chatBox');
+    const out=document.createElement('div');
+    out.className='bubble out';
+    const time=new Date().toLocaleTimeString('ru-RU').slice(0,5);
+    out.innerHTML=this.escape(text)+'<span class="t" style="text-align:right">'+time+' ✓✓</span>';
+    box.insertBefore(out,document.querySelector('.chat-inp'));
+    box.scrollTop=box.scrollHeight;
+    this.log('Сообщение в чат');
+
+    setTimeout(()=>{
+      const replies=[
+        'Проверяю по чеку №38201… Нашла. Через 3‑4 минуты бонусы будут зачислены. Извините за ожидание.',
+        'Ближайшая АЗС — T.S #14, пр. Назарбаева 142. 1.2 км от вас.',
+        'Сменить телефон можно в разделе Профиль → Личные данные. Если нужна помощь — подскажу.',
+        'Жалоба принята. Создам обращение и свяжусь с менеджером АЗС. Срок рассмотрения — 24 часа.',
+        'Поняла, передаю в работу. Есть ещё вопросы?',
+      ];
+      const reply=replies[Math.floor(Math.random()*replies.length)];
+      const inEl=document.createElement('div');
+      inEl.className='bubble in';
+      inEl.innerHTML=this.escape(reply)+'<span class="t">'+new Date().toLocaleTimeString('ru-RU').slice(0,5)+'</span>';
+      box.insertBefore(inEl,document.querySelector('.chat-inp'));
+      box.scrollTop=box.scrollHeight;
+    },900);
+  },
+
+  escape(s){ return s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':'&quot;'}[c])); },
+};
+
+App.init();
+</script>
+</body>
+</html>
