@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Кампания «Месяц с Zurai» — АЗС T.S — 30 дней</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    line-height: 1.5;
+    color: #1a2332;
+    background: #fafbfc;
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 28px 36px 64px;
+  }
+  .head { border-bottom: 3px solid #1e3a8a; padding-bottom: 14px; margin-bottom: 22px; }
+  .head .meta { color: #64748b; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
+  .head h1 { font-size: 24px; color: #0f172a; line-height: 1.25; }
+  .head .sub { color: #475569; font-size: 13px; margin-top: 6px; }
+  .head .badges { margin-top: 10px; display: flex; gap: 6px; flex-wrap: wrap; }
+  .badge { display: inline-block; padding: 3px 9px; border-radius: 3px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; }
+  .badge.b1 { background: #1e3a8a; color: #fff; }
+  .badge.b2 { background: #d97706; color: #fff; }
+  .badge.b3 { background: #047857; color: #fff; }
+  .badge.b4 { background: #e2e8f0; color: #1e293b; }
+
+  .summary {
+    background: #1e3a8a;
+    color: #fff;
+    padding: 16px 20px;
+    border-radius: 4px;
+    margin-bottom: 22px;
+    font-size: 14px;
+    line-height: 1.55;
+  }
+  .summary strong { color: #fde68a; }
+  .summary .pull { display: block; margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.2); font-style: italic; font-size: 13px; }
+
+  h2 {
+    font-size: 13px;
+    color: #1e3a8a;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 24px 0 10px;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 4px;
+    font-weight: 700;
+  }
+  h3 {
+    font-size: 13.5px;
+    color: #0f172a;
+    margin: 14px 0 6px;
+    font-weight: 700;
+  }
+  p { margin-bottom: 7px; font-size: 13.5px; }
+  ul, ol { margin: 4px 0 10px 22px; font-size: 13.5px; }
+  li { margin-bottom: 3px; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 6px 0 12px; }
+  th, td { text-align: left; padding: 8px 11px; border-bottom: 1px solid #e2e8f0; vertical-align: top; }
+  th { background: #f1f5f9; font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; font-weight: 700; color: #334155; }
+  .num { text-align: right; font-variant-numeric: tabular-nums; }
+  tfoot th { background: #1e3a8a; color: #fff; }
+  tfoot th.num { color: #fff; }
+  .good { color: #047857; font-weight: 600; }
+  .warn { color: #b45309; font-weight: 600; }
+  .bad { color: #b91c1c; font-weight: 600; }
+
+  .note {
+    font-size: 12px;
+    color: #64748b;
+    font-style: italic;
+    margin-top: 4px;
+  }
+
+  .prize-pool {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-left: 4px solid #d97706;
+    padding: 14px 18px;
+    border-radius: 3px;
+    margin: 10px 0 18px;
+  }
+  .prize-pool-title {
+    font-weight: 700;
+    color: #92400e;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-size: 11px;
+    margin-bottom: 8px;
+  }
+  .prize-pool-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  .prize-pool-item {
+    background: #fef3c7;
+    padding: 12px 10px;
+    border-radius: 3px;
+    text-align: center;
+  }
+  .prize-pool-item .place {
+    font-size: 22px;
+    margin-bottom: 4px;
+  }
+  .prize-pool-item .what {
+    font-size: 12px;
+    color: #92400e;
+    font-weight: 600;
+    line-height: 1.35;
+  }
+  .prize-pool-item .val {
+    font-size: 14px;
+    font-weight: 700;
+    color: #78350f;
+    margin-top: 4px;
+  }
+
+  .timeline {
+    margin: 10px 0 16px;
+  }
+  .timeline-week {
+    border: 1px solid #e2e8f0;
+    border-left: 4px solid #1e3a8a;
+    background: #fff;
+    padding: 12px 16px;
+    border-radius: 3px;
+    margin-bottom: 8px;
+  }
+  .timeline-week .wk-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 8px;
+  }
+  .timeline-week h3 { margin: 0; font-size: 14px; color: #1e3a8a; }
+  .timeline-week .wk-dates { font-size: 11px; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; }
+  .timeline-week .kpi-line {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px dashed #e2e8f0;
+    font-size: 12px;
+    color: #475569;
+  }
+  .timeline-week .kpi-line strong { color: #047857; }
+
+  .box {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 3px;
+    padding: 12px 16px;
+    margin: 8px 0 14px;
+    font-size: 13px;
+  }
+  .box.green { border-left: 4px solid #047857; }
+  .box.amber { border-left: 4px solid #d97706; }
+  .box.red { border-left: 4px solid #b91c1c; }
+  .box.blue { border-left: 4px solid #1e3a8a; }
+  .box .lbl {
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-size: 11px;
+    margin-bottom: 6px;
+  }
+  .box.green .lbl { color: #047857; }
+  .box.amber .lbl { color: #92400e; }
+  .box.red .lbl { color: #991b1b; }
+  .box.blue .lbl { color: #1e3a8a; }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+
+  .kpi-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    padding: 12px 14px;
+    border-radius: 3px;
+  }
+  .kpi-card .kpi-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    color: #64748b;
+    letter-spacing: 0.04em;
+    margin-bottom: 4px;
+  }
+  .kpi-card .kpi-value {
+    font-size: 18px;
+    font-weight: 700;
+    color: #0f172a;
+  }
+  .kpi-card .kpi-sub {
+    font-size: 11px;
+    color: #475569;
+    margin-top: 2px;
+  }
+
+  .quote {
+    border-left: 3px solid #d97706;
+    background: #fffbeb;
+    padding: 10px 14px;
+    margin: 8px 0 14px;
+    font-style: italic;
+    font-size: 13.5px;
+    color: #78350f;
+  }
+
+  .footnote {
+    margin-top: 32px;
+    padding-top: 14px;
+    border-top: 1px solid #e2e8f0;
+    font-size: 11.5px;
+    color: #64748b;
+    line-height: 1.55;
+  }
+  @media print {
+    body { background: #fff; padding: 16px; max-width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<div class="head">
+  <div class="meta">Маркетинговая кампания · Партнёрский проект</div>
+  <h1>«Месяц с Zurai» — кампания на 30 дней по сети АЗС T.S</h1>
+  <div class="sub">Сэмплинг «2+1» + розыгрыш топлива и продукции · подготовлено для согласования с руководством</div>
+  <div class="badges">
+    <span class="badge b1">30 дней</span>
+    <span class="badge b2">Партнёр: Zurai</span>
+    <span class="badge b3">Бюджет T.S от 225 000 ₸</span>
+    <span class="badge b4">35 АЗС / ТОП-1 + ТОП-2</span>
+  </div>
+</div>
+
+<div class="summary">
+  <strong>Суть:</strong> локальный бренд напитков Zurai заходит в сеть T.S с пакетом: выкуп рекламных мест на АЗС, призовой фонд продукции, отгрузка партии «без документов» для механики «2+1». T.S вкладывает топливный приз (200 л АИ-92 + 100 л АИ-95) и операционный ресурс. Цель — запустить Zurai на полки, нарастить чек ТНП, протестировать «2+1» с напитками и монетизировать рекламные площади.
+  <span class="pull">«Купи 2 — третья в подарок. 16 победителей: электроника от Zurai и топливные талоны от T.S.»</span>
+</div>
+
+<h2>1. Ключевые показатели цели</h2>
+<div class="grid-3">
+  <div class="kpi-card">
+    <div class="kpi-label">Продажи Zurai</div>
+    <div class="kpi-value">4 000–6 000 шт</div>
+    <div class="kpi-sub">по сети за 30 дней</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-label">Доля чеков с Zurai</div>
+    <div class="kpi-value">≥ 12%</div>
+    <div class="kpi-sub">от всех ТНП-чеков к концу мес.</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-label">Регистрации в розыгрыше</div>
+    <div class="kpi-value">≥ 3 000</div>
+    <div class="kpi-sub">уникальные участники</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-label">Доля чеков с «2+1»</div>
+    <div class="kpi-value">≥ 8%</div>
+    <div class="kpi-sub">от ТНП-чеков (метрика кассиров)</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-label">Охват в Instagram</div>
+    <div class="kpi-value">+30%</div>
+    <div class="kpi-sub">к апрельскому уровню 10 850</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-label">Возврат участников</div>
+    <div class="kpi-value">≥ 25%</div>
+    <div class="kpi-sub">повторный чек после регистрации</div>
+  </div>
+</div>
+
+<h2>2. Условия партнёрства</h2>
+
+<div class="grid-2">
+  <div class="box blue">
+    <div class="lbl">Что даёт Zurai</div>
+    <ul>
+      <li>Выкуп рекламных мест на АЗС (лайтбоксы, шелф-токеры, стикеры) — ставка по контракту</li>
+      <li><strong>Главный приз финала — электроника</strong> (смартфон / планшет / ТВ / др. — согласовывается)</li>
+      <li>Призовой фонд для 4 еженедельных мини-розыгрышей (продукция Zurai)</li>
+      <li>Партия Zurai «без документов» для «2+1» (мин. 1 500–2 000 шт)</li>
+      <li>POS-материалы: воблеры, стикеры, брендирование лототронов</li>
+      <li>Кросс-публикации в своих соцсетях</li>
+    </ul>
+  </div>
+  <div class="box green">
+    <div class="lbl">Что даёт T.S</div>
+    <ul>
+      <li>Полочные места на 35 АЗС сети (или ТОП-1 + ТОП-2)</li>
+      <li>Топливный приз: 15 талонов по 20 л (10 × АИ-92 + 5 × АИ-95) = 200 л + 100 л = 75 400 ₸</li>
+      <li><strong>Мотивационная программа для кассиров</strong> — бонусы за «2+1» и регистрации, индивидуальный лидерборд</li>
+      <li><strong>Премия лучшей АЗС</strong> по итогам кампании — командный приз сменам-победителям</li>
+      <li>Кассирский ресурс, скрипт «2+1», обучение по сменам</li>
+      <li><strong>Платные инструменты 2ГИС</strong> — медийная реклама, баннер на карте, приоритет в выдаче (за пределами органики 179 211 показов в апреле)</li>
+      <li><strong>Поддержка социальных сетей</strong> — усиленный контент-план в Instagram + TikTok, Reels-кейсы, Stories-серии</li>
+      <li>Telegram-бот для регистрации чеков и оповещения участников</li>
+      <li>Лототрон у касс (обновлены в марте, квадратные)</li>
+    </ul>
+  </div>
+</div>
+
+<div class="box amber">
+  <div class="lbl">К согласованию до запуска</div>
+  <ul>
+    <li>Срок (фиксированные 30 дней) и дата старта</li>
+    <li>Точная номенклатура и объём Zurai по «2+1»</li>
+    <li>Призовой фонд Zurai в ₸</li>
+    <li>Условия возврата непроданной продукции</li>
+    <li>Эксклюзив на категорию (или нет) на период акции</li>
+    <li>Кто оплачивает печать совместных POS</li>
+  </ul>
+</div>
+
+<h2>3. Механика акции</h2>
+
+<h3>3.1 Главный розыгрыш (финал, 30-й день)</h3>
+<p><strong>Условие участия:</strong> заправка от <strong>40 литров</strong> на любой АЗС сети T.S → чек с QR-кодом → регистрация на лендинге или в Telegram-боте → попадание в общую базу. Один номер телефона = одна регистрация в день.</p>
+
+<div class="prize-pool">
+  <div class="prize-pool-title">Призовой фонд — главный финал</div>
+  <div class="prize-pool-grid" style="grid-template-columns: 1.4fr 1fr 1fr;">
+    <div class="prize-pool-item" style="background: #fde68a; border: 2px solid #d97706;">
+      <div class="place">🏆</div>
+      <div class="what">ГЛАВНЫЙ ПРИЗ от Zurai<br>Электроника<br><span style="font-weight: 400; font-size: 11px;">(смартфон / планшет / ТВ / др.)</span></div>
+      <div class="val">от партнёра</div>
+    </div>
+    <div class="prize-pool-item">
+      <div class="place">⛽</div>
+      <div class="what">10 победителей<br>топливный талон<br>20 л АИ-92</div>
+      <div class="val">≈ 4 500 ₸ × 10</div>
+    </div>
+    <div class="prize-pool-item">
+      <div class="place">⛽</div>
+      <div class="what">5 победителей<br>топливный талон<br>20 л АИ-95</div>
+      <div class="val">≈ 6 080 ₸ × 5</div>
+    </div>
+  </div>
+  <p class="note"><strong>Всего 16 победителей</strong> в главном финале: 1 главный приз (электроника от Zurai) + 15 топливных талонов по 20 л. Итого топлива от T.S: 200 л АИ-92 + 100 л АИ-95 = <strong>75 400 ₸</strong>. Конкретное наименование электроники уточняется при подписании контракта с Zurai (бюджет приза — на стороне партнёра).</p>
+</div>
+<div class="box amber">
+  <div class="lbl">Почему 15 «малых» победителей лучше, чем 3 «больших»</div>
+  <ul>
+    <li><strong>Социальное подтверждение:</strong> 15 публикаций победителей в Instagram = 15 единиц виральности вместо 3.</li>
+    <li><strong>Шанс воспринимается выше:</strong> участник видит реальную возможность выиграть, а не «лотерею».</li>
+    <li><strong>Возврат на АЗС:</strong> 20 л талона = 2 заправки на седан или 1 на внедорожник — гарантирует повторный заезд победителя.</li>
+    <li><strong>География победителей шире</strong> — победители распределяются по разным АЗС сети, контент берётся со всех точек.</li>
+  </ul>
+</div>
+
+<h3>3.2 Еженедельные мини-розыгрыши (4 шт)</h3>
+<p><strong>Условие:</strong> заправка от 30 л → автоматическое участие → розыгрыш по средам каждой недели.<br>
+<strong>Приз:</strong> ящик Zurai (12–24 единицы) на 3 победителя в неделю. Итого 12 победителей за месяц.</p>
+<p class="note">Цель — давать «вкус победы» рано, чтобы кампания не сводилась к долгому ожиданию финала. Это поддерживает интерес и пополняет UGC.</p>
+
+<h3>3.3 Сэмплинг «2+1» Zurai</h3>
+<div class="grid-2">
+  <div class="box green">
+    <div class="lbl">Вариант A · базовый</div>
+    <p>Покупка 2 любых напитков Zurai → третья единица Zurai в подарок.</p>
+    <p class="note">Подходит, если поставщик готов отгружать только «свою» третью единицу.</p>
+  </div>
+  <div class="box amber">
+    <div class="lbl">Вариант B · расширенный (рекомендуем)</div>
+    <p>Покупка 2 любых ТНП → 1 Zurai в подарок.</p>
+    <p class="note">Сильнее по охвату — раскручивает Zurai как «знакомство», а не «спецпредложение для уже-купивших». Финальное решение за поставщиком.</p>
+  </div>
+</div>
+<p>Ограничение: 1 «третья единица» на чек, чтобы партию не выгребли разом.</p>
+
+<h3>3.4 Прозрачность розыгрыша</h3>
+<ul>
+  <li>Финал — публичный, видео-стрим в Instagram и TikTok аккаунта T.S</li>
+  <li>Дата объявлена заранее, в шапке профиля и в закреплённом посте</li>
+  <li>Лототрон + ведущий, в идеале — с привлечением местного блогера</li>
+  <li>Победители публикуются с фото и тегами, передача приза фотофиксируется</li>
+</ul>
+
+<h2>4. Календарь — 30 дней</h2>
+<div class="timeline">
+
+  <div class="timeline-week">
+    <div class="wk-head">
+      <h3>Неделя 1 — Старт</h3>
+      <div class="wk-dates">Дни 1–7</div>
+    </div>
+    <ul>
+      <li><strong>День 1–2:</strong> установка POS на всех АЗС, обучение кассиров (15-мин брифинг по сменам), запуск бота/лендинга</li>
+      <li><strong>День 3–4:</strong> анонс в 2ГИС (обновление карточек, новая фотогалерея), стартовый пост в Instagram</li>
+      <li><strong>День 5–7:</strong> Reels-съёмка на АЗС, первые отзывы клиентов, активация Stories</li>
+    </ul>
+    <div class="kpi-line">KPI недели: 100% АЗС с POS · ≥50% кассиров с брифом · <strong>≥ 600 регистраций</strong></div>
+  </div>
+
+  <div class="timeline-week">
+    <div class="wk-head">
+      <h3>Неделя 2 — Раскачка</h3>
+      <div class="wk-dates">Дни 8–14</div>
+    </div>
+    <ul>
+      <li><strong>День 8:</strong> первый еженедельный мини-розыгрыш, объявление победителей в Instagram + вручение на АЗС</li>
+      <li><strong>День 9–14:</strong> усиление контента — Reels с победителями, отзывы участников, обзоры Zurai</li>
+    </ul>
+    <div class="kpi-line">KPI недели (накопительно): ≥ 1 200 регистраций · ≥ 1 000 шт Zurai продано · <strong>доля чеков с «2+1» ≥ 4%</strong></div>
+  </div>
+
+  <div class="timeline-week">
+    <div class="wk-head">
+      <h3>Неделя 3 — Пик</h3>
+      <div class="wk-dates">Дни 15–21</div>
+    </div>
+    <ul>
+      <li><strong>День 15:</strong> второй мини-розыгрыш</li>
+      <li><strong>День 16–18:</strong> партнёрская активация — Zurai подключает блогеров / инфлюенсеров</li>
+      <li><strong>День 19–21:</strong> третий мини-розыгрыш (сдвинут в середину недели для частоты)</li>
+    </ul>
+    <div class="kpi-line">KPI недели: ≥ 2 200 регистраций · ≥ 3 000 шт Zurai · <strong>доля «2+1» ≥ 7%</strong></div>
+  </div>
+
+  <div class="timeline-week">
+    <div class="wk-head">
+      <h3>Неделя 4 — Финал</h3>
+      <div class="wk-dates">Дни 22–30</div>
+    </div>
+    <ul>
+      <li><strong>День 22:</strong> четвёртый мини-розыгрыш</li>
+      <li><strong>День 23–28:</strong> нагнетание — ежедневные Stories с обратным отсчётом, тизеры приза</li>
+      <li><strong>День 29:</strong> последний день участия (до 23:59)</li>
+      <li><strong>День 30 — ФИНАЛ:</strong> стрим, лототрон, объявление 3 главных победителей, фото-сессия</li>
+    </ul>
+    <div class="kpi-line">KPI итога: ≥ 3 000 регистраций · 4 000–6 000 шт Zurai · <strong>контент-кейс готов к презентации руководству</strong></div>
+  </div>
+
+</div>
+
+<h2>5. Активация кассиров</h2>
+
+<h3>5.1 Скрипт допродажи</h3>
+<div class="quote">«Возьмите 2 напитка — третий в подарок от Zurai. И ваш чек участвует в розыгрыше топлива на год от T.S.»</div>
+<p>Короче 7 секунд. Тестируется на каждом кассире в первый день, фиксируется в чек-листе тайного покупателя.</p>
+
+<h3>5.2 Индивидуальная мотивация кассира</h3>
+<table>
+  <thead>
+    <tr><th>Метрика</th><th class="num">Норма</th><th>Бонус</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Доля чеков с «2+1» в смене</td><td class="num">≥ 10%</td><td>+500 ₸ к смене</td></tr>
+    <tr><td>Доля заправок 30+ л с регистрацией в розыгрыше</td><td class="num">≥ 20%</td><td>+500 ₸ к смене</td></tr>
+    <tr><td>Перевыполнение нормы «2+1» на 50%+</td><td class="num">≥ 15%</td><td>+1 000 ₸ к смене (повышенный)</td></tr>
+    <tr><td>Лучший кассир сети по итогам месяца</td><td class="num">№ 1</td><td>30 000 ₸ + ящик Zurai + сертификат</td></tr>
+    <tr><td>2-е и 3-е места по сети</td><td class="num">№ 2–3</td><td>15 000 ₸ + ящик Zurai</td></tr>
+  </tbody>
+</table>
+<p class="note">Не ломает текущий KPI ТНП (вес 20%) — добавляется как точечная мотивация только на месяц акции. Лидерборд кассиров публикуется еженедельно во внутреннем Telegram-канале сети.</p>
+
+<h3>5.3 Премия лучшей АЗС — командный приз</h3>
+<div class="box amber">
+  <div class="lbl">Конкурс АЗС внутри сети</div>
+  <p>Внутри кампании запускается параллельный конкурс между АЗС сети по продажам Zurai и регистрациям в розыгрыше. Цель — стимулировать командную работу смен и директоров АЗС, а не только индивидуальных кассиров.</p>
+  <p><strong>Критерии оценки</strong> (нормировано на средний трафик АЗС, чтобы малые точки конкурировали честно):</p>
+  <ul>
+    <li>Кол-во проданных Zurai на 1 заправочный чек</li>
+    <li>Доля чеков с активированным «2+1»</li>
+    <li>Кол-во регистраций в розыгрыше на 1 заезд</li>
+    <li>Результат тайных покупателей (среднее по визитам месяца)</li>
+  </ul>
+  <p>Расчёт интегрального балла: каждая метрика нормируется в 0–100, сумма по 4 параметрам = итоговый балл АЗС.</p>
+</div>
+
+<div class="prize-pool" style="border-left-color: #047857;">
+  <div class="prize-pool-title" style="color: #065f46;">Премиальный фонд лучшей АЗС — индивидуальные выплаты</div>
+  <div class="prize-pool-grid" style="grid-template-columns: repeat(2, 1fr);">
+    <div class="prize-pool-item" style="background: #d1fae5;">
+      <div class="place">👤</div>
+      <div class="what" style="color: #065f46;">Каждому кассиру<br>команды АЗС-победителя</div>
+      <div class="val" style="color: #064e3b;">15 000 ₸</div>
+    </div>
+    <div class="prize-pool-item" style="background: #d1fae5;">
+      <div class="place">⭐</div>
+      <div class="what" style="color: #065f46;">Старшему менеджеру<br>АЗС-победителя</div>
+      <div class="val" style="color: #064e3b;">25 000 ₸</div>
+    </div>
+  </div>
+  <p class="note">Премия выплачивается персонально каждому сотруднику АЗС-победителя, а не общей суммой на смену. При типовом штате АЗС (6 кассиров + 1 старший менеджер) размер премиального фонда на одну АЗС ≈ <strong>115 000 ₸</strong>. Победитель публично объявляется на финале вместе с главным розыгрышем.</p>
+</div>
+
+<h3>5.4 Тайные покупатели — расширенный чек-лист</h3>
+<ul>
+  <li>Предложил ли кассир «2+1»?</li>
+  <li>Озвучил ли возможность участия в розыгрыше?</li>
+  <li>Знает ли механику?</li>
+  <li>Знает ли о премии лучшей АЗС (вовлечён в командный результат)?</li>
+</ul>
+<p>Раз в неделю — отчёт. Кассиры, которые «забивают» — повторный тренинг. Данные тайных покупателей входят 4-м компонентом в интегральный балл АЗС.</p>
+
+<h2>6. Маркетинговая поддержка</h2>
+
+<h3>6.1 На АЗС (POS-материалы)</h3>
+<ul>
+  <li>Стикер на колонке с QR-кодом (ведёт на лендинг розыгрыша)</li>
+  <li>Воблер у касс — «2+1 Zurai»</li>
+  <li>Шелф-токер на полке Zurai</li>
+  <li>Объявление на чеке (если ПО кассы позволяет)</li>
+  <li>Брендированный лототрон у кассы</li>
+</ul>
+<p>Печать: ~50 000–80 000 ₸ (или партнёрская печать от Zurai).</p>
+
+<h3>6.2 Реклама в 2ГИС — платные инструменты</h3>
+<p>2ГИС — наш сильнейший digital-канал по сети T.S (179 211 показов и 553 звонка в апреле, +361% YoY). На месяц акции подключаем расширенный платный пакет, чтобы выйти за пределы органики.</p>
+<div class="grid-2">
+  <div class="box blue">
+    <div class="lbl">Медийная реклама 2ГИС</div>
+    <ul>
+      <li>Баннер на карте Шымкента в зоне 5 км от АЗС сети</li>
+      <li>Показ при поиске запросов «заправка», «заправка рядом», «АЗС» (топ запросы — 31% всех показов)</li>
+      <li>Период: 30 дней, ротация креативов с акцентом на «2+1» и розыгрыш</li>
+    </ul>
+  </div>
+  <div class="box blue">
+    <div class="lbl">Приоритет в выдаче</div>
+    <ul>
+      <li>Закрепление T.S в топ-3 выдачи по рубрике «Заправочные станции» (245 фирм в рубрике)</li>
+      <li>Премиум-карточка с акцией: «АКЦИЯ» в карточке + кнопка «Подробнее» на лендинг</li>
+      <li>Спецотметка «Розыгрыш топлива» в заголовке</li>
+    </ul>
+  </div>
+  <div class="box blue">
+    <div class="lbl">Карточки АЗС — обновление</div>
+    <ul>
+      <li>«Акция месяца: 2+1 Zurai + розыгрыш топлива» в описании всех 35 АЗС</li>
+      <li>Новая фотогалерея на каждой АЗС: POS, лототрон, продукт</li>
+      <li>Доп. кнопка-действие «Узнать о розыгрыше»</li>
+    </ul>
+  </div>
+  <div class="box blue">
+    <div class="lbl">Прогноз эффекта 2ГИС</div>
+    <ul>
+      <li>Показы: 220 000+ за месяц (+25% к апрелю)</li>
+      <li>Клики: 13 000+ (+25% к апрелю)</li>
+      <li>Звонки: 700+ (продолжение апрельского тренда)</li>
+      <li>Маршруты: 6 500+ — потенциальные заезды</li>
+    </ul>
+  </div>
+</div>
+
+<h3>6.3 Поддержка социальных сетей — усиленный план</h3>
+<div class="grid-2">
+  <div class="box blue">
+    <div class="lbl">Instagram T.S — контент-план</div>
+    <ul>
+      <li><strong>Постов:</strong> 16 за месяц (4 в неделю): анонс / победитель / Reels с продуктом / Stories-серия</li>
+      <li><strong>Reels:</strong> 8 видео — продукт, кассирские мини-интервью, реакция клиентов, моменты вручения призов</li>
+      <li><strong>Stories:</strong> ежедневные — обратный отсчёт до розыгрыша, опросы, голосования, поведение клиентов</li>
+      <li><strong>Прямые эфиры:</strong> 2 за месяц — еженедельный розыгрыш и финал</li>
+      <li><strong>Закреплённый пост</strong> с механикой акции на все 30 дней</li>
+    </ul>
+  </div>
+  <div class="box blue">
+    <div class="lbl">TikTok T.S</div>
+    <ul>
+      <li>Кросс-постинг Reels в TikTok</li>
+      <li>3 оригинальных короткометражки (кассир × клиент × Zurai)</li>
+      <li>Хэштеги: #ТСазс #акция2плюс1 #топливоназависть #zurai</li>
+    </ul>
+  </div>
+  <div class="box blue">
+    <div class="lbl">Кросс-публикации с Zurai</div>
+    <ul>
+      <li>Zurai дублирует наш контент с тегом T.S</li>
+      <li>Победители публикуются в обоих аккаунтах одновременно</li>
+      <li>Совместный финальный Reels-кейс (формат «как прошла кампания»)</li>
+      <li>Геотеги АЗС в каждом посте</li>
+    </ul>
+  </div>
+  <div class="box blue">
+    <div class="lbl">Telegram T.S</div>
+    <ul>
+      <li>Уведомления участникам о промежуточных розыгрышах</li>
+      <li>Внутренний канал: ежедневный лидерборд кассиров и АЗС</li>
+      <li>Бот для регистрации чеков с QR</li>
+      <li>Кнопка «Найти ближайшую АЗС с акцией»</li>
+    </ul>
+  </div>
+</div>
+
+<h3>6.4 Таргетированная реклама — если бюджет согласован (опционально)</h3>
+<p>Дополнительный платный охват на Meta + TikTok на 300 000–500 000 ₸:</p>
+<ul>
+  <li>Гео-таргет: 5 км вокруг АЗС</li>
+  <li>Аудитория: водители 25–55 М/Ж, интересы — авто, дальние поездки, грузоперевозки</li>
+  <li>Креатив: 3 Reels-варианта (A/B-тест) + 2 статичных баннера</li>
+  <li>Цель: регистрации в розыгрыше + трафик на лендинг</li>
+  <li>Ретаргетинг: пользователи, посетившие лендинг, но не зарегистрировавшиеся</li>
+</ul>
+
+<h2>7. Бюджет</h2>
+<table>
+  <thead>
+    <tr><th>Статья</th><th class="num">Сумма, ₸</th><th>Источник</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Топливный приз — 15 талонов по 20 л (10 × АИ-92, 5 × АИ-95)</td><td class="num">75 400</td><td>T.S</td></tr>
+    <tr><td><strong>Главный приз финала — электроника</strong> (смартфон / планшет / ТВ)</td><td class="num">0</td><td><strong>Zurai</strong></td></tr>
+    <tr><td>Призовой фонд еженедельных мини-розыгрышей (продукция Zurai)</td><td class="num">0</td><td><strong>Zurai</strong></td></tr>
+    <tr><td><strong>Премия лучшей АЗС</strong> (каждому кассиру 15 000 ₸ + старшему менеджеру 25 000 ₸)</td><td class="num">~ 115 000</td><td>T.S</td></tr>
+    <tr><td><strong>Индивидуальные бонусы кассирам</strong> (нормативные за «2+1» и регистрации)</td><td class="num">до 120 000</td><td>T.S</td></tr>
+    <tr><td><strong>Призовой фонд лучших кассиров</strong> (3 места: 30 / 15 / 15 тыс.)</td><td class="num">60 000 + 3 ящика</td><td>T.S + Zurai</td></tr>
+    <tr><td>POS-материалы (печать)</td><td class="num">50 000–80 000</td><td>T.S или Zurai (договорно)</td></tr>
+    <tr><td><strong>2ГИС — медийная реклама и баннер на карте</strong></td><td class="num">180 000–250 000</td><td>T.S</td></tr>
+    <tr><td><strong>2ГИС — приоритет в выдаче + премиум-карточка</strong></td><td class="num">90 000–150 000</td><td>T.S</td></tr>
+    <tr><td>Цифровой контент (своими силами, штатный SMM)</td><td class="num">0</td><td>T.S</td></tr>
+    <tr><td>Усиление контент-производства (доп. съёмки Reels/TikTok)</td><td class="num">50 000–80 000</td><td>T.S</td></tr>
+    <tr><td>Аренда лототрона</td><td class="num">0</td><td>T.S (есть)</td></tr>
+    <tr><td>Ведущий финала / блогер</td><td class="num">30 000–80 000</td><td>T.S или партнёрски</td></tr>
+    <tr><td>Таргетированная реклама Meta + TikTok (опционально)</td><td class="num">300 000–500 000</td><td>T.S, если бюджет согласован</td></tr>
+  </tbody>
+  <tfoot>
+    <tr><th>ИТОГО на T.S (базовый пакет, без доп. таргета)</th><th class="num">~ 770 000–940 000</th><th>&nbsp;</th></tr>
+    <tr><th>ИТОГО на T.S (полный пакет, с таргетом Meta/TikTok)</th><th class="num">~ 1 070 000–1 440 000</th><th>&nbsp;</th></tr>
+  </tfoot>
+</table>
+<p class="note">Базовый пакет включает топливный приз, премию лучшей АЗС, бонусы кассирам, POS, платные инструменты 2ГИС и усиление контент-производства. Это минимум, при котором кампания работает на полную силу. Таргет Meta/TikTok — дополнительная опция для удвоения охвата.</p>
+
+<div class="box green">
+  <div class="lbl">Входящий контр-поток от Zurai и эффект на ТНП</div>
+  <ul>
+    <li>Выручка T.S за рекламные места на АЗС (договорная) — прямая монетизация площадей</li>
+    <li>Стоимость призового фонда продукции — полностью на стороне партнёра</li>
+    <li>«Третьи единицы» в «2+1» — нулевая закупка для T.S, чистая маржа на продажах Zurai</li>
+    <li>Прирост среднего чека ТНП — органический эффект от усиленной активации кассиров</li>
+  </ul>
+  <p><strong>Прямой эффект — продажи Zurai.</strong> При среднем чеке Zurai 500 ₸ и продаже 5 000 единиц: выручка ≈ <strong>2 500 000 ₸</strong>, при марже 30% это ≈ <strong>750 000 ₸ прибыли</strong>.</p>
+  <p><strong>Косвенный эффект — рост чека ТНП.</strong> Кампания мотивирует кассира работать с допродажей в целом. Прогноз прироста выручки ТНП по сети за месяц: <strong>+8–12%</strong> к базе (≈ 5–8 млн ₸ доп. выручки при среднем месячном ТНП сети 64 млн ₸).</p>
+  <p><strong>Эффект 2ГИС.</strong> Платные инструменты + рекордный апрель = ожидаемый прирост звонков ещё на 15–25%, маршрутов на 10–15% (потенциальные заезды и продажи топлива).</p>
+  <p><strong>Окупаемость:</strong> при полном пакете 1,2 млн ₸ → прямая прибыль Zurai 750 тыс. ₸ + косвенный эффект на ТНП 1,5–2,5 млн ₸ прибыли = <strong>ROI 1,9–2,7×</strong> за один месяц. Это без учёта монетизации рекламных мест от Zurai и долгосрочного эффекта на лояльность.</p>
+</div>
+
+<h2>8. KPI постпроекта (оценка после)</h2>
+<table>
+  <thead><tr><th>Метрика</th><th>Источник данных</th></tr></thead>
+  <tbody>
+    <tr><td>Продажи Zurai по сети (шт, ₸)</td><td>Кассовая система</td></tr>
+    <tr><td>Доля чеков с Zurai от всех ТНП-чеков</td><td>Кассовая аналитика</td></tr>
+    <tr><td>Доля чеков с «2+1»</td><td>Кассовая система (отдельный код акции)</td></tr>
+    <tr><td>Прирост среднего чека ТНП</td><td>Сравнение с апрелем</td></tr>
+    <tr><td>Кол-во регистраций в розыгрыше</td><td>Лендинг / Telegram-бот</td></tr>
+    <tr><td>Конверсия «регистрация → повторный чек»</td><td>Сверка по номеру телефона</td></tr>
+    <tr><td>Охват и вовлечённость Instagram</td><td>Instagram Insights</td></tr>
+    <tr><td>Звонки / клики / маршруты 2ГИС</td><td>Кабинет 2ГИС</td></tr>
+    <tr><td>Доход от рекламных мест Zurai</td><td>Бухгалтерия</td></tr>
+    <tr><td>Удовлетворённость кассиров</td><td>Внутренний опрос</td></tr>
+  </tbody>
+</table>
+
+<h2>9. Риски и митигация</h2>
+<table>
+  <thead><tr><th>Риск</th><th>Митигация</th></tr></thead>
+  <tbody>
+    <tr><td>Zurai не отгрузит продукцию вовремя</td><td>Срок поставки в договоре; буфер из складов ТЖ / НП / ОМС на 3–5 дней</td></tr>
+    <tr><td>Кассиры «забивают» на скрипт</td><td>Тайные покупатели + бонус за выполнение норматива</td></tr>
+    <tr><td>Низкий регистрационный поток</td><td>Усиление скрипта кассира + точечный таргет (если бюджет)</td></tr>
+    <tr><td>Юр. оформление розыгрыша</td><td>Правила розыгрыша на лендинге, согласование с юристом</td></tr>
+    <tr><td>Обналичивание призов (как с талонами)</td><td>Призы выдаются публично, фотофиксация, ответственный сотрудник</td></tr>
+    <tr><td>Дублирование чеков</td><td>Один номер телефона = одна регистрация в день</td></tr>
+    <tr><td>Конфликт с другими акциями (Тассай, Lipton)</td><td>Разнесение по точкам: Zurai на ТОП-1 / ТОП-2, остальное — ТОП-3</td></tr>
+  </tbody>
+</table>
+
+<h2>10. Что нужно от руководства до запуска</h2>
+<ol>
+  <li>Подписать контракт с Zurai — рекламные места, <strong>главный приз (электроника)</strong>, призовой фонд еженедельных розыгрышей, партия для «2+1»</li>
+  <li>Согласовать у Zurai <strong>конкретный главный приз</strong> (смартфон / планшет / ТВ — нужна модель и бюджет, чтобы анонсировать в коммуникациях)</li>
+  <li>Согласовать топливный приз — 15 талонов по 20 л (200 л АИ-92 + 100 л АИ-95) = 75 400 ₸ на списание в маркетинговые расходы</li>
+  <li><strong>Согласовать премиальный фонд лучшей АЗС</strong> — каждому кассиру 15 000 ₸ + старшему менеджеру 25 000 ₸ (≈ 115 000 ₸ на одну АЗС-победителя, зависит от штата)</li>
+  <li><strong>Согласовать индивидуальные бонусы кассирам</strong> — до 120 000 ₸ + 60 000 ₸ призовой фонд лучших кассиров</li>
+  <li><strong>Согласовать платные инструменты 2ГИС</strong> — 270 000–400 000 ₸ (медийка + приоритет в выдаче)</li>
+  <li><strong>Утвердить усиленный SMM-план</strong> — 50 000–80 000 ₸ на доп. контент-производство</li>
+  <li>Решение по таргет-бюджету Meta/TikTok: да / нет (300 000–500 000 ₸)</li>
+  <li>Юридическая проверка правил розыгрыша и кассирских бонусов</li>
+  <li>Определить список АЗС: все 35 или только ТОП-1 + ТОП-2</li>
+  <li><strong>Утвердить итоговый бюджет:</strong> базовый пакет 770 тыс.–940 тыс. ₸ или полный 1,07–1,44 млн ₸</li>
+</ol>
+
+<div class="footnote">
+  <strong>Подготовлено:</strong> отдел маркетинга T.S, май 2026 г.<br>
+  <strong>Партнёр:</strong> Zurai (локальный бренд напитков)<br>
+  <strong>Период кампании:</strong> 30 дней с даты согласования и подписания партнёрского контракта<br>
+  <strong>Открытые вопросы для уточнения:</strong> объём «третьей единицы» Zurai · конкретная модель электроники для главного приза от партнёра · дата старта.
+</div>
+
+</body>
+</html>
