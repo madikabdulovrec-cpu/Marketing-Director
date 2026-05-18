@@ -1,25 +1,71 @@
 # Индекс памяти проектов
 
-> Эта папка — сквозная память по всем проектам владельца репо (Маркетинг директор).
-> Каждая сессия Claude должна начинать работу с прочтения этого файла, чтобы получить карту проектов и понять, где что лежит.
+> Сквозная память по всем проектам владельца репо (Маркетинг директор).
+> Любая сессия Claude должна начинать работу с этого файла.
 
 ## Как пользоваться
 
-1. Читаешь этот файл → видишь список проектов и где они физически лежат.
-2. Открываешь нужный `project_*.md` → получаешь стек, статус, принципы и ссылку на код.
-3. Если код проекта — в отдельном GitHub-репо, в карточке указана ссылка для `git clone`.
+1. Читаешь этот файл → видишь список проектов, статусы, где код.
+2. Открываешь нужный `project_<slug>.md` → получаешь стек, хронологию, принципы.
+3. Если код в отдельном GitHub-репо — карточка содержит URL для `git clone`.
 
 ## Активные проекты
 
-| Проект | Карточка | Где код | GitHub |
-|---|---|---|---|
-| **Dishandi SPA** — стратегия + 90-дневный план | [project_dishandi.md](project_dishandi.md) | корень репо: `strategy_dishandi_v1.3.html`, `ACTION_PLAN.md`, `PROJECT.md`, `INVITATION_NIGHT_PLAN.md` | этот репо (`Marketing-Director`) |
-| **T.S** — приложение для сети АЗС | [project_ts_app.md](project_ts_app.md) | `ТС приложение/` | этот репо |
-| **Receipts Bot** — Telegram-бот сбора чеков | [project_receipts_bot.md](project_receipts_bot.md) | локально: `receipts_bot/` (в `.gitignore`) | [Evimiz-KZ/cheki-bot](https://github.com/Evimiz-KZ/cheki-bot) — отдельный репо |
-| **Immune Up** — стратегия по продукту | [project_immune_up.md](project_immune_up.md) | локально: `Immune_Up_встреча_и_стратегии.docx` (в `.gitignore`) | — |
+| Проект | Статус | Послед. касание | Карточка | Где код | GitHub |
+|---|---|---|---|---|---|
+| **Immune Up** — SMM + поиск дистрибьюторов | 🟢 active | 2026-05-13 | [project_immune_up.md](project_immune_up.md) | `Immune_Up/` | в этом репо |
+| **Dishandi SPA** — стратегия + 90-дн. план | 🟢 active | 2026-05-04 | [project_dishandi.md](project_dishandi.md) | корень: `strategy_dishandi_v1.3.html`, `ACTION_PLAN.md`, `PROJECT.md`, `INVITATION_NIGHT_PLAN.md` | в этом репо |
+| **T.S** — приложение для сети АЗС | 🟡 paused | 2026-05-18 | [project_ts_app.md](project_ts_app.md) | `ТС приложение/` | в этом репо |
+| **Receipts Bot** — Telegram-бот сбора чеков | 🟢 active | 2026-05-04 | [project_receipts_bot.md](project_receipts_bot.md) | **отдельный репо**, локально `receipts_bot/` (в `.gitignore`) | [Evimiz-KZ/cheki-bot](https://github.com/Evimiz-KZ/cheki-bot) |
 
-## Инфраструктурные правила
+Легенда статусов: 🟢 active · 🟡 paused · ⚪ archive · 🔵 spec/research
 
-- **Чувствительные файлы** (брифы клиентов, бухгалтерия, исходные PDF брендбуков, DOCX с заметками встреч) — в `.gitignore`. Принцип: всё, что содержит контакты/коммерческую тайну/раннюю версию = не публикуем.
-- **Один проект — одна карточка** в `memory/`. Если стартует новый проект — создаём `project_<slug>.md` и добавляем строку в таблицу выше.
-- **Код в отдельном GitHub-репо** ссылаем, а не зеркалим. Зеркало = рассинхрон.
+## Как продолжить на другом устройстве
+
+### Шаг 0 — клонировать всё, что нужно
+
+```bash
+git clone git@github.com:madikabdulovrec-cpu/Marketing-Director.git
+cd Marketing-Director
+
+# Если нужен бот — клонируется отдельно:
+git clone https://github.com/Evimiz-KZ/cheki-bot.git receipts_bot
+```
+
+### Шаг 1 — выбрать проект и дать Claude правильный «вход»
+
+Скопируй один из готовых промптов ниже первым сообщением в новую сессию Claude Code:
+
+**Immune Up:**
+> Работаем над Immune Up. Прочитай `memory/project_immune_up.md`, затем список файлов в `Immune_Up/`. Текущая стратегия — `Immune_Up/Immune_Up_Strategy_v2.docx`. Жду задачу.
+
+**Dishandi SPA:**
+> Работаем над Dishandi. Прочитай `memory/project_dishandi.md`. Актуальная стратегия — `strategy_dishandi_v1.3.html`, операционный план — `ACTION_PLAN.md`. Жду задачу.
+
+**T.S — приложение АЗС:**
+> Работаем над T.S app. Прочитай `memory/project_ts_app.md`. Прототипы в `ТС приложение/TS_app_design_v*.html` и `TS_app_prototype*.html`. Жду задачу.
+
+**Receipts Bot:**
+> Работаем над Receipts Bot. Прочитай `memory/project_receipts_bot.md`. Сам код — в отдельном репо `github.com/Evimiz-KZ/cheki-bot`, локально в `receipts_bot/`. Жду задачу.
+
+## Что НЕ в git (нужно перенести вручную, если важно)
+
+| Что | Где локально | Почему не в git |
+|---|---|---|
+| `dishandi_brief.md` | корень | Бриф клиента, чувствительно |
+| `PROJECT_STATE.md` | корень | Внутренние заметки |
+| `Бухгалтерия/` | корень | Финансовые данные |
+| Все `*.xlsx`, `*.pdf`, исходные `*.docx` | разное | Бинарники / клиентские документы |
+| `Immune_Up/inputs/` | `Immune_Up/inputs/` | КП и стратегия от заказчика (~20 MB PDF) |
+| `Immune_Up_встреча_и_стратегия.docx`, `Immune_Up_B2B_SMM_стратегия.docx` | корень | Старые версии, заменены `Strategy_v2` |
+| `receipts_bot/.env` | `receipts_bot/` | Токен Telegram-бота |
+| `T.S Brandbook.pdf`, `ТЗ для приложения T.S` | `ТС приложение/` | Брендбук и ТЗ заказчика T.S |
+| `ТС приложение/_extracted/brandbook/` | там же | 78 MB PNG-извлечений брендбука |
+
+**Если на новом устройстве чего-то из этого не хватает** — скопируй через флешку / облако из старого устройства. Не пытайся восстановить из git.
+
+## Правила обновления этого файла
+
+- Любой новый проект → строка в таблице + готовый промпт в «Как продолжить на другом устройстве» + создать `project_<slug>.md`.
+- При изменении статуса проекта — обновляй колонку «Статус».
+- При работе с проектом — обновляй «Послед. касание» (формат YYYY-MM-DD).

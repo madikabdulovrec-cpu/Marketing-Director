@@ -10,6 +10,22 @@ started: 2026-05-11
 
 # Immune Up — Marketing / SMM проект
 
+## Запуск сессии по этому проекту
+
+> Работаем над Immune Up. Прочитай `memory/project_immune_up.md`, затем список файлов в `Immune_Up/`. Текущая стратегия — `Immune_Up/Immune_Up_Strategy_v2.docx`. Жду задачу.
+
+## Что НЕ в git (только локально, перенести вручную на новое устройство)
+
+| Файл / папка | Почему |
+|---|---|
+| `Immune_Up/inputs/Immune Up_КП.pdf` | КП заказчика с оптовыми ценами (~8 MB) |
+| `Immune_Up/inputs/Стратегия Immune Up.pdf` | Стратегия от агентства DST Sales (~11 MB) |
+| `Immune_Up/inputs/*.txt` | Расшифровки PDF (`pdftotext`) — лежат рядом с PDF |
+| `Immune_Up_встреча_и_стратегия.docx` (корень) | Старая версия стратегии — заменена `Strategy_v2` |
+| `Immune_Up_B2B_SMM_стратегия.docx` (корень) | Старая B2B-версия v1 — заменена `Strategy_v2` |
+
+Все актуальные `*.docx` в `Immune_Up/` — **в git** (для них в `.gitignore` исключение `!Immune_Up/*.docx`).
+
 ## Контекст бренда
 
 - **Бренд:** Immune Up (Иммуне Ап)
