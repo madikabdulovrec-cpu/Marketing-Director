@@ -7,6 +7,12 @@ dishandi_brief.md
 *.pdf
 *.docx
 
+# Immune Up: артефакты разрешены, входящие данные заказчика — нет
+!Immune_Up/*.docx
+Immune_Up/inputs/
+Immune_Up_встреча_и_стратегия.docx
+Immune_Up_B2B_SMM_стратегия.docx
+
 # Скрипты сборки — не нужны на гите
 build_xlsx.py
 render_*.py
