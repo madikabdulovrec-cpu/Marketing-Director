@@ -14,14 +14,15 @@ local_path: KomekAI/
 
 ## Запуск сессии по этому проекту
 
-> Работаем над KomekAI. Прочитай `memory/project_komekai.md`, затем `KomekAI/KOMEKAI_PLATFORM.md` (описание продукта) и `KomekAI/KomekAI_Strategy_v1.docx` (стратегия по Котлеру). Жду задачу.
+> Работаем над KomekAI. Прочитай `memory/project_komekai.md`, затем `KomekAI/KOMEKAI_PLATFORM.md` (продукт), `KomekAI/KomekAI_Strategy_v1.docx` (обзорная стратегия) и `KomekAI/KomekAI_STP_Goals_v1.docx` (углублённая проработка сегментации/позиционирования/целей). Жду задачу.
 
 ## Где что лежит (в git)
 
 | Файл | Что |
 |---|---|
 | `KomekAI/KOMEKAI_PLATFORM.md` | Описание продукта — источник для сайта, презентации, брендбука. Главный документ-исходник |
-| `KomekAI/KomekAI_Strategy_v1.docx` | Стратегический анализ по Котлеру: STP, позиционирование, 7P, SMART-цели, дорожная карта 90 дн, риски |
+| `KomekAI/KomekAI_Strategy_v1.docx` | Стратегический анализ по Котлеру (обзорный): рынок, STP, позиционирование, 7P, SMART-цели, дорожная карта 90 дн, риски |
+| `KomekAI/KomekAI_STP_Goals_v1.docx` | **Углублённая** проработка по 3 блокам: критериальная матрица сегментов, 2 персоны + journey, 3 варианта positioning + verbal identity голоса, OKR-каскад с разбивкой по неделям |
 
 ## Что НЕ в git (только локально)
 

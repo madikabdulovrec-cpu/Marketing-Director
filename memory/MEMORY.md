@@ -38,7 +38,7 @@ git clone https://github.com/Evimiz-KZ/cheki-bot.git receipts_bot
 Скопируй один из готовых промптов ниже первым сообщением в новую сессию Claude Code:
 
 **KomekAI:**
-> Работаем над KomekAI. Прочитай `memory/project_komekai.md`, затем `KomekAI/KOMEKAI_PLATFORM.md` (описание продукта) и `KomekAI/KomekAI_Strategy_v1.docx` (стратегия по Котлеру). Жду задачу.
+> Работаем над KomekAI. Прочитай `memory/project_komekai.md`, затем `KomekAI/KOMEKAI_PLATFORM.md` (продукт), `KomekAI/KomekAI_Strategy_v1.docx` (обзорная стратегия) и `KomekAI/KomekAI_STP_Goals_v1.docx` (углублённая проработка сегментации/позиционирования/целей). Жду задачу.
 
 **Immune Up:**
 > Работаем над Immune Up. Прочитай `memory/project_immune_up.md`, затем список файлов в `Immune_Up/`. Текущая стратегия — `Immune_Up/Immune_Up_Strategy_v2.docx`. Жду задачу.
