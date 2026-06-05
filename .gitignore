@@ -13,6 +13,10 @@ Immune_Up/inputs/
 Immune_Up_встреча_и_стратегия.docx
 Immune_Up_B2B_SMM_стратегия.docx
 
+# KomekAI: артефакты стратегии разрешены, входящие конфиденциальные — нет
+!KomekAI/*.docx
+KomekAI/inputs/
+
 # Скрипты сборки — не нужны на гите
 build_xlsx.py
 render_*.py

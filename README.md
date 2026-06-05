@@ -12,6 +12,7 @@
 
 | Проект | Карточка | Где |
 |---|---|---|
+| **KomekAI** — голос+текст AI-ассистент для МСБ KZ | [memory/project_komekai.md](memory/project_komekai.md) | `KomekAI/` |
 | **Immune Up** — SMM + поиск дистрибьюторов | [memory/project_immune_up.md](memory/project_immune_up.md) | `Immune_Up/` |
 | **Dishandi SPA** — стратегия + 90-дн. план | [memory/project_dishandi.md](memory/project_dishandi.md) | корень (`strategy_dishandi_v1.3.html`, `ACTION_PLAN.md`, `PROJECT.md`, `INVITATION_NIGHT_PLAN.md`) |
 | **T.S** — приложение для сети АЗС | [memory/project_ts_app.md](memory/project_ts_app.md) | `ТС приложение/` |
